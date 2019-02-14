@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.28307.271
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OpenKuka.KukavarClient", "OpenKuka.KukavarClient\OpenKuka.KukavarClient.csproj", "{857F50A6-ECDF-4DE9-8B0B-DFA207A60BA4}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OpenKuka.KukavarClient.DemoApp", "OpenKuka.KukavarClient.DemoApp\OpenKuka.KukavarClient.DemoApp.csproj", "{9C01CFB2-E726-49CB-94F9-8F22177DE313}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{857F50A6-ECDF-4DE9-8B0B-DFA207A60BA4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{857F50A6-ECDF-4DE9-8B0B-DFA207A60BA4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{857F50A6-ECDF-4DE9-8B0B-DFA207A60BA4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{857F50A6-ECDF-4DE9-8B0B-DFA207A60BA4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9C01CFB2-E726-49CB-94F9-8F22177DE313}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9C01CFB2-E726-49CB-94F9-8F22177DE313}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9C01CFB2-E726-49CB-94F9-8F22177DE313}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9C01CFB2-E726-49CB-94F9-8F22177DE313}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {B596ECAB-DB29-4C00-9EBA-460ED902E67C}
+	EndGlobalSection
+EndGlobal
