@@ -29,6 +29,7 @@ namespace Kukavar.DemoApp
         public ConcurrentQueue<int> CommunicationGroupIds;
 
         private Stopwatch chrono = new Stopwatch();
+        private DataTable records;
 
         public Form1()
         {
@@ -433,6 +434,10 @@ namespace Kukavar.DemoApp
                 scbRead.SelectedIndex = -1;
             }
         }
+        private void SetReadElapsedTime(double time)
+        {
+            lbReadTime.Text = "elapsed time : " + Math.Round(time, 1) + "ms";
+        }
         #endregion
 
         #region Read template
@@ -716,12 +721,21 @@ namespace Kukavar.DemoApp
         }
         #endregion
 
-        
-        
-
-        private void SetReadElapsedTime(double time)
+        #region Record
+        private void InitRecord()
         {
-            lbReadTime.Text = "elapsed time : " + Math.Round(time, 1) + "ms";
+            
+            records = new DataTable("Positions");
+
         }
+        private async void btAddRecord_Click(object sender, EventArgs e)
+        {
+            await client.SendAsync(KVReadQuery.Build(1, "$POS_ACT"));
+            await client.SendAsync(KVReadQuery.Build(2, "$AXIS_ACT"));
+        }
+        #endregion
+
+
+        
     }
 }

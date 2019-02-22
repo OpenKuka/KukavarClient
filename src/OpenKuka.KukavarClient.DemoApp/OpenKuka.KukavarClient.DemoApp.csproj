@@ -140,5 +140,8 @@
   <ItemGroup>
     <None Include="icon\fold.png" />
   </ItemGroup>
+  <ItemGroup>
+    <Content Include="icon\record.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

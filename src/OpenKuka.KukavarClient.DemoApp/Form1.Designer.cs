@@ -46,21 +46,34 @@
             this.lbConnectionStatus = new System.Windows.Forms.TextBox();
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
+            this.lbReadTime = new System.Windows.Forms.Label();
             this.btReadTemplate = new System.Windows.Forms.Button();
             this.label10 = new System.Windows.Forms.Label();
             this.tbTemplateName = new System.Windows.Forms.TextBox();
             this.cbTemplate = new System.Windows.Forms.ComboBox();
             this.lstbRead = new System.Windows.Forms.ListBox();
             this.label9 = new System.Windows.Forms.Label();
-            this.scbRead = new AutoCompleteComboBox.SuggestComboBox();
             this.label8 = new System.Windows.Forms.Label();
             this.btReadSingle = new System.Windows.Forms.Button();
             this.label7 = new System.Windows.Forms.Label();
             this.treeListView = new BrightIdeasSoftware.TreeListView();
             this.tabPage2 = new System.Windows.Forms.TabPage();
+            this.tabPage3 = new System.Windows.Forms.TabPage();
+            this.dataGridView1 = new System.Windows.Forms.DataGridView();
+            this.tabPage4 = new System.Windows.Forms.TabPage();
+            this.tabPage5 = new System.Windows.Forms.TabPage();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
+            this.tbRobVersion = new System.Windows.Forms.TextBox();
+            this.label13 = new System.Windows.Forms.Label();
+            this.tbRobHours = new System.Windows.Forms.TextBox();
+            this.label12 = new System.Windows.Forms.Label();
+            this.tbRobName = new System.Windows.Forms.TextBox();
+            this.label11 = new System.Windows.Forms.Label();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
             this.toolTip = new System.Windows.Forms.ToolTip(this.components);
+            this.scbRead = new AutoCompleteComboBox.SuggestComboBox();
+            this.btExpandAll = new System.Windows.Forms.Button();
+            this.btCollapseAll = new System.Windows.Forms.Button();
             this.btRemoveHistory = new System.Windows.Forms.Button();
             this.btEditTemplateName = new System.Windows.Forms.Button();
             this.btAddReadTemplate = new System.Windows.Forms.Button();
@@ -69,19 +82,18 @@
             this.btAddTemplateVar = new System.Windows.Forms.Button();
             this.btRemoveTemplateVar = new System.Windows.Forms.Button();
             this.btDown = new System.Windows.Forms.Button();
-            this.btExpandAll = new System.Windows.Forms.Button();
-            this.btCollapseAll = new System.Windows.Forms.Button();
-            this.lbReadTime = new System.Windows.Forms.Label();
-            this.label11 = new System.Windows.Forms.Label();
-            this.tbRobName = new System.Windows.Forms.TextBox();
-            this.tbRobHours = new System.Windows.Forms.TextBox();
-            this.label12 = new System.Windows.Forms.Label();
-            this.tbRobVersion = new System.Windows.Forms.TextBox();
-            this.label13 = new System.Windows.Forms.Label();
+            this.btAddRecord = new System.Windows.Forms.Button();
+            this.btRemoveRecord = new System.Windows.Forms.Button();
+            this.label14 = new System.Windows.Forms.Label();
+            this.ckPOS = new System.Windows.Forms.CheckBox();
+            this.checkBox1 = new System.Windows.Forms.CheckBox();
+            this.checkBox2 = new System.Windows.Forms.CheckBox();
             this.grpCSettings.SuspendLayout();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.treeListView)).BeginInit();
+            this.tabPage3.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.groupBox2.SuspendLayout();
             this.groupBox3.SuspendLayout();
             this.SuspendLayout();
@@ -237,6 +249,9 @@
             // 
             this.tabControl1.Controls.Add(this.tabPage1);
             this.tabControl1.Controls.Add(this.tabPage2);
+            this.tabControl1.Controls.Add(this.tabPage3);
+            this.tabControl1.Controls.Add(this.tabPage4);
+            this.tabControl1.Controls.Add(this.tabPage5);
             this.tabControl1.Enabled = false;
             this.tabControl1.Location = new System.Drawing.Point(12, 216);
             this.tabControl1.Name = "tabControl1";
@@ -275,6 +290,15 @@
             this.tabPage1.TabIndex = 0;
             this.tabPage1.Text = "READ";
             this.tabPage1.UseVisualStyleBackColor = true;
+            // 
+            // lbReadTime
+            // 
+            this.lbReadTime.Location = new System.Drawing.Point(372, 363);
+            this.lbReadTime.Name = "lbReadTime";
+            this.lbReadTime.Size = new System.Drawing.Size(297, 13);
+            this.lbReadTime.TabIndex = 50;
+            this.lbReadTime.Text = "elapsed time : ms";
+            this.lbReadTime.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             // 
             // btReadTemplate
             // 
@@ -333,19 +357,6 @@
             this.label9.TabIndex = 24;
             this.label9.Text = "Select a template";
             // 
-            // scbRead
-            // 
-            this.scbRead.FilterRule = null;
-            this.scbRead.FormattingEnabled = true;
-            this.scbRead.Location = new System.Drawing.Point(15, 50);
-            this.scbRead.Name = "scbRead";
-            this.scbRead.PropertySelector = null;
-            this.scbRead.Size = new System.Drawing.Size(150, 21);
-            this.scbRead.SuggestBoxHeight = 96;
-            this.scbRead.SuggestListOrderRule = null;
-            this.scbRead.TabIndex = 20;
-            this.scbRead.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.scbRead_KeyPress);
-            // 
             // label8
             // 
             this.label8.AutoSize = true;
@@ -397,6 +408,48 @@
             this.tabPage2.Text = "WRITE";
             this.tabPage2.UseVisualStyleBackColor = true;
             // 
+            // tabPage3
+            // 
+            this.tabPage3.Controls.Add(this.checkBox2);
+            this.tabPage3.Controls.Add(this.checkBox1);
+            this.tabPage3.Controls.Add(this.ckPOS);
+            this.tabPage3.Controls.Add(this.label14);
+            this.tabPage3.Controls.Add(this.btRemoveRecord);
+            this.tabPage3.Controls.Add(this.btAddRecord);
+            this.tabPage3.Controls.Add(this.dataGridView1);
+            this.tabPage3.Location = new System.Drawing.Point(4, 22);
+            this.tabPage3.Name = "tabPage3";
+            this.tabPage3.Size = new System.Drawing.Size(687, 393);
+            this.tabPage3.TabIndex = 2;
+            this.tabPage3.Text = "RECORDE";
+            this.tabPage3.UseVisualStyleBackColor = true;
+            // 
+            // dataGridView1
+            // 
+            this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dataGridView1.Location = new System.Drawing.Point(15, 90);
+            this.dataGridView1.Name = "dataGridView1";
+            this.dataGridView1.Size = new System.Drawing.Size(649, 268);
+            this.dataGridView1.TabIndex = 0;
+            // 
+            // tabPage4
+            // 
+            this.tabPage4.Location = new System.Drawing.Point(4, 22);
+            this.tabPage4.Name = "tabPage4";
+            this.tabPage4.Size = new System.Drawing.Size(687, 393);
+            this.tabPage4.TabIndex = 3;
+            this.tabPage4.Text = "MONITOR";
+            this.tabPage4.UseVisualStyleBackColor = true;
+            // 
+            // tabPage5
+            // 
+            this.tabPage5.Location = new System.Drawing.Point(4, 22);
+            this.tabPage5.Name = "tabPage5";
+            this.tabPage5.Size = new System.Drawing.Size(687, 393);
+            this.tabPage5.TabIndex = 4;
+            this.tabPage5.Text = "TEST";
+            this.tabPage5.UseVisualStyleBackColor = true;
+            // 
             // groupBox2
             // 
             this.groupBox2.Controls.Add(this.tbRobVersion);
@@ -412,6 +465,57 @@
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "System Info";
             // 
+            // tbRobVersion
+            // 
+            this.tbRobVersion.Location = new System.Drawing.Point(78, 54);
+            this.tbRobVersion.Name = "tbRobVersion";
+            this.tbRobVersion.Size = new System.Drawing.Size(182, 20);
+            this.tbRobVersion.TabIndex = 12;
+            this.tbRobVersion.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            // 
+            // label13
+            // 
+            this.label13.AutoSize = true;
+            this.label13.Location = new System.Drawing.Point(6, 57);
+            this.label13.Name = "label13";
+            this.label13.Size = new System.Drawing.Size(41, 13);
+            this.label13.TabIndex = 13;
+            this.label13.Text = "System";
+            // 
+            // tbRobHours
+            // 
+            this.tbRobHours.Location = new System.Drawing.Point(190, 80);
+            this.tbRobHours.Name = "tbRobHours";
+            this.tbRobHours.Size = new System.Drawing.Size(70, 20);
+            this.tbRobHours.TabIndex = 10;
+            this.tbRobHours.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            // 
+            // label12
+            // 
+            this.label12.AutoSize = true;
+            this.label12.Location = new System.Drawing.Point(6, 83);
+            this.label12.Name = "label12";
+            this.label12.Size = new System.Drawing.Size(75, 13);
+            this.label12.TabIndex = 11;
+            this.label12.Text = "Hours (hh:mm)";
+            // 
+            // tbRobName
+            // 
+            this.tbRobName.Location = new System.Drawing.Point(78, 28);
+            this.tbRobName.Name = "tbRobName";
+            this.tbRobName.Size = new System.Drawing.Size(182, 20);
+            this.tbRobName.TabIndex = 9;
+            this.tbRobName.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            // 
+            // label11
+            // 
+            this.label11.AutoSize = true;
+            this.label11.Location = new System.Drawing.Point(6, 31);
+            this.label11.Name = "label11";
+            this.label11.Size = new System.Drawing.Size(35, 13);
+            this.label11.TabIndex = 9;
+            this.label11.Text = "Name";
+            // 
             // groupBox3
             // 
             this.groupBox3.Controls.Add(this.btStop);
@@ -425,9 +529,44 @@
             this.groupBox3.TabStop = false;
             this.groupBox3.Text = "Start/Stop";
             // 
+            // scbRead
+            // 
+            this.scbRead.FilterRule = null;
+            this.scbRead.FormattingEnabled = true;
+            this.scbRead.Location = new System.Drawing.Point(15, 50);
+            this.scbRead.Name = "scbRead";
+            this.scbRead.PropertySelector = null;
+            this.scbRead.Size = new System.Drawing.Size(150, 21);
+            this.scbRead.SuggestBoxHeight = 96;
+            this.scbRead.SuggestListOrderRule = null;
+            this.scbRead.TabIndex = 20;
+            this.scbRead.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.scbRead_KeyPress);
+            // 
+            // btExpandAll
+            // 
+            this.btExpandAll.Image = global::Kukavar.DemoApp.Properties.Resources.unfold;
+            this.btExpandAll.Location = new System.Drawing.Point(615, 14);
+            this.btExpandAll.Name = "btExpandAll";
+            this.btExpandAll.Size = new System.Drawing.Size(24, 28);
+            this.btExpandAll.TabIndex = 49;
+            this.toolTip.SetToolTip(this.btExpandAll, "Expand All");
+            this.btExpandAll.UseVisualStyleBackColor = true;
+            this.btExpandAll.Click += new System.EventHandler(this.btExpandAll_Click);
+            // 
+            // btCollapseAll
+            // 
+            this.btCollapseAll.Image = global::Kukavar.DemoApp.Properties.Resources.fold;
+            this.btCollapseAll.Location = new System.Drawing.Point(645, 14);
+            this.btCollapseAll.Name = "btCollapseAll";
+            this.btCollapseAll.Size = new System.Drawing.Size(24, 28);
+            this.btCollapseAll.TabIndex = 48;
+            this.toolTip.SetToolTip(this.btCollapseAll, "Collapse All");
+            this.btCollapseAll.UseVisualStyleBackColor = true;
+            this.btCollapseAll.Click += new System.EventHandler(this.btCollapseAll_Click);
+            // 
             // btRemoveHistory
             // 
-            this.btRemoveHistory.Image = global::Kukavar.DemoApp.Properties.Resources.remove;
+            this.btRemoveHistory.Image = global::Kukavar.DemoApp.Properties.Resources.add;
             this.btRemoveHistory.Location = new System.Drawing.Point(171, 48);
             this.btRemoveHistory.Name = "btRemoveHistory";
             this.btRemoveHistory.Size = new System.Drawing.Size(24, 24);
@@ -487,7 +626,7 @@
             // 
             // btAddTemplateVar
             // 
-            this.btAddTemplateVar.Image = global::Kukavar.DemoApp.Properties.Resources.add1;
+            this.btAddTemplateVar.Image = global::Kukavar.DemoApp.Properties.Resources.add;
             this.btAddTemplateVar.Location = new System.Drawing.Point(171, 306);
             this.btAddTemplateVar.Name = "btAddTemplateVar";
             this.btAddTemplateVar.Size = new System.Drawing.Size(24, 24);
@@ -520,87 +659,74 @@
             this.btDown.UseVisualStyleBackColor = true;
             this.btDown.Click += new System.EventHandler(this.btDown_Click);
             // 
-            // btExpandAll
+            // btAddRecord
             // 
-            this.btExpandAll.Image = global::Kukavar.DemoApp.Properties.Resources.unfold;
-            this.btExpandAll.Location = new System.Drawing.Point(615, 14);
-            this.btExpandAll.Name = "btExpandAll";
-            this.btExpandAll.Size = new System.Drawing.Size(24, 28);
-            this.btExpandAll.TabIndex = 49;
-            this.toolTip.SetToolTip(this.btExpandAll, "Expand All");
-            this.btExpandAll.UseVisualStyleBackColor = true;
-            this.btExpandAll.Click += new System.EventHandler(this.btExpandAll_Click);
+            this.btAddRecord.Image = global::Kukavar.DemoApp.Properties.Resources.add;
+            this.btAddRecord.Location = new System.Drawing.Point(15, 60);
+            this.btAddRecord.Name = "btAddRecord";
+            this.btAddRecord.Size = new System.Drawing.Size(24, 24);
+            this.btAddRecord.TabIndex = 47;
+            this.btAddRecord.Text = " ";
+            this.toolTip.SetToolTip(this.btAddRecord, "Remove selected item from history");
+            this.btAddRecord.UseVisualStyleBackColor = true;
+            this.btAddRecord.Click += new System.EventHandler(this.btAddRecord_Click);
             // 
-            // btCollapseAll
+            // btRemoveRecord
             // 
-            this.btCollapseAll.Image = global::Kukavar.DemoApp.Properties.Resources.fold;
-            this.btCollapseAll.Location = new System.Drawing.Point(645, 14);
-            this.btCollapseAll.Name = "btCollapseAll";
-            this.btCollapseAll.Size = new System.Drawing.Size(24, 28);
-            this.btCollapseAll.TabIndex = 48;
-            this.toolTip.SetToolTip(this.btCollapseAll, "Collapse All");
-            this.btCollapseAll.UseVisualStyleBackColor = true;
-            this.btCollapseAll.Click += new System.EventHandler(this.btCollapseAll_Click);
+            this.btRemoveRecord.Image = global::Kukavar.DemoApp.Properties.Resources.remove;
+            this.btRemoveRecord.Location = new System.Drawing.Point(45, 60);
+            this.btRemoveRecord.Name = "btRemoveRecord";
+            this.btRemoveRecord.Size = new System.Drawing.Size(24, 24);
+            this.btRemoveRecord.TabIndex = 48;
+            this.btRemoveRecord.Text = " ";
+            this.toolTip.SetToolTip(this.btRemoveRecord, "Remove selected item from history");
+            this.btRemoveRecord.UseVisualStyleBackColor = true;
             // 
-            // lbReadTime
+            // label14
             // 
-            this.lbReadTime.Location = new System.Drawing.Point(372, 363);
-            this.lbReadTime.Name = "lbReadTime";
-            this.lbReadTime.Size = new System.Drawing.Size(297, 13);
-            this.lbReadTime.TabIndex = 50;
-            this.lbReadTime.Text = "elapsed time : ms";
-            this.lbReadTime.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.label14.Location = new System.Drawing.Point(12, 361);
+            this.label14.Name = "label14";
+            this.label14.Size = new System.Drawing.Size(414, 32);
+            this.label14.TabIndex = 50;
+            this.label14.Text = "Warning : do not use this for accurate recording when the robot is moving. \r\nFor " +
+    "each record, several requests are sent to the robot and there will be some laten" +
+    "cy between them.\r\n";
             // 
-            // label11
+            // ckPOS
             // 
-            this.label11.AutoSize = true;
-            this.label11.Location = new System.Drawing.Point(6, 31);
-            this.label11.Name = "label11";
-            this.label11.Size = new System.Drawing.Size(35, 13);
-            this.label11.TabIndex = 9;
-            this.label11.Text = "Name";
+            this.ckPOS.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.ckPOS.Location = new System.Drawing.Point(574, 16);
+            this.ckPOS.Name = "ckPOS";
+            this.ckPOS.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
+            this.ckPOS.Size = new System.Drawing.Size(90, 19);
+            this.ckPOS.TabIndex = 51;
+            this.ckPOS.Text = "XYZ ABC";
+            this.ckPOS.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.ckPOS.UseVisualStyleBackColor = true;
             // 
-            // tbRobName
+            // checkBox1
             // 
-            this.tbRobName.Location = new System.Drawing.Point(78, 28);
-            this.tbRobName.Name = "tbRobName";
-            this.tbRobName.Size = new System.Drawing.Size(182, 20);
-            this.tbRobName.TabIndex = 9;
-            this.tbRobName.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            this.checkBox1.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.checkBox1.Location = new System.Drawing.Point(574, 33);
+            this.checkBox1.Name = "checkBox1";
+            this.checkBox1.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
+            this.checkBox1.Size = new System.Drawing.Size(90, 19);
+            this.checkBox1.TabIndex = 52;
+            this.checkBox1.Text = "A1-A6";
+            this.checkBox1.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.checkBox1.UseVisualStyleBackColor = true;
             // 
-            // tbRobHours
+            // checkBox2
             // 
-            this.tbRobHours.Location = new System.Drawing.Point(190, 80);
-            this.tbRobHours.Name = "tbRobHours";
-            this.tbRobHours.Size = new System.Drawing.Size(70, 20);
-            this.tbRobHours.TabIndex = 10;
-            this.tbRobHours.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
-            // 
-            // label12
-            // 
-            this.label12.AutoSize = true;
-            this.label12.Location = new System.Drawing.Point(6, 83);
-            this.label12.Name = "label12";
-            this.label12.Size = new System.Drawing.Size(75, 13);
-            this.label12.TabIndex = 11;
-            this.label12.Text = "Hours (hh:mm)";
-            // 
-            // tbRobVersion
-            // 
-            this.tbRobVersion.Location = new System.Drawing.Point(78, 54);
-            this.tbRobVersion.Name = "tbRobVersion";
-            this.tbRobVersion.Size = new System.Drawing.Size(182, 20);
-            this.tbRobVersion.TabIndex = 12;
-            this.tbRobVersion.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
-            // 
-            // label13
-            // 
-            this.label13.AutoSize = true;
-            this.label13.Location = new System.Drawing.Point(6, 57);
-            this.label13.Name = "label13";
-            this.label13.Size = new System.Drawing.Size(41, 13);
-            this.label13.TabIndex = 13;
-            this.label13.Text = "System";
+            this.checkBox2.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.checkBox2.Location = new System.Drawing.Point(574, 51);
+            this.checkBox2.Name = "checkBox2";
+            this.checkBox2.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
+            this.checkBox2.Size = new System.Drawing.Size(90, 19);
+            this.checkBox2.TabIndex = 53;
+            this.checkBox2.Text = "E1-E6";
+            this.checkBox2.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.checkBox2.UseVisualStyleBackColor = true;
             // 
             // Form1
             // 
@@ -620,6 +746,8 @@
             this.tabPage1.ResumeLayout(false);
             this.tabPage1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.treeListView)).EndInit();
+            this.tabPage3.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
             this.groupBox2.ResumeLayout(false);
             this.groupBox2.PerformLayout();
             this.groupBox3.ResumeLayout(false);
@@ -679,5 +807,15 @@
         private System.Windows.Forms.Label label11;
         private System.Windows.Forms.TextBox tbRobVersion;
         private System.Windows.Forms.Label label13;
+        private System.Windows.Forms.TabPage tabPage3;
+        private System.Windows.Forms.TabPage tabPage4;
+        private System.Windows.Forms.TabPage tabPage5;
+        private System.Windows.Forms.DataGridView dataGridView1;
+        private System.Windows.Forms.Button btRemoveRecord;
+        private System.Windows.Forms.Button btAddRecord;
+        private System.Windows.Forms.Label label14;
+        private System.Windows.Forms.CheckBox ckPOS;
+        private System.Windows.Forms.CheckBox checkBox2;
+        private System.Windows.Forms.CheckBox checkBox1;
     }
 }
