@@ -11,33 +11,30 @@ using System.Threading.Tasks;
 
 namespace OpenKuka.KukavarClient
 {
-    /// <summary>
-    /// A communication is the association of a request (from the client) and the corresponding answer (from the proxy).
-    /// </summary>
-    public struct KVCommunication
+    public delegate Task KVReplyCallback(KVReply reply);
+    public struct KVReply
     {
+        private long msElapsed_start;
+        
         public int Id => Query.Id;
         public RWMode Mode => Query.Mode;
         public bool Successful => ((KVAnswer)Answer).Successful;
-
         public IKVMessage Query { get; private set; }
         public KVAnswer Answer { get; internal set; }
-        
         public DateTime SendTime { get; internal set; }
         public TimeSpan RoundTripTime { get; private set; }
+        internal KVReplyCallback Callback { get; set; }
 
-        private long msElapsed_start;
-
-        public KVCommunication(IKVMessage query, Stopwatch chrono)
+        public KVReply(IKVMessage query, Stopwatch chrono, KVReplyCallback callback = null)
         {
             Query = query;
             Answer = KVAnswer.Pong;
             msElapsed_start = chrono.ElapsedMilliseconds;
             SendTime = DateTime.Now;
             RoundTripTime = TimeSpan.Zero;
+            Callback = callback;
         }
-
-        public void SetAnswer(KVAnswer answer, Stopwatch chrono)
+        internal void SetAnswer(KVAnswer answer, Stopwatch chrono)
         {
             RoundTripTime = TimeSpan.FromMilliseconds((double)(chrono.ElapsedMilliseconds - msElapsed_start));
             Answer = answer;
@@ -46,37 +43,12 @@ namespace OpenKuka.KukavarClient
 
     public class KukavarClient : AsyncTcpClient
     {
-
         private Stopwatch chrono = new Stopwatch();
-        public ConcurrentQueue<KVCommunication> CommunicationQueue;
+        private ConcurrentDictionary<int, KVReply> ReplyQueue;
         
-
-        public int MsgId { get; private set; } = 0; // the client should be reponsible to assign message ids.
-        public new Logger Logger { get; private set; }
-
-        public Func<KVCommunication, Task> KVAnswerReceivedCallback { get; set; }
-        private Task OnKVAnswerReceived(KVAnswer answer)
-        {
-            KVCommunication com;
-            if (CommunicationQueue.TryDequeue(out com))
-            {
-                com.SetAnswer(answer, chrono);
-                if (com.Query.Id != com.Answer.Id)
-                {
-                    throw new Exception("Invalid Id");
-                }
-                else
-                {
-                    Logger.Log(LogLevel.Debug, "<< query dequeue : id={0}, len={1}, mode={2}, tm={3}", answer.Id, answer.MessageLength, answer.Mode, com.RoundTripTime.TotalMilliseconds);
-                }
-            }
-
-            if (KVAnswerReceivedCallback != null)
-                return KVAnswerReceivedCallback.Invoke(com);
-            else
-                return Task.CompletedTask;
-        }
-
+        public int MsgId { get; private set; } = 0; // the client should be repsonsible to assign message ids.
+        private new Logger Logger { get; set; }
+  
         public KukavarClient(int guid, Logger logger = null) : base(guid, 2, 2, 2048, logger)
         {
             chrono.Start(); // use this timer to get accurate measurement of roundtrip times
@@ -85,71 +57,31 @@ namespace OpenKuka.KukavarClient
             PingMsg = KVReadQuery.Ping.Message;
             PongMsg = KVAnswer.Pong.Message;
 
-            CommunicationQueue = new ConcurrentQueue<KVCommunication>();
+            ReplyQueue = new ConcurrentDictionary<int, KVReply>();
 
-            
             BytesEnqueuedCallback = async (client, count) => {
                 await DequeueAll(this.ByteBuffer.Content);
             };
+        }
+        public async Task<int> SendAsync(IKVMessage query, KVReplyCallback callback = null)
+        {
+            query.Id = ++MsgId;
+            await SendAsync(query.Message, 0, query.MessageLength);
 
-            
+            var reply = new KVReply(query, chrono, callback);
+            ReplyQueue[reply.Id] = reply;
+            Logger.Log(LogLevel.Debug, ">> query enqueue : id={0}, len={1}, mode={2}", query.Id, query.MessageLength, query.Mode);
+            return query.Id;
+        }
+        public void ClearQueue()
+        {
+            // dequeue until no more items are in the queue.
+            ReplyQueue.Clear();
         }
 
-        #region Data EventHandlers
-        private async Task BytesReceivedHandler(object sender, BytesReceivedEventArgs e)
+        private async Task<int> DequeueAll(IEnumerable<byte> buffer)
         {
-            Console.WriteLine("{0} bytes received", e.Count);
-            await DequeueAll(ByteBuffer.Content);
-        }
-
-        #endregion
-
-        #region Connection EventHandlers
-        private async Task ConnectingHandler(object sender, EventArgs e)
-        {
-            var client = (KukavarClient)sender;
-            if (client.Status == ClientStatus.Connecting)
-            {
-                Console.WriteLine("KV Connecting...");
-            }
-            else
-            {
-                if (client.ReconnectionAttemptsCount == 1)
-                {
-                    Console.WriteLine("KV Reconnecting...");
-                }
-            }    
-        }
-        private async Task ConnectedHandler(object sender, EventArgs e)
-        {
-            var client = (KukavarClient)sender;
-            Console.WriteLine("KV Connected");
-        }
-        private async Task ConnectionErrorHandler(object sender, ConnectionErrorEventArgs e)
-        {
-            Console.WriteLine("Disconnected with error {0}", e.ErrorCode);
-        }
-        private async Task ClosingHandler(object sender, ClosingEventArgs e)
-        {
-            if (e.BrokenConnection)
-            {
-                Console.WriteLine("Closing (broken)...");
-            }
-            else
-            {
-                Console.WriteLine("Closing ...");
-            }    
-            
-        }
-        private async Task ClosedHandeler(object sender, EventArgs e)
-        {
-            Console.WriteLine("Closed");
-        }
-        #endregion
-
-        public async Task<int> DequeueAll(IEnumerable<byte> buffer)
-        {
-            return await Dequeue(buffer,0).ConfigureAwait(false);
+            return await Dequeue(buffer, 0).ConfigureAwait(false);
         }
         private async Task<int> Dequeue(IEnumerable<byte> buffer, int maxNumberOfMessageToDequeue)
         {
@@ -191,21 +123,28 @@ namespace OpenKuka.KukavarClient
                     throw;
                 }
             }
-            
+
             return dequeuedBytesCount;
         }
-
-        public async Task<int> SendAsync(IKVMessage query)
+        private Task OnKVAnswerReceived(KVAnswer answer)
         {
-            query.Id = ++MsgId;
-            await SendAsync(query.Message, 0, query.MessageLength);
+            KVReply reply;
+            
+            if (ReplyQueue.TryGetValue(answer.Id, out reply))
+            {
+                reply.SetAnswer(answer, chrono);
+                Logger.Log(LogLevel.Debug, "<< query dequeue : id={0}, len={1}, mode={2}, tm={3}", answer.Id, answer.MessageLength, answer.Mode, reply.RoundTripTime.TotalMilliseconds);
 
-            var com = new KVCommunication(query, chrono);
-            CommunicationQueue.Enqueue(com);
-            Logger.Log(LogLevel.Debug, ">> query enqueue : id={0}, len={1}, mode={2}", query.Id, query.MessageLength, query.Mode);
-            return query.Id;
+                if (reply.Callback != null)
+                    return reply.Callback.Invoke(reply);
+            }
+            else
+            {
+                Logger.Log(LogLevel.Warn, "the answer was not paired with a query"); 
+            }
+
+            return Task.CompletedTask;
         }
-
 
         public new static void Test()
         {

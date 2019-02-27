@@ -4,6 +4,7 @@ using System.ComponentModel;
 using System.Drawing;
 using System.Linq;
 using System.Linq.Expressions;
+using System.Reflection;
 using System.Windows.Forms;
 
 namespace AutoCompleteComboBox
@@ -86,7 +87,22 @@ namespace AutoCompleteComboBox
         {
             filterRuleCompiled = s => s.ToLower().Contains(Text.Trim().ToLower());
             suggestListOrderRuleCompiled = s => s;
-            propertySelectorCompiled = collection => collection.Cast<string>();
+            propertySelectorCompiled = (collection) => 
+            {
+                var property = Items[0].GetType().GetProperty(DisplayMember);
+
+                if (property == null)
+                {
+                    return collection.Cast<string>();
+                }
+                else
+                {
+                    return Items.OfType<Object>().Select(o =>
+                    {
+                        return property.GetValue(o, null).ToString();
+                    });
+                }
+             };
 
             suggestionListBox.DataSource = suggBindingList;
             suggestionListBox.Click += SuggestionListBoxOnClick;

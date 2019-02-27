@@ -34,7 +34,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="OpenKuka.KRL">
-      <HintPath>..\..\..\KRL\src\OpenKuka.KRL\bin\Debug\OpenKuka.KRL.dll</HintPath>
+      <HintPath>..\..\..\KRL\src\OpenKuka.KRL\bin\Release\OpenKuka.KRL.dll</HintPath>
     </Reference>
     <Reference Include="Superpower">
       <HintPath>..\..\..\KRL\src\OpenKuka.KRL\bin\Debug\Superpower.dll</HintPath>
@@ -141,6 +141,7 @@
     <None Include="icon\fold.png" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="icon\clear.png" />
     <Content Include="icon\record.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

@@ -14,6 +14,8 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using OpenKuka.KukavarClient;
 using System.Collections.Concurrent;
+using OpenKuka.KRL.Types;
+using System.Threading;
 
 namespace Kukavar.DemoApp
 {
@@ -21,24 +23,27 @@ namespace Kukavar.DemoApp
     {
         internal AppSettings settings = JsonSettings.Load<AppSettings>();
 
+        private System.Threading.Timer infoTimer, monitoringTimer;
+
         private const int readHistoryMaxCount = 30;
         private const int readTemplatesMaxCount = 10;
 
         private KukavarClient client;
-        public ConcurrentQueue<KVCommunication> CommunicationGroup;
-        public ConcurrentQueue<int> CommunicationGroupIds;
-
-        private Stopwatch chrono = new Stopwatch();
+        private Stopwatch chrono = Stopwatch.StartNew();
         private DataTable records;
-
         public Form1()
         {
             InitializeComponent();
+
 
             // Load Settings
             settings.ReadHistory = settings.ReadHistory ?? new List<string>();
             scbRead.DataSource = settings.ReadHistory;
             scbRead.SelectedIndex = -1;
+
+            settings.WriteHistory = settings.WriteHistory ?? new List<WriteVariable>();
+            scbWrite.DataSource = settings.WriteHistory;
+            scbWrite.SelectedIndex = -1;
 
             settings.ReadTemplateList = settings.ReadTemplateList ?? new Dictionary<string, List<String>>();
             RefreshTemplateCombobox();
@@ -49,8 +54,203 @@ namespace Kukavar.DemoApp
             tbReconnectionTO.Text = settings.ReconnectionTimeout.ToString();
             ckAutoReconnect.Checked = settings.AutoReconnect;
 
+            // info timer
+            infoTimer = new System.Threading.Timer((state) =>
+            {
+                if (client.Status == ClientStatus.Connected)
+                {
+                    KVReplyCallback callback = async (reply) =>
+                    {
+                        if (reply.Successful)
+                        {
+                            this.BeginInvoke((Action)delegate ()
+                            {
+                                var varName1 = ((KVReadQuery)reply.Query).VarName;
+                                switch (varName1)
+                                {
+                                    case "$PRO_STATE0":
+                                        lbProState0.Text = reply.Answer.VarValue;
+                                        CmdInfoColors(lbProState0, reply.Answer.VarValue);
+                                        break;
+
+                                    case "$PRO_STATE1":
+                                        lbProState1.Text = reply.Answer.VarValue;
+                                        CmdInfoColors(lbProState1, reply.Answer.VarValue);
+                                        break;
+
+                                    case "$PRO_NAME0[]":
+                                        lbProName0.Text = reply.Answer.VarValue;
+                                        break;
+
+                                    case "$PRO_NAME1[]":
+                                        lbProName1.Text = reply.Answer.VarValue;
+                                        break;
+                                }
+                            });
+                        }
+                    };
+                    var t1 = client.SendAsync(KVReadQuery.Build(0, "$PRO_STATE0"), callback);
+                    var t2 = client.SendAsync(KVReadQuery.Build(0, "$PRO_STATE1"), callback);
+                    var t3 = client.SendAsync(KVReadQuery.Build(0, "$PRO_NAME0[]"), callback);
+                    var t4 = client.SendAsync(KVReadQuery.Build(0, "$PRO_NAME1[]"), callback);
+                }
+            }, null, Timeout.Infinite, Timeout.Infinite);
+
+            // monitoring timer
+            monitoringTimer = new System.Threading.Timer((state) =>
+            {
+                if (client.Status == ClientStatus.Connected)
+                {
+                    KVReplyCallback callback = async (reply) =>
+                    {
+                        if (reply.Successful)
+                        {
+                            this.BeginInvoke((Action)delegate ()
+                            {
+                                var varName1 = ((KVReadQuery)reply.Query).VarName;
+                                var ast = reply.Answer.GetAST();
+                                var format = "{0:F3}";
+                                switch (varName1)
+                                {
+                                    case "$POS_ACT":
+                                        try
+                                        {
+                                            var e6pos = new E6POS(ast);
+                                            lb_X.Text = string.Format(format, e6pos.X);
+                                            lb_Y.Text = string.Format(format, e6pos.Y);
+                                            lb_Z.Text = string.Format(format, e6pos.Z);
+                                            lb_A.Text = string.Format(format, e6pos.A);
+                                            lb_B.Text = string.Format(format, e6pos.B);
+                                            lb_C.Text = string.Format(format, e6pos.C);
+                                            lb_E1.Text = string.Format(format, e6pos.E1);
+                                            lb_E2.Text = string.Format(format, e6pos.E2);
+                                            lb_E3.Text = string.Format(format, e6pos.E3);
+                                            lb_E4.Text = string.Format(format, e6pos.E4);
+                                            lb_E5.Text = string.Format(format, e6pos.E5);
+                                            lb_E6.Text = string.Format(format, e6pos.E6);
+                                        }
+                                        catch (Exception)
+                                        {
+                                            //throw;
+                                        }
+                                        break;
+
+                                    case "$AXIS_ACT":
+                                        try
+                                        {
+                                            var e6axis = new E6AXIS(ast);
+                                            lb_A1.Text = string.Format(format, e6axis.A1);
+                                            lb_A2.Text = string.Format(format, e6axis.A2);
+                                            lb_A3.Text = string.Format(format, e6axis.A3);
+                                            lb_A4.Text = string.Format(format, e6axis.A4);
+                                            lb_A5.Text = string.Format(format, e6axis.A5);
+                                            lb_A6.Text = string.Format(format, e6axis.A6);
+                                            lb_E1.Text = string.Format(format, e6axis.E1);
+                                            lb_E2.Text = string.Format(format, e6axis.E2);
+                                            lb_E3.Text = string.Format(format, e6axis.E3);
+                                            lb_E4.Text = string.Format(format, e6axis.E4);
+                                            lb_E5.Text = string.Format(format, e6axis.E5);
+                                            lb_E6.Text = string.Format(format, e6axis.E6);
+                                        }
+                                        catch (Exception)
+                                        {
+
+                                            //throw;
+                                        }
+                                        break;
+
+                                    case "$VEL":
+                                        try
+                                        {
+                                            var vel = new CP(ast);
+                                            lb_VelCP.Text = string.Format(format, vel.LIN);
+                                            lb_VelORI1.Text = string.Format(format, vel.ORI1);
+                                            lb_VelORI2.Text = string.Format(format, vel.ORI2);
+                                        }
+                                        catch (Exception)
+                                        {
+
+                                            //throw;
+                                        }
+                                        break;
+
+                                    case "$ACC":
+                                        try
+                                        {
+                                            var acc = new CP(ast);
+                                            lb_AccCP.Text = string.Format(format, acc.LIN);
+                                            lb_AccORI1.Text = string.Format(format, acc.ORI1);
+                                            lb_AccORI2.Text = string.Format(format, acc.ORI2);
+                                        }
+                                        catch (Exception)
+                                        {
+
+                                            //throw;
+                                        }
+                                        break;
+
+                                    case "$BASE":
+                                        try
+                                        {
+                                            var frame = new FRAME(ast);
+                                            lb_BX.Text = string.Format(format, frame.X);
+                                            lb_BY.Text = string.Format(format, frame.Y);
+                                            lb_BZ.Text = string.Format(format, frame.Z);
+                                            lb_BA.Text = string.Format(format, frame.A);
+                                            lb_BB.Text = string.Format(format, frame.B);
+                                            lb_BC.Text = string.Format(format, frame.C);
+   
+                                        }
+                                        catch (Exception)
+                                        {
+                                            //throw;
+                                        }
+                                        break;
+
+                                    case "$TOOL":
+                                        try
+                                        {
+                                            var frame = new FRAME(ast);
+                                            lb_TX.Text = string.Format(format, frame.X);
+                                            lb_TY.Text = string.Format(format, frame.Y);
+                                            lb_TZ.Text = string.Format(format, frame.Z);
+                                            lb_TA.Text = string.Format(format, frame.A);
+                                            lb_TB.Text = string.Format(format, frame.B);
+                                            lb_TC.Text = string.Format(format, frame.C);
+
+                                        }
+                                        catch (Exception)
+                                        {
+                                            //throw;
+                                        }
+                                        break;
+
+
+                                }
+                            });
+                        }
+                    };
+
+                    var t1 = client.SendAsync(KVReadQuery.Build(0, "$POS_ACT"), callback);
+                    var t2 = client.SendAsync(KVReadQuery.Build(0, "$AXIS_ACT"), callback);
+                    var t3 = client.SendAsync(KVReadQuery.Build(0, "$VEL"), callback);
+                    var t4 = client.SendAsync(KVReadQuery.Build(0, "$ACC"), callback);
+                    var t5 = client.SendAsync(KVReadQuery.Build(0, "$BASE"), callback);
+                    var t6 = client.SendAsync(KVReadQuery.Build(0, "$TOOL"), callback);
+                }
+            }, null, Timeout.Infinite, Timeout.Infinite);
+
+            //infoTimer.Interval = 5000;
+            //infoTimer.Tick += (s, ev) => 
+            //{
+
+            //};
+
             // Init Tree
             InitTree();
+
+            // Init Record
+            InitRecord();
 
             // Init Client
             client = new KukavarClient(1, KukavarLogManager.GetLogger(1))
@@ -65,81 +265,7 @@ namespace Kukavar.DemoApp
             client.Closing += ClosingErrorHandler;
             client.Closed += ClosedErrorHandler;
 
-            CommunicationGroup = new ConcurrentQueue<KVCommunication>();
-            CommunicationGroupIds = new ConcurrentQueue<int>();
-
-            client.KVAnswerReceivedCallback = async (com) =>
-            {
-                if (CommunicationGroupIds.Any(id => id == com.Answer.Id))
-                {
-                    // a group of request is pending so we stack the answers in a group
-                    CommunicationGroup.Enqueue(com);
-                    int id;
-                    if (CommunicationGroupIds.TryDequeue(out id))
-                    {
-                        Debug.WriteLine("CommunicationGroupIds.Dequeue : " + id);
-                    }
-                    else
-                    {
-                        throw new Exception("Dequeue failed");
-                    }
-                }
-                else
-                {
-                    // this is a single request
-                    this.BeginInvoke((Action)delegate ()
-                    {
-                        //code to update UI
-                        if (com.Answer.Successful)
-                        {
-                            var mode = com.Query.Mode;
-                            switch (mode)
-                            {
-                                case RWMode.READ:
-                                    var readQuery = (KVReadQuery)com.Query;
-                                    if (readQuery.VarName == "$MODEL_NAME[]")
-                                    {
-                                        var name = com.Answer.VarValue;
-                                        tbRobName.Text = name.Substring(1, name.Length - 2); 
-                                    }
-                                    else if (readQuery.VarName == "$V_ROBCOR[]")
-                                    {
-                                        var name = com.Answer.VarValue;
-                                        tbRobVersion.Text = name.Substring(1, name.Length - 2);
-                                    }
-                                    else if (readQuery.VarName == "$ROBRUNTIME")
-                                    {
-                                        var min = int.Parse(com.Answer.VarValue);
-                                        tbRobHours.Text = string.Format("{0}:{1:00}", min / 60, min % 60);
-                                    }
-                                    else
-                                    {
-                                        var ast = com.Answer.GetAST();
-                                        ast.Name = readQuery.VarName;
-                                        SetReadElapsedTime(com.RoundTripTime.TotalMilliseconds);
-                                        FillTree(ast);
-                                    }    
-                                    break;
-
-                                case RWMode.WRITE:
-                                    break;
-
-                                case RWMode.UNDEF:
-                                    break;
-
-                                default:
-                                    break;
-                            }
-                            
-                        }
-                        else
-                        {
-                            treeListView.ClearObjects();
-                            MessageBox.Show("Invalid answer : " + com.Answer.ToString());
-                        }
-                    });
-                }
-            };
+            var varName = scbRead.Text;
         }
 
         #region Connection
@@ -178,18 +304,47 @@ namespace Kukavar.DemoApp
             {
                 //code to update UI
                 lbConnectionStatus.Text = "connected";
-                lbConnectionStatus.BackColor = Color.Green;
+                lbConnectionStatus.BackColor = Color.LimeGreen;
                 tabControl1.Enabled = true;
-
-                client.SendAsync(KVReadQuery.Build(0, "$MODEL_NAME[]"));
-                client.SendAsync(KVReadQuery.Build(0, "$V_ROBCOR[]"));
-                client.SendAsync(KVReadQuery.Build(0, "$ROBRUNTIME"));
-
             });
+              
+            var t1 = client.SendAsync(KVReadQuery.Build(0, "$MODEL_NAME[]"), async (reply) =>
+            {
+                if (!reply.Answer.Successful) return;
+                this.BeginInvoke((Action)delegate ()
+                {
+                    var name = reply.Answer.VarValue;
+                    tbRobName.Text = name.Substring(1, name.Length - 2); 
+                });
+            });
+
+            var t2 = client.SendAsync(KVReadQuery.Build(0, "$V_ROBCOR[]"), async (reply) =>
+            {
+                if (!reply.Answer.Successful) return;
+                this.BeginInvoke((Action)delegate ()
+                {
+                    var name = reply.Answer.VarValue;
+                    tbRobVersion.Text = name.Substring(1, name.Length - 2);
+                });
+            });
+
+            var t3 = client.SendAsync(KVReadQuery.Build(0, "$ROBRUNTIME"), async (reply) =>
+            {
+                if (!reply.Answer.Successful) return;
+                this.BeginInvoke((Action)delegate ()
+                {
+                    var min = int.Parse(reply.Answer.VarValue);
+                    tbRobHours.Text = string.Format("{0}:{1:00}", min / 60, min % 60);
+                });
+            });
+            infoTimer.Change(TimeSpan.FromMilliseconds(0), TimeSpan.FromMilliseconds(1000));
             return Task.CompletedTask;
         }
         private Task ConnectionErrorHandler(object sender, ConnectionErrorEventArgs e)
         {
+            infoTimer.Change(Timeout.Infinite, Timeout.Infinite);
+            CmdInfoReset();
+
             this.BeginInvoke((Action)delegate ()
             {
                 //code to update UI
@@ -201,6 +356,9 @@ namespace Kukavar.DemoApp
         }
         private Task ClosingErrorHandler(object sender, ClosingEventArgs e)
         {
+            infoTimer.Change(Timeout.Infinite, Timeout.Infinite);
+            CmdInfoReset();
+
             this.BeginInvoke((Action)delegate ()
             {
                 //code to update UI
@@ -212,6 +370,9 @@ namespace Kukavar.DemoApp
         }
         private Task ClosedErrorHandler(object sender, EventArgs e)
         {
+            infoTimer.Change(Timeout.Infinite, Timeout.Infinite);
+            CmdInfoReset();
+
             this.BeginInvoke((Action)delegate ()
             {
                 //code to update UI
@@ -220,6 +381,38 @@ namespace Kukavar.DemoApp
                 tabControl1.Enabled = false;
             });
             return Task.CompletedTask;
+        }
+        
+        private void CmdInfoColors(Label label, string state)
+        {
+            switch (state)
+            {
+                case "#P_ACTIVE":
+                    label.BackColor = Color.LimeGreen;
+                    break;
+                case "#P_STOP":
+                case "#P_UNKNOWN":
+                    label.BackColor = Color.Red;
+                    break;
+                case "#P_END":
+                    label.BackColor = Color.Yellow;
+                    break;
+                case "#P_RESET":
+                    label.BackColor = Color.Orange;
+                    break;
+                default:
+                    label.BackColor = Color.LightGray;
+                    break;
+            }
+        }
+        private void CmdInfoReset()
+        {
+            var list = new List<Label>() { lbProName0, lbProName1, lbProState0, lbProState1 };
+            foreach (var label in list)
+            {
+                label.Text = "";
+                label.BackColor = Color.LightGray;
+            }
         }
         #endregion
 
@@ -301,12 +494,22 @@ namespace Kukavar.DemoApp
         {
             FillTree(new List<Data> { data });
         }
-        private void FillTree(IEnumerable<Data> dataList)
+        private void FillTree(IEnumerable<Data> dataList, bool expandall = false)
         {
             // set the tree roots
             treeListView.ClearObjects();
-            this.treeListView.Roots = dataList;
-            treeListView.ExpandAll();
+            treeListView.Roots = dataList;
+
+            if (dataList.Count() > 1)
+            {
+                if (expandall) treeListView.ExpandAll();
+                else treeListView.CollapseAll();
+            }
+            else
+            {
+                treeListView.ExpandAll();
+            }
+            
             treeListView.AutoResizeColumns();
         }
         private void treeListView_CellClick(object sender, BrightIdeasSoftware.CellClickEventArgs e)
@@ -402,7 +605,24 @@ namespace Kukavar.DemoApp
         private async void btReadSingle_Click(object sender, EventArgs e)
         {
             var varName = scbRead.Text;
-            await client.SendAsync(KVReadQuery.Build(1, varName));
+            if (varName == "")
+            {
+                MessageBox.Show("Please, enter a variable name.");
+                return;
+            }
+
+            await client.SendAsync(KVReadQuery.Build(1, varName), async (reply) =>
+            {
+                if (!reply.Answer.Successful) return;
+
+                this.BeginInvoke((Action)delegate ()
+                {
+                    var ast = reply.Answer.GetAST();
+                    ast.Name = ((KVReadQuery)reply.Query).VarName;
+                    SetReadElapsedTime(reply.RoundTripTime.TotalMilliseconds);
+                    FillTree(ast);
+                });
+            });
 
             // update combobox history
             if (varName!= "")
@@ -443,89 +663,74 @@ namespace Kukavar.DemoApp
         #region Read template
         private async void btReadTemplate_Click(object sender, EventArgs e)
         {
-            if (CommunicationGroupIds.Count == 0)
+            chrono.Restart();
+            btReadTemplate.Enabled = false;
+
+            var queue = new ConcurrentQueue<KVReply>();
+
+            // send all queries
+            var queries = lstbRead.Items.OfType<string>().Select(name => KVReadQuery.Build(1, name));
+            var sendQueries = Task.Run(async () =>
             {
-                chrono.Restart();
-                btReadTemplate.Enabled = false;
-                var queries = lstbRead.Items.OfType<string>().Select(name => KVReadQuery.Build(1, name));
-
-                // send all queries
-                var sendQueries = Task.Run(async () =>
+                foreach (var query in queries)
                 {
-                    foreach (var query in queries)
+                    await client.SendAsync(query, async (reply) =>
                     {
-                        var id = await client.SendAsync(query);
-                        CommunicationGroupIds.Enqueue(id);
-                        Debug.WriteLine("CommunicationGroupIds.Enqueue : " + id);
-                    }
-                });
-
-                sendQueries.Wait();
-
-                var waitError = false;
-                var waitAnswers = Task.Run(() =>
-                {
-                    var timeout = new Stopwatch();
-                    timeout.Start();
-                    while (CommunicationGroupIds.Count > 0)
-                    {
-                        Task.Delay(1);
-                        if (timeout.ElapsedMilliseconds > 2000)
-                        {
-                            waitError = true;
-                            break;
-                        }
-                    }
-                });
-               
-                waitAnswers.Wait();
-
-                if (!waitError)
-                {
-                    chrono.Stop();
-                    SetReadElapsedTime((double)chrono.ElapsedMilliseconds);
-                    Debug.WriteLine("CommunicationGroup.Count = " + CommunicationGroup.Count);
-
-                    treeListView.ClearObjects();
-
-                    var dataList = new List<Data>();
-                    while (!CommunicationGroup.IsEmpty)
-                    {
-                        KVCommunication com;
-                        if (CommunicationGroup.TryDequeue(out com))
-                        {
-                            if (com.Answer.Successful)
-                            {
-                                var ast = com.Answer.GetAST();
-                                ast.Name = ((KVReadQuery)com.Query).VarName;
-                                dataList.Add(ast);
-                            }
-                        }
-                        else
-                        {
-                            Debug.WriteLine("CommunicationGroup.TryDequeue : false");
-                        }
-                    }
-
-                    FillTree(dataList);
-                    treeListView.CollapseAll();
-                    btReadTemplate.Enabled = true;
+                        queue.Enqueue(reply);
+                    });
                 }
-                else
+            });
+
+            // time out
+            var replyTimeout = false;
+            var waitAnswers = Task.Run(() =>
+            {
+                var queriesCount = queries.Count();
+                var timeout = Stopwatch.StartNew();
+                while (queue.Count < queriesCount)
                 {
-                    MessageBox.Show("Read template aborted (timeout)");
-                    while (!CommunicationGroup.IsEmpty)
+                    Task.Delay(1);
+                    if (timeout.ElapsedMilliseconds > 2000)
                     {
-                        KVCommunication com;
-                        CommunicationGroup.TryDequeue(out com);
-                    }
-                    while (!CommunicationGroupIds.IsEmpty)
-                    {
-                        int id;
-                        CommunicationGroupIds.TryDequeue(out id);
+                        replyTimeout = true;
+                        break;
                     }
                 }
+            });
+            waitAnswers.Wait();
+
+            if (!replyTimeout)
+            {
+                SetReadElapsedTime((double)chrono.ElapsedMilliseconds);
+
+                var dataList = new List<Data>();
+                while (!queue.IsEmpty)
+                {
+                    KVReply reply;
+                    if (queue.TryDequeue(out reply))
+                    {
+                        if (reply.Answer.Successful)
+                        {
+                            var ast = reply.Answer.GetAST();
+                            ast.Name = ((KVReadQuery)reply.Query).VarName;
+                            dataList.Add(ast);
+                        }
+                    }
+                    else
+                    {
+                        Debug.WriteLine("CommunicationGroup.TryDequeue : false");
+                    }
+                }
+
+                FillTree(dataList, true);
             }
+            else
+            {
+                client.ClearQueue();
+                MessageBox.Show("Read template aborted (timeout).");
+            }
+
+            btReadTemplate.Enabled = true;
         }
         private void btAddReadTemplate_Click(object sender, EventArgs e)
         {
@@ -724,18 +929,495 @@ namespace Kukavar.DemoApp
         #region Record
         private void InitRecord()
         {
-            
             records = new DataTable("Positions");
 
+            // record ID
+            DataColumn colId = new DataColumn("Id");
+            colId.DataType = System.Type.GetType("System.Int32");
+            colId.AutoIncrement = true;
+            colId.AutoIncrementSeed = 1;
+            colId.AutoIncrementStep = 1;
+
+            // record Date
+            DataColumn colDate = new DataColumn("$DATE");
+            colDate.DataType = System.Type.GetType("System.DateTime");
+
+            // data fields
+            records.Columns.Add(colId);
+            records.Columns.Add(colDate);
+
+            records.Columns.Add("$POS_ACT.X");
+            records.Columns.Add("$POS_ACT.Y");
+            records.Columns.Add("$POS_ACT.Z");
+            records.Columns.Add("$POS_ACT.A");
+            records.Columns.Add("$POS_ACT.B");
+            records.Columns.Add("$POS_ACT.C");
+            records.Columns.Add("$POS_ACT.E1");
+            records.Columns.Add("$POS_ACT.E2");
+            records.Columns.Add("$POS_ACT.E3");
+            records.Columns.Add("$POS_ACT.E4");
+            records.Columns.Add("$POS_ACT.E5");
+            records.Columns.Add("$POS_ACT.E6");
+            records.Columns.Add("$POS_ACT.S");
+            records.Columns.Add("$POS_ACT.T");
+
+            records.Columns.Add("$AXIS_ACT.A1");
+            records.Columns.Add("$AXIS_ACT.A2");
+            records.Columns.Add("$AXIS_ACT.A3");
+            records.Columns.Add("$AXIS_ACT.A4");
+            records.Columns.Add("$AXIS_ACT.A5");
+            records.Columns.Add("$AXIS_ACT.A6");
+            records.Columns.Add("$AXIS_ACT.E1");
+            records.Columns.Add("$AXIS_ACT.E2");
+            records.Columns.Add("$AXIS_ACT.E3");
+            records.Columns.Add("$AXIS_ACT.E4");
+            records.Columns.Add("$AXIS_ACT.E5");
+            records.Columns.Add("$AXIS_ACT.E6");
+
+            records.Columns.Add("$BASE.X");
+            records.Columns.Add("$BASE.Y");
+            records.Columns.Add("$BASE.Z");
+            records.Columns.Add("$BASE.A");
+            records.Columns.Add("$BASE.B");
+            records.Columns.Add("$BASE.C");
+
+            records.Columns.Add("$TOOL.X");
+            records.Columns.Add("$TOOL.Y");
+            records.Columns.Add("$TOOL.Z");
+            records.Columns.Add("$TOOL.A");
+            records.Columns.Add("$TOOL.B");
+            records.Columns.Add("$TOOL.C");
+
+            for (int i = 2; i < records.Columns.Count; i++)
+            {
+                if (records.Columns[i].ColumnName == "$POS_ACT.S" || records.Columns[i].ColumnName == "$POS_ACT.T")
+                {
+                    records.Columns[i].DataType = System.Type.GetType("System.Int32");
+                }
+                else
+                {
+                    records.Columns[i].DataType = System.Type.GetType("System.Double");
+                }
+            }
+
+            // load settings
+            settings.Records = settings.Records ?? new List<Record>();
+            if (settings.Records.Count > 0)
+            {
+                foreach (var record in settings.Records)
+                {
+                    records.Rows.Add(record.ToArray());
+                }
+            }
+
+            // Bind the view
+            dgvRecords.DataSource = records;
+
+            // Clipboard
+            dgvRecords.SelectionMode = DataGridViewSelectionMode.RowHeaderSelect;
+            cbRecordFormat.SelectedIndex = 0;
+
+            // DataGridView Format
+            dgvRecords.AllowUserToAddRows = false;
+            dgvRecords.RowsDefaultCellStyle.BackColor = Color.White;
+            dgvRecords.AlternatingRowsDefaultCellStyle.BackColor = Color.LightGray;
+            dgvRecords.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.DisplayedCells;
+            dgvRecords.AllowUserToResizeRows = false;
+
+            dgvRecords.RowHeadersVisible = true;
+            dgvRecords.RowHeadersWidth = 30;
+
+            dgvRecords.Columns["Id"].DefaultCellStyle.BackColor = Color.Gray;
+
+            dgvRecords.Columns["$DATE"].DefaultCellStyle.BackColor = Color.Gray;
+            dgvRecords.Columns["$DATE"].DefaultCellStyle.Format = "yyyy/MM/dd HH:mm:ss";
+
+            for (int i = 0; i < records.Columns.Count; i++)
+            {
+                dgvRecords.Columns[i].SortMode = DataGridViewColumnSortMode.NotSortable;
+                dgvRecords.Columns[i].FillWeight = 1;
+            }
+
+            records.TableNewRow += (s, e) => {
+                if (records.Rows.Count == 0)
+                    rblRecordFilter_SelectedIndexChanged(null, null);
+            };
+
+            cbRecordFormat.SelectedIndex = 0;
         }
         private async void btAddRecord_Click(object sender, EventArgs e)
         {
-            await client.SendAsync(KVReadQuery.Build(1, "$POS_ACT"));
-            await client.SendAsync(KVReadQuery.Build(2, "$AXIS_ACT"));
+            chrono.Restart();
+            btAddRecord.Enabled = false;
+
+            var queue = new ConcurrentQueue<KVReply>();
+
+            // send all queries
+            var queries = (new List<string> { "$DATE", "$POS_ACT", "$AXIS_ACT", "$BASE", "$TOOL" }).Select(name => KVReadQuery.Build(1, name));
+            var sendQueries = Task.Run(async () =>
+            {
+                foreach (var query in queries)
+                {
+                    await client.SendAsync(query, async (reply) =>
+                    {
+                        queue.Enqueue(reply);
+                    });
+                }
+            });
+
+            // time out
+            var replyTimeout = false;
+            var waitAnswers = Task.Run(() =>
+            {
+                var queriesCount = queries.Count();
+                var timeout = Stopwatch.StartNew();
+                while (queue.Count < queriesCount)
+                {
+                    Task.Delay(1);
+                    if (timeout.ElapsedMilliseconds > 2000)
+                    {
+                        replyTimeout = true;
+                        break;
+                    }
+                }
+            });
+            waitAnswers.Wait();
+
+            if (!replyTimeout)
+            {
+                //MessageBox.Show("All replies recieved !");
+                var row = records.NewRow();
+                while (!queue.IsEmpty)
+                {
+                    KVReply reply;
+                    if (queue.TryDequeue(out reply))
+                    {
+                        if (reply.Answer.Successful)
+                        {
+                            var query = (KVReadQuery)reply.Query;
+                            var ast = reply.Answer.GetAST();
+                            switch (query.VarName)
+                            {
+                                case "$DATE":
+                                    var date = new DATE(ast);
+                                    row["$DATE"] = date.ToDateTime();
+                                    break;
+
+                                case "$POS_ACT":
+                                    var e6pos = new E6POS(ast);
+                                    row["$POS_ACT.X"] = e6pos.X;
+                                    row["$POS_ACT.Y"] = e6pos.Y;
+                                    row["$POS_ACT.Z"] = e6pos.Z;
+                                    row["$POS_ACT.A"] = e6pos.A;
+                                    row["$POS_ACT.B"] = e6pos.B;
+                                    row["$POS_ACT.C"] = e6pos.C;
+                                    row["$POS_ACT.E1"] = e6pos.E1;
+                                    row["$POS_ACT.E2"] = e6pos.E2;
+                                    row["$POS_ACT.E3"] = e6pos.E3;
+                                    row["$POS_ACT.E4"] = e6pos.E4;
+                                    row["$POS_ACT.E5"] = e6pos.E5;
+                                    row["$POS_ACT.E6"] = e6pos.E6;
+                                    row["$POS_ACT.S"] = e6pos.S;
+                                    row["$POS_ACT.T"] = e6pos.T;
+                                    break;
+
+                                case "$AXIS_ACT":
+                                    var e6axis = new E6AXIS(ast);
+                                    row["$AXIS_ACT.A1"] = e6axis.A1;
+                                    row["$AXIS_ACT.A2"] = e6axis.A2;
+                                    row["$AXIS_ACT.A3"] = e6axis.A3;
+                                    row["$AXIS_ACT.A4"] = e6axis.A4;
+                                    row["$AXIS_ACT.A5"] = e6axis.A5;
+                                    row["$AXIS_ACT.A6"] = e6axis.A6;
+                                    row["$AXIS_ACT.E1"] = e6axis.E1;
+                                    row["$AXIS_ACT.E2"] = e6axis.E2;
+                                    row["$AXIS_ACT.E3"] = e6axis.E3;
+                                    row["$AXIS_ACT.E4"] = e6axis.E4;
+                                    row["$AXIS_ACT.E5"] = e6axis.E5;
+                                    row["$AXIS_ACT.E6"] = e6axis.E6;
+                                    break;
+
+                                case "$BASE":
+                                    var baseFrame = new FRAME(ast);
+                                    row["$BASE.X"] = baseFrame.X;
+                                    row["$BASE.Y"] = baseFrame.Y;
+                                    row["$BASE.Z"] = baseFrame.Z;
+                                    row["$BASE.A"] = baseFrame.A;
+                                    row["$BASE.B"] = baseFrame.B;
+                                    row["$BASE.C"] = baseFrame.C;
+                                    break;
+
+                                case "$TOOL":
+                                    var toolFrame = new FRAME(ast);
+                                    row["$TOOL.X"] = toolFrame.X;
+                                    row["$TOOL.Y"] = toolFrame.Y;
+                                    row["$TOOL.Z"] = toolFrame.Z;
+                                    row["$TOOL.A"] = toolFrame.A;
+                                    row["$TOOL.B"] = toolFrame.B;
+                                    row["$TOOL.C"] = toolFrame.C;
+                                    break;
+
+                                default:
+                                    break;
+                            }
+                        }
+                    }
+                    else
+                    {
+                        Debug.WriteLine("CommunicationGroup.TryDequeue : false");
+                    }
+                }
+                records.Rows.Add(row);
+
+                settings.Records.Clear();
+                foreach (var dr in records.Rows.OfType<DataRow>())
+                {
+                    var rec = Record.FromDatarow(dr);
+                    settings.Records.Add(rec);
+                }
+
+                //settings.Records = records.Rows.OfType<DataRow>().Select(dr => Record.FromDatarow(dr)).ToList();
+                settings.Save();
+            }
+            else
+            {
+                client.ClearQueue();
+                MessageBox.Show("Read template aborted (timeout).");
+            }
+            btAddRecord.Enabled = true;
+        }
+        private void btRemoveRecord_Click(object sender, EventArgs e)
+        {
+            var selectedRows = dgvRecords.SelectedRows;
+            if (selectedRows.Count > 0)
+            {
+                var result = MessageBox.Show("Are you sure you want to delete the selected rows ?", "Delete Records", MessageBoxButtons.OKCancel);
+                switch (result)
+                {
+                    case DialogResult.OK:
+                        foreach (DataGridViewRow item in selectedRows)
+                        {
+                            dgvRecords.Rows.RemoveAt(item.Index);
+                        }
+                        settings.Save();
+                        break;
+                }
+            }
+            else
+            {
+                MessageBox.Show("No rows are selected. Please, select one or severl rows to delete by clicking on rows header.");
+            }
+        }
+        private void btRecordReset_Click(object sender, EventArgs e)
+        {
+            var res = MessageBox.Show("Are you sure you want to clear all records ?", "Reset Records", MessageBoxButtons.OKCancel);
+            switch (res)
+            {
+                case DialogResult.OK:
+                    records.Rows.Clear();
+                    // us this too reset auto-increment
+                    records.Columns["Id"].AutoIncrementStep = -1;
+                    records.Columns["Id"].AutoIncrementSeed = -1;
+                    records.Columns["Id"].AutoIncrementStep = 1;
+                    records.Columns["Id"].AutoIncrementSeed = 1;
+
+                    settings.Records.Clear();
+                    settings.Save();
+                    break;
+            }
+        }
+        private void rblRecordFilter_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (records == null) return;
+            if (records.Columns == null) return;
+
+            var cols = records.Columns.OfType<DataColumn>();
+            switch (rblRecordFilter.SelectedIndex)
+            {
+                case 0:
+                    foreach (var col in cols)
+                    {
+                        var colName = col.ColumnName;
+                        if (colName.Contains("$POS_ACT"))
+                        {
+                            dgvRecords.Columns[colName].Visible = true;
+                            dgvRecords.Columns[colName].HeaderText = colName.Split(char.Parse("."))[1];
+                        }
+                        else
+                        {
+                            dgvRecords.Columns[colName].Visible = false;
+                        }
+                    }
+                    break;
+
+                case 1:
+                    foreach (var col in cols)
+                    {
+                        var colName = col.ColumnName;
+                        if (colName.Contains("$AXIS_ACT"))
+                        {
+                            dgvRecords.Columns[colName].Visible = true;
+                            dgvRecords.Columns[colName].HeaderText = colName.Split(char.Parse("."))[1];
+                        }
+                        else
+                        {
+                            dgvRecords.Columns[colName].Visible = false;
+                        }
+                    }
+                    break;
+
+                case 2:
+                    foreach (var col in cols)
+                    {
+                        var colName = col.ColumnName;
+                        if (colName.Contains("$BASE"))
+                        {
+                            dgvRecords.Columns[colName].Visible = true;
+                            dgvRecords.Columns[colName].HeaderText = colName.Split(char.Parse("."))[1];
+                        }
+                        else
+                        {
+                            dgvRecords.Columns[colName].Visible = false;
+                        }
+                    }
+                    break;
+
+                case 3:
+                    foreach (var col in cols)
+                    {
+                        var colName = col.ColumnName;
+                        if (colName.Contains("$TOOL"))
+                        {
+                            dgvRecords.Columns[colName].Visible = true;
+                            dgvRecords.Columns[colName].HeaderText = colName.Split(char.Parse("."))[1];
+                        }
+                        else
+                        {
+                            dgvRecords.Columns[colName].Visible = false;
+                        }
+                    }
+                    break;
+
+                case 4:
+                    foreach (var col in cols)
+                    {
+                        var colName = col.ColumnName;
+                        dgvRecords.Columns[colName].Visible = true;
+                        dgvRecords.Columns[colName].HeaderText = colName;
+                    }
+                    break;
+            }
+
+            dgvRecords.Columns["Id"].Visible = true;
+            dgvRecords.Columns["$DATE"].Visible = true;
+        }
+        private void cbRecordFormat_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (cbRecordFormat.SelectedIndex >= 0)
+            {
+                for (int i = 2; i < dgvRecords.Columns.Count; i++)
+                {
+                    dgvRecords.Columns[i].DefaultCellStyle.Format = cbRecordFormat.Text;
+                }
+                dgvRecords.Columns["$POS_ACT.S"].DefaultCellStyle.Format = "F0";
+                dgvRecords.Columns["$POS_ACT.T"].DefaultCellStyle.Format = "F0";
+            }
+
+        }
+        private void rblRecordHeader_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            switch (rblRecordHeader.SelectedIndex)
+            {
+                case 0:
+                    dgvRecords.ClipboardCopyMode = DataGridViewClipboardCopyMode.EnableAlwaysIncludeHeaderText;
+                    break;
+
+                case 1:
+                    dgvRecords.ClipboardCopyMode = DataGridViewClipboardCopyMode.EnableWithoutHeaderText;
+                    break;
+            }
         }
         #endregion
-
-
         
+
+        private async void btWrite_Click(object sender, EventArgs e)
+        {
+            var varName = scbWrite.Text;
+            var varValue = tbVarValue.Text;
+
+            if (varName == "")
+            {
+                MessageBox.Show("Please, enter a variable name.");
+                return;
+            }
+
+            if (varValue == "")
+            {
+                MessageBox.Show("Please, enter a variable value.");
+                return;
+            }
+
+            await client.SendAsync(KVPWriteQuery.Build(1, varName, varValue), async (reply) =>
+            {
+                this.BeginInvoke((Action)delegate ()
+                {
+                    lbWriteStatus.Text = "Write status : " + (reply.Answer.Successful ? "ok" : "error");
+                    if (!reply.Answer.Successful) return;
+
+                    var ast = reply.Answer.GetAST();
+                    ast.Name = ((KVPWriteQuery)reply.Query).VarName;
+                    lbWriteElapsed.Text = "elapsed time : " + Math.Round(reply.RoundTripTime.TotalMilliseconds, 1) + "ms";
+                    
+                });
+            });
+
+            // update combobox history
+            if (varName != "")
+            {
+                // removes other occurence
+                // ensure unique varnames in list and last occurence goes on top of the list
+                settings.WriteHistory.RemoveAll(s => s.VarName.Equals(varName, StringComparison.OrdinalIgnoreCase));
+                settings.WriteHistory.Insert(0, new WriteVariable() { VarName = varName, VarValue = varValue });
+
+                if (settings.WriteHistory.Count == readHistoryMaxCount) settings.WriteHistory.RemoveAt(scbWrite.Items.Count - 1);
+
+                // rebind the source to update the control
+                scbWrite.DataSource = new BindingSource(settings.WriteHistory, null);
+                settings.Save();
+            }
+        }
+
+        private void label24_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void tabPage4_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void btMonitor_Click(object sender, EventArgs e)
+        {
+            grp_TCP.Enabled = !grp_TCP.Enabled;
+            grp_EXT.Enabled = !grp_EXT.Enabled;
+            grp_AXIS.Enabled = !grp_AXIS.Enabled;
+            grp_BASE.Enabled = !grp_BASE.Enabled;
+            grp_TOOL.Enabled = !grp_TOOL.Enabled;
+            grp_VEL.Enabled = !grp_VEL.Enabled;
+            grp_ACC.Enabled = !grp_ACC.Enabled;
+
+            if (btMonitor.Text == "Start")
+            {
+                btMonitor.Text = "Stop";
+                monitoringTimer.Change(TimeSpan.FromMilliseconds(0), TimeSpan.FromMilliseconds(200));
+            }
+            else
+            {
+                btMonitor.Text = "Start";
+                monitoringTimer.Change(Timeout.Infinite, Timeout.Infinite);
+            }
+
+        }
     }
 }
