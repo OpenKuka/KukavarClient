@@ -33,7 +33,6 @@
             this.tbServerPort = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
-            this.btStart = new System.Windows.Forms.Button();
             this.grpCSettings = new System.Windows.Forms.GroupBox();
             this.ckAutoReconnect = new System.Windows.Forms.CheckBox();
             this.label5 = new System.Windows.Forms.Label();
@@ -42,28 +41,16 @@
             this.label3 = new System.Windows.Forms.Label();
             this.tbMaxIdleTime = new System.Windows.Forms.TextBox();
             this.label6 = new System.Windows.Forms.Label();
-            this.btStop = new System.Windows.Forms.Button();
             this.lbConnectionStatus = new System.Windows.Forms.TextBox();
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
             this.lbReadTime = new System.Windows.Forms.Label();
-            this.btExpandAll = new System.Windows.Forms.Button();
-            this.btCollapseAll = new System.Windows.Forms.Button();
-            this.btRemoveHistory = new System.Windows.Forms.Button();
             this.btReadTemplate = new System.Windows.Forms.Button();
             this.label10 = new System.Windows.Forms.Label();
             this.tbTemplateName = new System.Windows.Forms.TextBox();
-            this.btEditTemplateName = new System.Windows.Forms.Button();
             this.cbTemplate = new System.Windows.Forms.ComboBox();
-            this.btAddReadTemplate = new System.Windows.Forms.Button();
             this.lstbRead = new System.Windows.Forms.ListBox();
-            this.btRemoveReadTemplate = new System.Windows.Forms.Button();
-            this.btUp = new System.Windows.Forms.Button();
-            this.btAddTemplateVar = new System.Windows.Forms.Button();
-            this.btRemoveTemplateVar = new System.Windows.Forms.Button();
-            this.btDown = new System.Windows.Forms.Button();
             this.label9 = new System.Windows.Forms.Label();
-            this.scbRead = new AutoCompleteComboBox.SuggestComboBox();
             this.label8 = new System.Windows.Forms.Label();
             this.btReadSingle = new System.Windows.Forms.Button();
             this.label7 = new System.Windows.Forms.Label();
@@ -73,13 +60,11 @@
             this.lbWriteElapsed = new System.Windows.Forms.Label();
             this.tbVarValue = new System.Windows.Forms.TextBox();
             this.label23 = new System.Windows.Forms.Label();
-            this.scbWrite = new AutoCompleteComboBox.SuggestComboBox();
             this.btWrite = new System.Windows.Forms.Button();
             this.label21 = new System.Windows.Forms.Label();
             this.tabPage3 = new System.Windows.Forms.TabPage();
             this.label19 = new System.Windows.Forms.Label();
             this.label20 = new System.Windows.Forms.Label();
-            this.btRecordReset = new System.Windows.Forms.Button();
             this.rblRecordHeader = new EWSoftware.ListControls.RadioButtonList();
             this.label18 = new System.Windows.Forms.Label();
             this.cbRecordFormat = new EWSoftware.ListControls.AutoCompleteComboBox();
@@ -88,10 +73,105 @@
             this.label15 = new System.Windows.Forms.Label();
             this.rblRecordFilter = new EWSoftware.ListControls.RadioButtonList();
             this.label14 = new System.Windows.Forms.Label();
-            this.btRemoveRecord = new System.Windows.Forms.Button();
-            this.btAddRecord = new System.Windows.Forms.Button();
             this.dgvRecords = new System.Windows.Forms.DataGridView();
             this.tabPage4 = new System.Windows.Forms.TabPage();
+            this.lbMonitoRate = new System.Windows.Forms.Label();
+            this.lbMonitoTime = new System.Windows.Forms.Label();
+            this.grp_TOOL = new System.Windows.Forms.GroupBox();
+            this.lb_TC = new System.Windows.Forms.Label();
+            this.label57 = new System.Windows.Forms.Label();
+            this.label60 = new System.Windows.Forms.Label();
+            this.label61 = new System.Windows.Forms.Label();
+            this.lb_TZ = new System.Windows.Forms.Label();
+            this.lb_TY = new System.Windows.Forms.Label();
+            this.lb_TB = new System.Windows.Forms.Label();
+            this.label67 = new System.Windows.Forms.Label();
+            this.lb_TX = new System.Windows.Forms.Label();
+            this.label69 = new System.Windows.Forms.Label();
+            this.label71 = new System.Windows.Forms.Label();
+            this.lb_TA = new System.Windows.Forms.Label();
+            this.grp_BASE = new System.Windows.Forms.GroupBox();
+            this.lb_BC = new System.Windows.Forms.Label();
+            this.label27 = new System.Windows.Forms.Label();
+            this.label29 = new System.Windows.Forms.Label();
+            this.label31 = new System.Windows.Forms.Label();
+            this.lb_BZ = new System.Windows.Forms.Label();
+            this.lb_BY = new System.Windows.Forms.Label();
+            this.lb_BB = new System.Windows.Forms.Label();
+            this.label45 = new System.Windows.Forms.Label();
+            this.lb_BX = new System.Windows.Forms.Label();
+            this.label49 = new System.Windows.Forms.Label();
+            this.label53 = new System.Windows.Forms.Label();
+            this.lb_BA = new System.Windows.Forms.Label();
+            this.grp_ACC = new System.Windows.Forms.GroupBox();
+            this.lb_AccORI2 = new System.Windows.Forms.Label();
+            this.label37 = new System.Windows.Forms.Label();
+            this.lb_AccORI1 = new System.Windows.Forms.Label();
+            this.label41 = new System.Windows.Forms.Label();
+            this.lb_AccCP = new System.Windows.Forms.Label();
+            this.label42 = new System.Windows.Forms.Label();
+            this.grp_VEL = new System.Windows.Forms.GroupBox();
+            this.label62 = new System.Windows.Forms.Label();
+            this.lb_VelORI2 = new System.Windows.Forms.Label();
+            this.label63 = new System.Windows.Forms.Label();
+            this.lb_VelORI1 = new System.Windows.Forms.Label();
+            this.label70 = new System.Windows.Forms.Label();
+            this.lb_VelCP = new System.Windows.Forms.Label();
+            this.grp_EXT = new System.Windows.Forms.GroupBox();
+            this.lb_E6 = new System.Windows.Forms.Label();
+            this.label50 = new System.Windows.Forms.Label();
+            this.lb_E3 = new System.Windows.Forms.Label();
+            this.label51 = new System.Windows.Forms.Label();
+            this.lb_E2 = new System.Windows.Forms.Label();
+            this.label52 = new System.Windows.Forms.Label();
+            this.lb_E5 = new System.Windows.Forms.Label();
+            this.label56 = new System.Windows.Forms.Label();
+            this.lb_E1 = new System.Windows.Forms.Label();
+            this.lb_E4 = new System.Windows.Forms.Label();
+            this.label58 = new System.Windows.Forms.Label();
+            this.label59 = new System.Windows.Forms.Label();
+            this.grp_AXIS = new System.Windows.Forms.GroupBox();
+            this.lb_A6 = new System.Windows.Forms.Label();
+            this.label38 = new System.Windows.Forms.Label();
+            this.lb_A3 = new System.Windows.Forms.Label();
+            this.label39 = new System.Windows.Forms.Label();
+            this.lb_A2 = new System.Windows.Forms.Label();
+            this.label40 = new System.Windows.Forms.Label();
+            this.lb_A5 = new System.Windows.Forms.Label();
+            this.label44 = new System.Windows.Forms.Label();
+            this.lb_A1 = new System.Windows.Forms.Label();
+            this.lb_A4 = new System.Windows.Forms.Label();
+            this.label46 = new System.Windows.Forms.Label();
+            this.label47 = new System.Windows.Forms.Label();
+            this.grp_TCP = new System.Windows.Forms.GroupBox();
+            this.lb_OV = new System.Windows.Forms.Label();
+            this.label33 = new System.Windows.Forms.Label();
+            this.lb_S = new System.Windows.Forms.Label();
+            this.label55 = new System.Windows.Forms.Label();
+            this.lb_T = new System.Windows.Forms.Label();
+            this.label65 = new System.Windows.Forms.Label();
+            this.lb_C = new System.Windows.Forms.Label();
+            this.label25 = new System.Windows.Forms.Label();
+            this.label30 = new System.Windows.Forms.Label();
+            this.label36 = new System.Windows.Forms.Label();
+            this.lb_Z = new System.Windows.Forms.Label();
+            this.lb_Y = new System.Windows.Forms.Label();
+            this.lb_B = new System.Windows.Forms.Label();
+            this.label32 = new System.Windows.Forms.Label();
+            this.lb_X = new System.Windows.Forms.Label();
+            this.label28 = new System.Windows.Forms.Label();
+            this.label34 = new System.Windows.Forms.Label();
+            this.lb_A = new System.Windows.Forms.Label();
+            this.tabPage6 = new System.Windows.Forms.TabPage();
+            this.textBoxFilterData = new System.Windows.Forms.TextBox();
+            this.objectListView = new BrightIdeasSoftware.DataListView();
+            this.olvColName = ((BrightIdeasSoftware.OLVColumn)(new BrightIdeasSoftware.OLVColumn()));
+            this.olvColTag = ((BrightIdeasSoftware.OLVColumn)(new BrightIdeasSoftware.OLVColumn()));
+            this.olvColGroup = ((BrightIdeasSoftware.OLVColumn)(new BrightIdeasSoftware.OLVColumn()));
+            this.olvColValue = ((BrightIdeasSoftware.OLVColumn)(new BrightIdeasSoftware.OLVColumn()));
+            this.olvColType = ((BrightIdeasSoftware.OLVColumn)(new BrightIdeasSoftware.OLVColumn()));
+            this.cb_IO = new System.Windows.Forms.ComboBox();
+            this.label35 = new System.Windows.Forms.Label();
             this.tabPage5 = new System.Windows.Forms.TabPage();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.lbProName1 = new System.Windows.Forms.Label();
@@ -107,87 +187,31 @@
             this.tbRobName = new System.Windows.Forms.TextBox();
             this.label11 = new System.Windows.Forms.Label();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
+            this.ckMonitor = new System.Windows.Forms.CheckBox();
+            this.ckConnect = new System.Windows.Forms.CheckBox();
             this.toolTip = new System.Windows.Forms.ToolTip(this.components);
-            this.btMonitor = new System.Windows.Forms.Button();
-            this.lb_X = new System.Windows.Forms.Label();
-            this.label25 = new System.Windows.Forms.Label();
-            this.grp_TCP = new System.Windows.Forms.GroupBox();
-            this.lb_Y = new System.Windows.Forms.Label();
-            this.label28 = new System.Windows.Forms.Label();
-            this.lb_Z = new System.Windows.Forms.Label();
-            this.label30 = new System.Windows.Forms.Label();
-            this.lb_A = new System.Windows.Forms.Label();
-            this.label32 = new System.Windows.Forms.Label();
-            this.lb_B = new System.Windows.Forms.Label();
-            this.label34 = new System.Windows.Forms.Label();
-            this.lb_C = new System.Windows.Forms.Label();
-            this.label36 = new System.Windows.Forms.Label();
-            this.grp_AXIS = new System.Windows.Forms.GroupBox();
-            this.label38 = new System.Windows.Forms.Label();
-            this.label39 = new System.Windows.Forms.Label();
-            this.label40 = new System.Windows.Forms.Label();
-            this.label44 = new System.Windows.Forms.Label();
-            this.label46 = new System.Windows.Forms.Label();
-            this.label47 = new System.Windows.Forms.Label();
-            this.grp_EXT = new System.Windows.Forms.GroupBox();
-            this.label50 = new System.Windows.Forms.Label();
-            this.label51 = new System.Windows.Forms.Label();
-            this.label52 = new System.Windows.Forms.Label();
-            this.label56 = new System.Windows.Forms.Label();
-            this.label58 = new System.Windows.Forms.Label();
-            this.label59 = new System.Windows.Forms.Label();
-            this.grp_VEL = new System.Windows.Forms.GroupBox();
-            this.label62 = new System.Windows.Forms.Label();
-            this.label63 = new System.Windows.Forms.Label();
-            this.label70 = new System.Windows.Forms.Label();
-            this.grp_ACC = new System.Windows.Forms.GroupBox();
-            this.label37 = new System.Windows.Forms.Label();
-            this.label41 = new System.Windows.Forms.Label();
-            this.label42 = new System.Windows.Forms.Label();
-            this.grp_BASE = new System.Windows.Forms.GroupBox();
-            this.lb_BC = new System.Windows.Forms.Label();
-            this.label27 = new System.Windows.Forms.Label();
-            this.label29 = new System.Windows.Forms.Label();
-            this.label31 = new System.Windows.Forms.Label();
-            this.lb_BZ = new System.Windows.Forms.Label();
-            this.lb_BY = new System.Windows.Forms.Label();
-            this.lb_BB = new System.Windows.Forms.Label();
-            this.label45 = new System.Windows.Forms.Label();
-            this.lb_BX = new System.Windows.Forms.Label();
-            this.label49 = new System.Windows.Forms.Label();
-            this.label53 = new System.Windows.Forms.Label();
-            this.lb_BA = new System.Windows.Forms.Label();
-            this.grp_TOOL = new System.Windows.Forms.GroupBox();
-            this.lb_TC = new System.Windows.Forms.Label();
-            this.label57 = new System.Windows.Forms.Label();
-            this.label60 = new System.Windows.Forms.Label();
-            this.label61 = new System.Windows.Forms.Label();
-            this.lb_TZ = new System.Windows.Forms.Label();
-            this.lb_TY = new System.Windows.Forms.Label();
-            this.lb_TB = new System.Windows.Forms.Label();
-            this.label67 = new System.Windows.Forms.Label();
-            this.lb_TX = new System.Windows.Forms.Label();
-            this.label69 = new System.Windows.Forms.Label();
-            this.label71 = new System.Windows.Forms.Label();
-            this.lb_TA = new System.Windows.Forms.Label();
-            this.lb_E6 = new System.Windows.Forms.Label();
-            this.lb_E3 = new System.Windows.Forms.Label();
-            this.lb_E2 = new System.Windows.Forms.Label();
-            this.lb_E5 = new System.Windows.Forms.Label();
-            this.lb_E1 = new System.Windows.Forms.Label();
-            this.lb_E4 = new System.Windows.Forms.Label();
-            this.lb_A6 = new System.Windows.Forms.Label();
-            this.lb_A3 = new System.Windows.Forms.Label();
-            this.lb_A2 = new System.Windows.Forms.Label();
-            this.lb_A5 = new System.Windows.Forms.Label();
-            this.lb_A1 = new System.Windows.Forms.Label();
-            this.lb_A4 = new System.Windows.Forms.Label();
-            this.lb_VelORI2 = new System.Windows.Forms.Label();
-            this.lb_VelORI1 = new System.Windows.Forms.Label();
-            this.lb_VelCP = new System.Windows.Forms.Label();
-            this.lb_AccORI2 = new System.Windows.Forms.Label();
-            this.lb_AccORI1 = new System.Windows.Forms.Label();
-            this.lb_AccCP = new System.Windows.Forms.Label();
+            this.imageList1 = new System.Windows.Forms.ImageList(this.components);
+            this.btExpandAll = new System.Windows.Forms.Button();
+            this.btCollapseAll = new System.Windows.Forms.Button();
+            this.btRemoveHistory = new System.Windows.Forms.Button();
+            this.btEditTemplateName = new System.Windows.Forms.Button();
+            this.btAddReadTemplate = new System.Windows.Forms.Button();
+            this.btRemoveReadTemplate = new System.Windows.Forms.Button();
+            this.btUp = new System.Windows.Forms.Button();
+            this.btAddTemplateVar = new System.Windows.Forms.Button();
+            this.btRemoveTemplateVar = new System.Windows.Forms.Button();
+            this.btDown = new System.Windows.Forms.Button();
+            this.btRecordReset = new System.Windows.Forms.Button();
+            this.btRemoveRecord = new System.Windows.Forms.Button();
+            this.btAddRecord = new System.Windows.Forms.Button();
+            this.button3 = new System.Windows.Forms.Button();
+            this.button4 = new System.Windows.Forms.Button();
+            this.button5 = new System.Windows.Forms.Button();
+            this.btIO_Add = new System.Windows.Forms.Button();
+            this.btIO_Remove = new System.Windows.Forms.Button();
+            this.button8 = new System.Windows.Forms.Button();
+            this.scbRead = new AutoCompleteComboBox.SuggestComboBox();
+            this.scbWrite = new AutoCompleteComboBox.SuggestComboBox();
             this.grpCSettings.SuspendLayout();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
@@ -198,15 +222,17 @@
             ((System.ComponentModel.ISupportInitialize)(this.rblRecordFilter)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dgvRecords)).BeginInit();
             this.tabPage4.SuspendLayout();
+            this.grp_TOOL.SuspendLayout();
+            this.grp_BASE.SuspendLayout();
+            this.grp_ACC.SuspendLayout();
+            this.grp_VEL.SuspendLayout();
+            this.grp_EXT.SuspendLayout();
+            this.grp_AXIS.SuspendLayout();
+            this.grp_TCP.SuspendLayout();
+            this.tabPage6.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.objectListView)).BeginInit();
             this.groupBox2.SuspendLayout();
             this.groupBox3.SuspendLayout();
-            this.grp_TCP.SuspendLayout();
-            this.grp_AXIS.SuspendLayout();
-            this.grp_EXT.SuspendLayout();
-            this.grp_VEL.SuspendLayout();
-            this.grp_ACC.SuspendLayout();
-            this.grp_BASE.SuspendLayout();
-            this.grp_TOOL.SuspendLayout();
             this.SuspendLayout();
             // 
             // tbServerIP
@@ -242,16 +268,6 @@
             this.label2.Size = new System.Drawing.Size(26, 13);
             this.label2.TabIndex = 3;
             this.label2.Text = "Port";
-            // 
-            // btStart
-            // 
-            this.btStart.Location = new System.Drawing.Point(28, 28);
-            this.btStart.Name = "btStart";
-            this.btStart.Size = new System.Drawing.Size(100, 24);
-            this.btStart.TabIndex = 4;
-            this.btStart.Text = "Start";
-            this.btStart.UseVisualStyleBackColor = true;
-            this.btStart.Click += new System.EventHandler(this.btStart_Click);
             // 
             // grpCSettings
             // 
@@ -337,16 +353,6 @@
             this.label6.TabIndex = 9;
             this.label6.Text = "Connection Status :";
             // 
-            // btStop
-            // 
-            this.btStop.Location = new System.Drawing.Point(28, 60);
-            this.btStop.Name = "btStop";
-            this.btStop.Size = new System.Drawing.Size(100, 24);
-            this.btStop.TabIndex = 10;
-            this.btStop.Text = "Stop";
-            this.btStop.UseVisualStyleBackColor = true;
-            this.btStop.Click += new System.EventHandler(this.btStop_Click);
-            // 
             // lbConnectionStatus
             // 
             this.lbConnectionStatus.BackColor = System.Drawing.Color.LightGray;
@@ -362,8 +368,8 @@
             this.tabControl1.Controls.Add(this.tabPage2);
             this.tabControl1.Controls.Add(this.tabPage3);
             this.tabControl1.Controls.Add(this.tabPage4);
+            this.tabControl1.Controls.Add(this.tabPage6);
             this.tabControl1.Controls.Add(this.tabPage5);
-            this.tabControl1.Enabled = false;
             this.tabControl1.Location = new System.Drawing.Point(12, 216);
             this.tabControl1.Name = "tabControl1";
             this.tabControl1.SelectedIndex = 0;
@@ -411,40 +417,6 @@
             this.lbReadTime.Text = "elapsed time : ms";
             this.lbReadTime.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             // 
-            // btExpandAll
-            // 
-            this.btExpandAll.Image = global::Kukavar.DemoApp.Properties.Resources.unfold;
-            this.btExpandAll.Location = new System.Drawing.Point(615, 14);
-            this.btExpandAll.Name = "btExpandAll";
-            this.btExpandAll.Size = new System.Drawing.Size(24, 28);
-            this.btExpandAll.TabIndex = 49;
-            this.toolTip.SetToolTip(this.btExpandAll, "Expand All");
-            this.btExpandAll.UseVisualStyleBackColor = true;
-            this.btExpandAll.Click += new System.EventHandler(this.btExpandAll_Click);
-            // 
-            // btCollapseAll
-            // 
-            this.btCollapseAll.Image = global::Kukavar.DemoApp.Properties.Resources.fold;
-            this.btCollapseAll.Location = new System.Drawing.Point(645, 14);
-            this.btCollapseAll.Name = "btCollapseAll";
-            this.btCollapseAll.Size = new System.Drawing.Size(24, 28);
-            this.btCollapseAll.TabIndex = 48;
-            this.toolTip.SetToolTip(this.btCollapseAll, "Collapse All");
-            this.btCollapseAll.UseVisualStyleBackColor = true;
-            this.btCollapseAll.Click += new System.EventHandler(this.btCollapseAll_Click);
-            // 
-            // btRemoveHistory
-            // 
-            this.btRemoveHistory.Image = global::Kukavar.DemoApp.Properties.Resources.remove;
-            this.btRemoveHistory.Location = new System.Drawing.Point(171, 48);
-            this.btRemoveHistory.Name = "btRemoveHistory";
-            this.btRemoveHistory.Size = new System.Drawing.Size(24, 24);
-            this.btRemoveHistory.TabIndex = 46;
-            this.btRemoveHistory.Text = " ";
-            this.toolTip.SetToolTip(this.btRemoveHistory, "Remove selected item from history");
-            this.btRemoveHistory.UseVisualStyleBackColor = true;
-            this.btRemoveHistory.Click += new System.EventHandler(this.btRemoveHistory_Click);
-            // 
             // btReadTemplate
             // 
             this.btReadTemplate.Location = new System.Drawing.Point(262, 117);
@@ -475,19 +447,6 @@
             this.tbTemplateName.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.tbTemplateName_KeyPress);
             this.tbTemplateName.Validating += new System.ComponentModel.CancelEventHandler(this.tbTemplateName_Validating);
             // 
-            // btEditTemplateName
-            // 
-            this.btEditTemplateName.CausesValidation = false;
-            this.btEditTemplateName.Image = global::Kukavar.DemoApp.Properties.Resources.edit;
-            this.btEditTemplateName.Location = new System.Drawing.Point(171, 163);
-            this.btEditTemplateName.Name = "btEditTemplateName";
-            this.btEditTemplateName.Size = new System.Drawing.Size(24, 24);
-            this.btEditTemplateName.TabIndex = 36;
-            this.btEditTemplateName.Text = " ";
-            this.toolTip.SetToolTip(this.btEditTemplateName, "Edit template name");
-            this.btEditTemplateName.UseVisualStyleBackColor = true;
-            this.btEditTemplateName.Click += new System.EventHandler(this.btEditTemplateName_Click);
-            // 
             // cbTemplate
             // 
             this.cbTemplate.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
@@ -498,18 +457,6 @@
             this.cbTemplate.TabIndex = 35;
             this.cbTemplate.SelectedIndexChanged += new System.EventHandler(this.cbTemplate_SelectedIndexChanged);
             // 
-            // btAddReadTemplate
-            // 
-            this.btAddReadTemplate.Image = global::Kukavar.DemoApp.Properties.Resources.addfilled;
-            this.btAddReadTemplate.Location = new System.Drawing.Point(172, 117);
-            this.btAddReadTemplate.Name = "btAddReadTemplate";
-            this.btAddReadTemplate.Size = new System.Drawing.Size(24, 24);
-            this.btAddReadTemplate.TabIndex = 34;
-            this.btAddReadTemplate.Text = " ";
-            this.toolTip.SetToolTip(this.btAddReadTemplate, "Add a new template");
-            this.btAddReadTemplate.UseVisualStyleBackColor = true;
-            this.btAddReadTemplate.Click += new System.EventHandler(this.btAddReadTemplate_Click);
-            // 
             // lstbRead
             // 
             this.lstbRead.FormattingEnabled = true;
@@ -517,64 +464,6 @@
             this.lstbRead.Name = "lstbRead";
             this.lstbRead.Size = new System.Drawing.Size(150, 147);
             this.lstbRead.TabIndex = 33;
-            // 
-            // btRemoveReadTemplate
-            // 
-            this.btRemoveReadTemplate.Image = global::Kukavar.DemoApp.Properties.Resources.delete;
-            this.btRemoveReadTemplate.Location = new System.Drawing.Point(198, 117);
-            this.btRemoveReadTemplate.Name = "btRemoveReadTemplate";
-            this.btRemoveReadTemplate.Size = new System.Drawing.Size(24, 24);
-            this.btRemoveReadTemplate.TabIndex = 31;
-            this.btRemoveReadTemplate.Text = " ";
-            this.toolTip.SetToolTip(this.btRemoveReadTemplate, "Delete the selected template");
-            this.btRemoveReadTemplate.UseVisualStyleBackColor = true;
-            this.btRemoveReadTemplate.Click += new System.EventHandler(this.btRemoveReadTemplate_Click);
-            // 
-            // btUp
-            // 
-            this.btUp.Image = global::Kukavar.DemoApp.Properties.Resources.up;
-            this.btUp.Location = new System.Drawing.Point(171, 213);
-            this.btUp.Name = "btUp";
-            this.btUp.Size = new System.Drawing.Size(24, 24);
-            this.btUp.TabIndex = 30;
-            this.toolTip.SetToolTip(this.btUp, "Move item Up");
-            this.btUp.UseVisualStyleBackColor = true;
-            this.btUp.Click += new System.EventHandler(this.btUp_Click);
-            // 
-            // btAddTemplateVar
-            // 
-            this.btAddTemplateVar.Image = global::Kukavar.DemoApp.Properties.Resources.add;
-            this.btAddTemplateVar.Location = new System.Drawing.Point(171, 306);
-            this.btAddTemplateVar.Name = "btAddTemplateVar";
-            this.btAddTemplateVar.Size = new System.Drawing.Size(24, 24);
-            this.btAddTemplateVar.TabIndex = 29;
-            this.btAddTemplateVar.Text = " ";
-            this.toolTip.SetToolTip(this.btAddTemplateVar, "Add the variable to the list");
-            this.btAddTemplateVar.UseVisualStyleBackColor = true;
-            this.btAddTemplateVar.Click += new System.EventHandler(this.btAddTemplateVar_Click);
-            // 
-            // btRemoveTemplateVar
-            // 
-            this.btRemoveTemplateVar.Image = global::Kukavar.DemoApp.Properties.Resources.remove;
-            this.btRemoveTemplateVar.Location = new System.Drawing.Point(171, 336);
-            this.btRemoveTemplateVar.Name = "btRemoveTemplateVar";
-            this.btRemoveTemplateVar.Size = new System.Drawing.Size(24, 24);
-            this.btRemoveTemplateVar.TabIndex = 28;
-            this.btRemoveTemplateVar.Text = " ";
-            this.toolTip.SetToolTip(this.btRemoveTemplateVar, "Remove the selected item from the variable list");
-            this.btRemoveTemplateVar.UseVisualStyleBackColor = true;
-            this.btRemoveTemplateVar.Click += new System.EventHandler(this.btRemoveTemplateVar_Click);
-            // 
-            // btDown
-            // 
-            this.btDown.Image = global::Kukavar.DemoApp.Properties.Resources.down;
-            this.btDown.Location = new System.Drawing.Point(171, 243);
-            this.btDown.Name = "btDown";
-            this.btDown.Size = new System.Drawing.Size(24, 24);
-            this.btDown.TabIndex = 25;
-            this.toolTip.SetToolTip(this.btDown, "Move item Down");
-            this.btDown.UseVisualStyleBackColor = true;
-            this.btDown.Click += new System.EventHandler(this.btDown_Click);
             // 
             // label9
             // 
@@ -584,19 +473,6 @@
             this.label9.Size = new System.Drawing.Size(89, 13);
             this.label9.TabIndex = 24;
             this.label9.Text = "Select a template";
-            // 
-            // scbRead
-            // 
-            this.scbRead.FilterRule = null;
-            this.scbRead.FormattingEnabled = true;
-            this.scbRead.Location = new System.Drawing.Point(15, 50);
-            this.scbRead.Name = "scbRead";
-            this.scbRead.PropertySelector = null;
-            this.scbRead.Size = new System.Drawing.Size(150, 21);
-            this.scbRead.SuggestBoxHeight = 96;
-            this.scbRead.SuggestListOrderRule = null;
-            this.scbRead.TabIndex = 20;
-            this.scbRead.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.scbRead_KeyPress);
             // 
             // label8
             // 
@@ -645,9 +521,9 @@
             this.tabPage2.Controls.Add(this.lbWriteElapsed);
             this.tabPage2.Controls.Add(this.tbVarValue);
             this.tabPage2.Controls.Add(this.label23);
-            this.tabPage2.Controls.Add(this.scbWrite);
             this.tabPage2.Controls.Add(this.btWrite);
             this.tabPage2.Controls.Add(this.label21);
+            this.tabPage2.Controls.Add(this.scbWrite);
             this.tabPage2.Location = new System.Drawing.Point(4, 22);
             this.tabPage2.Name = "tabPage2";
             this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
@@ -692,20 +568,6 @@
             this.label23.TabIndex = 40;
             this.label23.Text = "Variable value";
             // 
-            // scbWrite
-            // 
-            this.scbWrite.DisplayMember = "VarName";
-            this.scbWrite.FilterRule = null;
-            this.scbWrite.FormattingEnabled = true;
-            this.scbWrite.Location = new System.Drawing.Point(15, 50);
-            this.scbWrite.Name = "scbWrite";
-            this.scbWrite.PropertySelector = null;
-            this.scbWrite.Size = new System.Drawing.Size(150, 21);
-            this.scbWrite.SuggestBoxHeight = 96;
-            this.scbWrite.SuggestListOrderRule = null;
-            this.scbWrite.TabIndex = 24;
-            this.scbWrite.ValueMember = "VarValue";
-            // 
             // btWrite
             // 
             this.btWrite.Location = new System.Drawing.Point(262, 48);
@@ -730,7 +592,6 @@
             // 
             this.tabPage3.Controls.Add(this.label19);
             this.tabPage3.Controls.Add(this.label20);
-            this.tabPage3.Controls.Add(this.btRecordReset);
             this.tabPage3.Controls.Add(this.rblRecordHeader);
             this.tabPage3.Controls.Add(this.label18);
             this.tabPage3.Controls.Add(this.cbRecordFormat);
@@ -739,9 +600,10 @@
             this.tabPage3.Controls.Add(this.label15);
             this.tabPage3.Controls.Add(this.rblRecordFilter);
             this.tabPage3.Controls.Add(this.label14);
+            this.tabPage3.Controls.Add(this.dgvRecords);
+            this.tabPage3.Controls.Add(this.btRecordReset);
             this.tabPage3.Controls.Add(this.btRemoveRecord);
             this.tabPage3.Controls.Add(this.btAddRecord);
-            this.tabPage3.Controls.Add(this.dgvRecords);
             this.tabPage3.Location = new System.Drawing.Point(4, 22);
             this.tabPage3.Name = "tabPage3";
             this.tabPage3.Size = new System.Drawing.Size(687, 393);
@@ -766,18 +628,6 @@
             this.label20.Size = new System.Drawing.Size(23, 13);
             this.label20.TabIndex = 63;
             this.label20.Text = "Del";
-            // 
-            // btRecordReset
-            // 
-            this.btRecordReset.Image = global::Kukavar.DemoApp.Properties.Resources.delete;
-            this.btRecordReset.Location = new System.Drawing.Point(100, 40);
-            this.btRecordReset.Name = "btRecordReset";
-            this.btRecordReset.Size = new System.Drawing.Size(24, 24);
-            this.btRecordReset.TabIndex = 61;
-            this.btRecordReset.Text = " ";
-            this.toolTip.SetToolTip(this.btRecordReset, "Reset the recorder. Delete all records.");
-            this.btRecordReset.UseVisualStyleBackColor = true;
-            this.btRecordReset.Click += new System.EventHandler(this.btRecordReset_Click);
             // 
             // rblRecordHeader
             // 
@@ -889,30 +739,6 @@
     "each record, several requests are sent to the robot and there will be some laten" +
     "cy between them.\r\n";
             // 
-            // btRemoveRecord
-            // 
-            this.btRemoveRecord.Image = global::Kukavar.DemoApp.Properties.Resources.clear;
-            this.btRemoveRecord.Location = new System.Drawing.Point(44, 40);
-            this.btRemoveRecord.Name = "btRemoveRecord";
-            this.btRemoveRecord.Size = new System.Drawing.Size(24, 24);
-            this.btRemoveRecord.TabIndex = 48;
-            this.btRemoveRecord.Text = " ";
-            this.toolTip.SetToolTip(this.btRemoveRecord, "Remove the selected records from the table.");
-            this.btRemoveRecord.UseVisualStyleBackColor = true;
-            this.btRemoveRecord.Click += new System.EventHandler(this.btRemoveRecord_Click);
-            // 
-            // btAddRecord
-            // 
-            this.btAddRecord.Image = global::Kukavar.DemoApp.Properties.Resources.record;
-            this.btAddRecord.Location = new System.Drawing.Point(14, 40);
-            this.btAddRecord.Name = "btAddRecord";
-            this.btAddRecord.Size = new System.Drawing.Size(24, 24);
-            this.btAddRecord.TabIndex = 47;
-            this.btAddRecord.Text = " ";
-            this.toolTip.SetToolTip(this.btAddRecord, "Record the current position of the robot.");
-            this.btAddRecord.UseVisualStyleBackColor = true;
-            this.btAddRecord.Click += new System.EventHandler(this.btAddRecord_Click);
-            // 
             // dgvRecords
             // 
             this.dgvRecords.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
@@ -924,6 +750,8 @@
             // 
             // tabPage4
             // 
+            this.tabPage4.Controls.Add(this.lbMonitoRate);
+            this.tabPage4.Controls.Add(this.lbMonitoTime);
             this.tabPage4.Controls.Add(this.grp_TOOL);
             this.tabPage4.Controls.Add(this.grp_BASE);
             this.tabPage4.Controls.Add(this.grp_ACC);
@@ -931,14 +759,1003 @@
             this.tabPage4.Controls.Add(this.grp_EXT);
             this.tabPage4.Controls.Add(this.grp_AXIS);
             this.tabPage4.Controls.Add(this.grp_TCP);
-            this.tabPage4.Controls.Add(this.btMonitor);
             this.tabPage4.Location = new System.Drawing.Point(4, 22);
             this.tabPage4.Name = "tabPage4";
             this.tabPage4.Size = new System.Drawing.Size(687, 393);
             this.tabPage4.TabIndex = 3;
-            this.tabPage4.Text = "Monitoring";
+            this.tabPage4.Text = "Monitoring ROB";
             this.tabPage4.UseVisualStyleBackColor = true;
-            this.tabPage4.Click += new System.EventHandler(this.tabPage4_Click);
+            // 
+            // lbMonitoRate
+            // 
+            this.lbMonitoRate.Font = new System.Drawing.Font("Courier New", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lbMonitoRate.Location = new System.Drawing.Point(499, 326);
+            this.lbMonitoRate.Name = "lbMonitoRate";
+            this.lbMonitoRate.Size = new System.Drawing.Size(163, 13);
+            this.lbMonitoRate.TabIndex = 52;
+            this.lbMonitoRate.Text = "refresh rate :      ms";
+            this.lbMonitoRate.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            // 
+            // lbMonitoTime
+            // 
+            this.lbMonitoTime.Font = new System.Drawing.Font("Courier New", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lbMonitoTime.Location = new System.Drawing.Point(499, 339);
+            this.lbMonitoTime.Name = "lbMonitoTime";
+            this.lbMonitoTime.Size = new System.Drawing.Size(163, 13);
+            this.lbMonitoTime.TabIndex = 51;
+            this.lbMonitoTime.Text = "elapsed time :      ms";
+            this.lbMonitoTime.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            // 
+            // grp_TOOL
+            // 
+            this.grp_TOOL.Controls.Add(this.lb_TC);
+            this.grp_TOOL.Controls.Add(this.label57);
+            this.grp_TOOL.Controls.Add(this.label60);
+            this.grp_TOOL.Controls.Add(this.label61);
+            this.grp_TOOL.Controls.Add(this.lb_TZ);
+            this.grp_TOOL.Controls.Add(this.lb_TY);
+            this.grp_TOOL.Controls.Add(this.lb_TB);
+            this.grp_TOOL.Controls.Add(this.label67);
+            this.grp_TOOL.Controls.Add(this.lb_TX);
+            this.grp_TOOL.Controls.Add(this.label69);
+            this.grp_TOOL.Controls.Add(this.label71);
+            this.grp_TOOL.Controls.Add(this.lb_TA);
+            this.grp_TOOL.Enabled = false;
+            this.grp_TOOL.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(128)))), ((int)(((byte)(0)))));
+            this.grp_TOOL.Location = new System.Drawing.Point(521, 38);
+            this.grp_TOOL.Margin = new System.Windows.Forms.Padding(5);
+            this.grp_TOOL.Name = "grp_TOOL";
+            this.grp_TOOL.Padding = new System.Windows.Forms.Padding(5);
+            this.grp_TOOL.Size = new System.Drawing.Size(141, 152);
+            this.grp_TOOL.TabIndex = 29;
+            this.grp_TOOL.TabStop = false;
+            this.grp_TOOL.Text = "TOOL";
+            // 
+            // lb_TC
+            // 
+            this.lb_TC.Font = new System.Drawing.Font("Courier New", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lb_TC.Location = new System.Drawing.Point(53, 125);
+            this.lb_TC.Name = "lb_TC";
+            this.lb_TC.Size = new System.Drawing.Size(70, 20);
+            this.lb_TC.TabIndex = 26;
+            this.lb_TC.Text = "Y";
+            this.lb_TC.TextAlign = System.Drawing.ContentAlignment.TopRight;
+            // 
+            // label57
+            // 
+            this.label57.Location = new System.Drawing.Point(8, 26);
+            this.label57.Name = "label57";
+            this.label57.Size = new System.Drawing.Size(30, 20);
+            this.label57.TabIndex = 17;
+            this.label57.Text = "X";
+            // 
+            // label60
+            // 
+            this.label60.Location = new System.Drawing.Point(8, 66);
+            this.label60.Name = "label60";
+            this.label60.Size = new System.Drawing.Size(30, 20);
+            this.label60.TabIndex = 21;
+            this.label60.Text = "Z";
+            // 
+            // label61
+            // 
+            this.label61.Location = new System.Drawing.Point(8, 126);
+            this.label61.Name = "label61";
+            this.label61.Size = new System.Drawing.Size(30, 20);
+            this.label61.TabIndex = 27;
+            this.label61.Text = "C";
+            // 
+            // lb_TZ
+            // 
+            this.lb_TZ.Font = new System.Drawing.Font("Courier New", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lb_TZ.Location = new System.Drawing.Point(53, 65);
+            this.lb_TZ.Name = "lb_TZ";
+            this.lb_TZ.Size = new System.Drawing.Size(70, 20);
+            this.lb_TZ.TabIndex = 20;
+            this.lb_TZ.Text = "Y";
+            this.lb_TZ.TextAlign = System.Drawing.ContentAlignment.TopRight;
+            // 
+            // lb_TY
+            // 
+            this.lb_TY.Font = new System.Drawing.Font("Courier New", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lb_TY.Location = new System.Drawing.Point(53, 45);
+            this.lb_TY.Name = "lb_TY";
+            this.lb_TY.Size = new System.Drawing.Size(70, 20);
+            this.lb_TY.TabIndex = 18;
+            this.lb_TY.Text = "Y";
+            this.lb_TY.TextAlign = System.Drawing.ContentAlignment.TopRight;
+            // 
+            // lb_TB
+            // 
+            this.lb_TB.Font = new System.Drawing.Font("Courier New", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lb_TB.Location = new System.Drawing.Point(53, 105);
+            this.lb_TB.Name = "lb_TB";
+            this.lb_TB.Size = new System.Drawing.Size(70, 20);
+            this.lb_TB.TabIndex = 24;
+            this.lb_TB.Text = "Y";
+            this.lb_TB.TextAlign = System.Drawing.ContentAlignment.TopRight;
+            // 
+            // label67
+            // 
+            this.label67.Location = new System.Drawing.Point(8, 86);
+            this.label67.Name = "label67";
+            this.label67.Size = new System.Drawing.Size(30, 20);
+            this.label67.TabIndex = 23;
+            this.label67.Text = "A";
+            // 
+            // lb_TX
+            // 
+            this.lb_TX.Font = new System.Drawing.Font("Courier New", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lb_TX.Location = new System.Drawing.Point(53, 25);
+            this.lb_TX.Name = "lb_TX";
+            this.lb_TX.Size = new System.Drawing.Size(70, 20);
+            this.lb_TX.TabIndex = 16;
+            this.lb_TX.Text = "Y";
+            this.lb_TX.TextAlign = System.Drawing.ContentAlignment.TopRight;
+            // 
+            // label69
+            // 
+            this.label69.Location = new System.Drawing.Point(8, 46);
+            this.label69.Name = "label69";
+            this.label69.Size = new System.Drawing.Size(30, 20);
+            this.label69.TabIndex = 19;
+            this.label69.Text = "Y";
+            // 
+            // label71
+            // 
+            this.label71.Location = new System.Drawing.Point(8, 106);
+            this.label71.Name = "label71";
+            this.label71.Size = new System.Drawing.Size(30, 20);
+            this.label71.TabIndex = 25;
+            this.label71.Text = "B";
+            // 
+            // lb_TA
+            // 
+            this.lb_TA.Font = new System.Drawing.Font("Courier New", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lb_TA.Location = new System.Drawing.Point(53, 85);
+            this.lb_TA.Name = "lb_TA";
+            this.lb_TA.Size = new System.Drawing.Size(70, 20);
+            this.lb_TA.TabIndex = 22;
+            this.lb_TA.Text = "Y";
+            this.lb_TA.TextAlign = System.Drawing.ContentAlignment.TopRight;
+            // 
+            // grp_BASE
+            // 
+            this.grp_BASE.Controls.Add(this.lb_BC);
+            this.grp_BASE.Controls.Add(this.label27);
+            this.grp_BASE.Controls.Add(this.label29);
+            this.grp_BASE.Controls.Add(this.label31);
+            this.grp_BASE.Controls.Add(this.lb_BZ);
+            this.grp_BASE.Controls.Add(this.lb_BY);
+            this.grp_BASE.Controls.Add(this.lb_BB);
+            this.grp_BASE.Controls.Add(this.label45);
+            this.grp_BASE.Controls.Add(this.lb_BX);
+            this.grp_BASE.Controls.Add(this.label49);
+            this.grp_BASE.Controls.Add(this.label53);
+            this.grp_BASE.Controls.Add(this.lb_BA);
+            this.grp_BASE.Enabled = false;
+            this.grp_BASE.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(128)))), ((int)(((byte)(0)))));
+            this.grp_BASE.Location = new System.Drawing.Point(370, 38);
+            this.grp_BASE.Margin = new System.Windows.Forms.Padding(5);
+            this.grp_BASE.Name = "grp_BASE";
+            this.grp_BASE.Padding = new System.Windows.Forms.Padding(5);
+            this.grp_BASE.Size = new System.Drawing.Size(141, 152);
+            this.grp_BASE.TabIndex = 28;
+            this.grp_BASE.TabStop = false;
+            this.grp_BASE.Text = "BASE";
+            // 
+            // lb_BC
+            // 
+            this.lb_BC.Font = new System.Drawing.Font("Courier New", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lb_BC.Location = new System.Drawing.Point(53, 125);
+            this.lb_BC.Name = "lb_BC";
+            this.lb_BC.Size = new System.Drawing.Size(70, 20);
+            this.lb_BC.TabIndex = 26;
+            this.lb_BC.Text = "Y";
+            this.lb_BC.TextAlign = System.Drawing.ContentAlignment.TopRight;
+            // 
+            // label27
+            // 
+            this.label27.Location = new System.Drawing.Point(8, 26);
+            this.label27.Name = "label27";
+            this.label27.Size = new System.Drawing.Size(30, 20);
+            this.label27.TabIndex = 17;
+            this.label27.Text = "X";
+            // 
+            // label29
+            // 
+            this.label29.Location = new System.Drawing.Point(8, 66);
+            this.label29.Name = "label29";
+            this.label29.Size = new System.Drawing.Size(30, 20);
+            this.label29.TabIndex = 21;
+            this.label29.Text = "Z";
+            // 
+            // label31
+            // 
+            this.label31.Location = new System.Drawing.Point(8, 126);
+            this.label31.Name = "label31";
+            this.label31.Size = new System.Drawing.Size(30, 20);
+            this.label31.TabIndex = 27;
+            this.label31.Text = "C";
+            // 
+            // lb_BZ
+            // 
+            this.lb_BZ.Font = new System.Drawing.Font("Courier New", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lb_BZ.Location = new System.Drawing.Point(53, 65);
+            this.lb_BZ.Name = "lb_BZ";
+            this.lb_BZ.Size = new System.Drawing.Size(70, 20);
+            this.lb_BZ.TabIndex = 20;
+            this.lb_BZ.Text = "Y";
+            this.lb_BZ.TextAlign = System.Drawing.ContentAlignment.TopRight;
+            // 
+            // lb_BY
+            // 
+            this.lb_BY.Font = new System.Drawing.Font("Courier New", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lb_BY.Location = new System.Drawing.Point(53, 45);
+            this.lb_BY.Name = "lb_BY";
+            this.lb_BY.Size = new System.Drawing.Size(70, 20);
+            this.lb_BY.TabIndex = 18;
+            this.lb_BY.Text = "Y";
+            this.lb_BY.TextAlign = System.Drawing.ContentAlignment.TopRight;
+            // 
+            // lb_BB
+            // 
+            this.lb_BB.Font = new System.Drawing.Font("Courier New", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lb_BB.Location = new System.Drawing.Point(53, 105);
+            this.lb_BB.Name = "lb_BB";
+            this.lb_BB.Size = new System.Drawing.Size(70, 20);
+            this.lb_BB.TabIndex = 24;
+            this.lb_BB.Text = "Y";
+            this.lb_BB.TextAlign = System.Drawing.ContentAlignment.TopRight;
+            // 
+            // label45
+            // 
+            this.label45.Location = new System.Drawing.Point(8, 86);
+            this.label45.Name = "label45";
+            this.label45.Size = new System.Drawing.Size(30, 20);
+            this.label45.TabIndex = 23;
+            this.label45.Text = "A";
+            // 
+            // lb_BX
+            // 
+            this.lb_BX.Font = new System.Drawing.Font("Courier New", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lb_BX.Location = new System.Drawing.Point(53, 25);
+            this.lb_BX.Name = "lb_BX";
+            this.lb_BX.Size = new System.Drawing.Size(70, 20);
+            this.lb_BX.TabIndex = 16;
+            this.lb_BX.Text = "Y";
+            this.lb_BX.TextAlign = System.Drawing.ContentAlignment.TopRight;
+            // 
+            // label49
+            // 
+            this.label49.Location = new System.Drawing.Point(8, 46);
+            this.label49.Name = "label49";
+            this.label49.Size = new System.Drawing.Size(30, 20);
+            this.label49.TabIndex = 19;
+            this.label49.Text = "Y";
+            // 
+            // label53
+            // 
+            this.label53.Location = new System.Drawing.Point(8, 106);
+            this.label53.Name = "label53";
+            this.label53.Size = new System.Drawing.Size(30, 20);
+            this.label53.TabIndex = 25;
+            this.label53.Text = "B";
+            // 
+            // lb_BA
+            // 
+            this.lb_BA.Font = new System.Drawing.Font("Courier New", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lb_BA.Location = new System.Drawing.Point(53, 85);
+            this.lb_BA.Name = "lb_BA";
+            this.lb_BA.Size = new System.Drawing.Size(70, 20);
+            this.lb_BA.TabIndex = 22;
+            this.lb_BA.Text = "Y";
+            this.lb_BA.TextAlign = System.Drawing.ContentAlignment.TopRight;
+            // 
+            // grp_ACC
+            // 
+            this.grp_ACC.Controls.Add(this.lb_AccORI2);
+            this.grp_ACC.Controls.Add(this.label37);
+            this.grp_ACC.Controls.Add(this.lb_AccORI1);
+            this.grp_ACC.Controls.Add(this.label41);
+            this.grp_ACC.Controls.Add(this.lb_AccCP);
+            this.grp_ACC.Controls.Add(this.label42);
+            this.grp_ACC.Enabled = false;
+            this.grp_ACC.Location = new System.Drawing.Point(524, 200);
+            this.grp_ACC.Margin = new System.Windows.Forms.Padding(5);
+            this.grp_ACC.Name = "grp_ACC";
+            this.grp_ACC.Padding = new System.Windows.Forms.Padding(5);
+            this.grp_ACC.Size = new System.Drawing.Size(141, 98);
+            this.grp_ACC.TabIndex = 29;
+            this.grp_ACC.TabStop = false;
+            this.grp_ACC.Text = "ACC";
+            // 
+            // lb_AccORI2
+            // 
+            this.lb_AccORI2.Font = new System.Drawing.Font("Courier New", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lb_AccORI2.Location = new System.Drawing.Point(53, 71);
+            this.lb_AccORI2.Name = "lb_AccORI2";
+            this.lb_AccORI2.Size = new System.Drawing.Size(70, 20);
+            this.lb_AccORI2.TabIndex = 45;
+            this.lb_AccORI2.Text = "Y";
+            this.lb_AccORI2.TextAlign = System.Drawing.ContentAlignment.TopRight;
+            // 
+            // label37
+            // 
+            this.label37.Location = new System.Drawing.Point(15, 32);
+            this.label37.Name = "label37";
+            this.label37.Size = new System.Drawing.Size(40, 20);
+            this.label37.TabIndex = 17;
+            this.label37.Text = "CP";
+            // 
+            // lb_AccORI1
+            // 
+            this.lb_AccORI1.Font = new System.Drawing.Font("Courier New", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lb_AccORI1.Location = new System.Drawing.Point(53, 51);
+            this.lb_AccORI1.Name = "lb_AccORI1";
+            this.lb_AccORI1.Size = new System.Drawing.Size(70, 20);
+            this.lb_AccORI1.TabIndex = 44;
+            this.lb_AccORI1.Text = "Y";
+            this.lb_AccORI1.TextAlign = System.Drawing.ContentAlignment.TopRight;
+            // 
+            // label41
+            // 
+            this.label41.Location = new System.Drawing.Point(15, 72);
+            this.label41.Name = "label41";
+            this.label41.Size = new System.Drawing.Size(40, 20);
+            this.label41.TabIndex = 21;
+            this.label41.Text = "ORI2";
+            // 
+            // lb_AccCP
+            // 
+            this.lb_AccCP.Font = new System.Drawing.Font("Courier New", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lb_AccCP.Location = new System.Drawing.Point(53, 31);
+            this.lb_AccCP.Name = "lb_AccCP";
+            this.lb_AccCP.Size = new System.Drawing.Size(70, 20);
+            this.lb_AccCP.TabIndex = 43;
+            this.lb_AccCP.Text = "Y";
+            this.lb_AccCP.TextAlign = System.Drawing.ContentAlignment.TopRight;
+            // 
+            // label42
+            // 
+            this.label42.Location = new System.Drawing.Point(15, 52);
+            this.label42.Name = "label42";
+            this.label42.Size = new System.Drawing.Size(40, 20);
+            this.label42.TabIndex = 19;
+            this.label42.Text = "ORI1";
+            // 
+            // grp_VEL
+            // 
+            this.grp_VEL.Controls.Add(this.label62);
+            this.grp_VEL.Controls.Add(this.lb_VelORI2);
+            this.grp_VEL.Controls.Add(this.label63);
+            this.grp_VEL.Controls.Add(this.lb_VelORI1);
+            this.grp_VEL.Controls.Add(this.label70);
+            this.grp_VEL.Controls.Add(this.lb_VelCP);
+            this.grp_VEL.Enabled = false;
+            this.grp_VEL.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.grp_VEL.Location = new System.Drawing.Point(370, 200);
+            this.grp_VEL.Margin = new System.Windows.Forms.Padding(5);
+            this.grp_VEL.Name = "grp_VEL";
+            this.grp_VEL.Padding = new System.Windows.Forms.Padding(5);
+            this.grp_VEL.Size = new System.Drawing.Size(141, 98);
+            this.grp_VEL.TabIndex = 28;
+            this.grp_VEL.TabStop = false;
+            this.grp_VEL.Text = "VEL";
+            // 
+            // label62
+            // 
+            this.label62.Location = new System.Drawing.Point(15, 32);
+            this.label62.Name = "label62";
+            this.label62.Size = new System.Drawing.Size(40, 20);
+            this.label62.TabIndex = 17;
+            this.label62.Text = "CP";
+            // 
+            // lb_VelORI2
+            // 
+            this.lb_VelORI2.Font = new System.Drawing.Font("Courier New", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lb_VelORI2.Location = new System.Drawing.Point(53, 71);
+            this.lb_VelORI2.Name = "lb_VelORI2";
+            this.lb_VelORI2.Size = new System.Drawing.Size(70, 20);
+            this.lb_VelORI2.TabIndex = 42;
+            this.lb_VelORI2.Text = "Y";
+            this.lb_VelORI2.TextAlign = System.Drawing.ContentAlignment.TopRight;
+            // 
+            // label63
+            // 
+            this.label63.Location = new System.Drawing.Point(15, 72);
+            this.label63.Name = "label63";
+            this.label63.Size = new System.Drawing.Size(40, 20);
+            this.label63.TabIndex = 21;
+            this.label63.Text = "ORI2";
+            // 
+            // lb_VelORI1
+            // 
+            this.lb_VelORI1.Font = new System.Drawing.Font("Courier New", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lb_VelORI1.Location = new System.Drawing.Point(53, 52);
+            this.lb_VelORI1.Name = "lb_VelORI1";
+            this.lb_VelORI1.Size = new System.Drawing.Size(70, 20);
+            this.lb_VelORI1.TabIndex = 41;
+            this.lb_VelORI1.Text = "Y";
+            this.lb_VelORI1.TextAlign = System.Drawing.ContentAlignment.TopRight;
+            // 
+            // label70
+            // 
+            this.label70.Location = new System.Drawing.Point(15, 52);
+            this.label70.Name = "label70";
+            this.label70.Size = new System.Drawing.Size(40, 20);
+            this.label70.TabIndex = 19;
+            this.label70.Text = "ORI1";
+            // 
+            // lb_VelCP
+            // 
+            this.lb_VelCP.Font = new System.Drawing.Font("Courier New", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lb_VelCP.Location = new System.Drawing.Point(53, 32);
+            this.lb_VelCP.Name = "lb_VelCP";
+            this.lb_VelCP.Size = new System.Drawing.Size(70, 20);
+            this.lb_VelCP.TabIndex = 40;
+            this.lb_VelCP.Text = "Y";
+            this.lb_VelCP.TextAlign = System.Drawing.ContentAlignment.TopRight;
+            // 
+            // grp_EXT
+            // 
+            this.grp_EXT.Controls.Add(this.lb_E6);
+            this.grp_EXT.Controls.Add(this.label50);
+            this.grp_EXT.Controls.Add(this.lb_E3);
+            this.grp_EXT.Controls.Add(this.label51);
+            this.grp_EXT.Controls.Add(this.lb_E2);
+            this.grp_EXT.Controls.Add(this.label52);
+            this.grp_EXT.Controls.Add(this.lb_E5);
+            this.grp_EXT.Controls.Add(this.label56);
+            this.grp_EXT.Controls.Add(this.lb_E1);
+            this.grp_EXT.Controls.Add(this.lb_E4);
+            this.grp_EXT.Controls.Add(this.label58);
+            this.grp_EXT.Controls.Add(this.label59);
+            this.grp_EXT.Enabled = false;
+            this.grp_EXT.ForeColor = System.Drawing.Color.Black;
+            this.grp_EXT.Location = new System.Drawing.Point(186, 200);
+            this.grp_EXT.Margin = new System.Windows.Forms.Padding(5);
+            this.grp_EXT.Name = "grp_EXT";
+            this.grp_EXT.Padding = new System.Windows.Forms.Padding(5);
+            this.grp_EXT.Size = new System.Drawing.Size(141, 152);
+            this.grp_EXT.TabIndex = 29;
+            this.grp_EXT.TabStop = false;
+            this.grp_EXT.Text = "EXT AXIS";
+            // 
+            // lb_E6
+            // 
+            this.lb_E6.Font = new System.Drawing.Font("Courier New", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lb_E6.Location = new System.Drawing.Point(53, 123);
+            this.lb_E6.Name = "lb_E6";
+            this.lb_E6.Size = new System.Drawing.Size(70, 20);
+            this.lb_E6.TabIndex = 33;
+            this.lb_E6.Text = "Y";
+            this.lb_E6.TextAlign = System.Drawing.ContentAlignment.TopRight;
+            // 
+            // label50
+            // 
+            this.label50.Location = new System.Drawing.Point(8, 26);
+            this.label50.Name = "label50";
+            this.label50.Size = new System.Drawing.Size(30, 20);
+            this.label50.TabIndex = 17;
+            this.label50.Text = "E1";
+            // 
+            // lb_E3
+            // 
+            this.lb_E3.Font = new System.Drawing.Font("Courier New", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lb_E3.Location = new System.Drawing.Point(53, 63);
+            this.lb_E3.Name = "lb_E3";
+            this.lb_E3.Size = new System.Drawing.Size(70, 20);
+            this.lb_E3.TabIndex = 30;
+            this.lb_E3.Text = "Y";
+            this.lb_E3.TextAlign = System.Drawing.ContentAlignment.TopRight;
+            // 
+            // label51
+            // 
+            this.label51.Location = new System.Drawing.Point(8, 66);
+            this.label51.Name = "label51";
+            this.label51.Size = new System.Drawing.Size(30, 20);
+            this.label51.TabIndex = 21;
+            this.label51.Text = "E3";
+            // 
+            // lb_E2
+            // 
+            this.lb_E2.Font = new System.Drawing.Font("Courier New", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lb_E2.Location = new System.Drawing.Point(53, 43);
+            this.lb_E2.Name = "lb_E2";
+            this.lb_E2.Size = new System.Drawing.Size(70, 20);
+            this.lb_E2.TabIndex = 29;
+            this.lb_E2.Text = "Y";
+            this.lb_E2.TextAlign = System.Drawing.ContentAlignment.TopRight;
+            // 
+            // label52
+            // 
+            this.label52.Location = new System.Drawing.Point(8, 126);
+            this.label52.Name = "label52";
+            this.label52.Size = new System.Drawing.Size(30, 20);
+            this.label52.TabIndex = 27;
+            this.label52.Text = "E6";
+            // 
+            // lb_E5
+            // 
+            this.lb_E5.Font = new System.Drawing.Font("Courier New", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lb_E5.Location = new System.Drawing.Point(53, 103);
+            this.lb_E5.Name = "lb_E5";
+            this.lb_E5.Size = new System.Drawing.Size(70, 20);
+            this.lb_E5.TabIndex = 32;
+            this.lb_E5.Text = "Y";
+            this.lb_E5.TextAlign = System.Drawing.ContentAlignment.TopRight;
+            // 
+            // label56
+            // 
+            this.label56.Location = new System.Drawing.Point(8, 86);
+            this.label56.Name = "label56";
+            this.label56.Size = new System.Drawing.Size(30, 20);
+            this.label56.TabIndex = 23;
+            this.label56.Text = "E4";
+            // 
+            // lb_E1
+            // 
+            this.lb_E1.Font = new System.Drawing.Font("Courier New", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lb_E1.Location = new System.Drawing.Point(53, 23);
+            this.lb_E1.Name = "lb_E1";
+            this.lb_E1.Size = new System.Drawing.Size(70, 20);
+            this.lb_E1.TabIndex = 28;
+            this.lb_E1.Text = "Y";
+            this.lb_E1.TextAlign = System.Drawing.ContentAlignment.TopRight;
+            // 
+            // lb_E4
+            // 
+            this.lb_E4.Font = new System.Drawing.Font("Courier New", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lb_E4.Location = new System.Drawing.Point(53, 83);
+            this.lb_E4.Name = "lb_E4";
+            this.lb_E4.Size = new System.Drawing.Size(70, 20);
+            this.lb_E4.TabIndex = 31;
+            this.lb_E4.Text = "Y";
+            this.lb_E4.TextAlign = System.Drawing.ContentAlignment.TopRight;
+            // 
+            // label58
+            // 
+            this.label58.Location = new System.Drawing.Point(8, 46);
+            this.label58.Name = "label58";
+            this.label58.Size = new System.Drawing.Size(30, 20);
+            this.label58.TabIndex = 19;
+            this.label58.Text = "E2";
+            // 
+            // label59
+            // 
+            this.label59.Location = new System.Drawing.Point(8, 106);
+            this.label59.Name = "label59";
+            this.label59.Size = new System.Drawing.Size(30, 20);
+            this.label59.TabIndex = 25;
+            this.label59.Text = "E5";
+            // 
+            // grp_AXIS
+            // 
+            this.grp_AXIS.Controls.Add(this.lb_A6);
+            this.grp_AXIS.Controls.Add(this.label38);
+            this.grp_AXIS.Controls.Add(this.lb_A3);
+            this.grp_AXIS.Controls.Add(this.label39);
+            this.grp_AXIS.Controls.Add(this.lb_A2);
+            this.grp_AXIS.Controls.Add(this.label40);
+            this.grp_AXIS.Controls.Add(this.lb_A5);
+            this.grp_AXIS.Controls.Add(this.label44);
+            this.grp_AXIS.Controls.Add(this.lb_A1);
+            this.grp_AXIS.Controls.Add(this.lb_A4);
+            this.grp_AXIS.Controls.Add(this.label46);
+            this.grp_AXIS.Controls.Add(this.label47);
+            this.grp_AXIS.Enabled = false;
+            this.grp_AXIS.ForeColor = System.Drawing.Color.Blue;
+            this.grp_AXIS.Location = new System.Drawing.Point(186, 38);
+            this.grp_AXIS.Margin = new System.Windows.Forms.Padding(5);
+            this.grp_AXIS.Name = "grp_AXIS";
+            this.grp_AXIS.Padding = new System.Windows.Forms.Padding(5);
+            this.grp_AXIS.Size = new System.Drawing.Size(141, 152);
+            this.grp_AXIS.TabIndex = 28;
+            this.grp_AXIS.TabStop = false;
+            this.grp_AXIS.Text = "ROB AXIS";
+            // 
+            // lb_A6
+            // 
+            this.lb_A6.Font = new System.Drawing.Font("Courier New", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lb_A6.Location = new System.Drawing.Point(53, 125);
+            this.lb_A6.Name = "lb_A6";
+            this.lb_A6.Size = new System.Drawing.Size(70, 20);
+            this.lb_A6.TabIndex = 39;
+            this.lb_A6.Text = "Y";
+            this.lb_A6.TextAlign = System.Drawing.ContentAlignment.TopRight;
+            // 
+            // label38
+            // 
+            this.label38.Location = new System.Drawing.Point(8, 26);
+            this.label38.Name = "label38";
+            this.label38.Size = new System.Drawing.Size(30, 20);
+            this.label38.TabIndex = 17;
+            this.label38.Text = "A1";
+            // 
+            // lb_A3
+            // 
+            this.lb_A3.Font = new System.Drawing.Font("Courier New", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lb_A3.Location = new System.Drawing.Point(53, 65);
+            this.lb_A3.Name = "lb_A3";
+            this.lb_A3.Size = new System.Drawing.Size(70, 20);
+            this.lb_A3.TabIndex = 36;
+            this.lb_A3.Text = "Y";
+            this.lb_A3.TextAlign = System.Drawing.ContentAlignment.TopRight;
+            // 
+            // label39
+            // 
+            this.label39.Location = new System.Drawing.Point(8, 66);
+            this.label39.Name = "label39";
+            this.label39.Size = new System.Drawing.Size(30, 20);
+            this.label39.TabIndex = 21;
+            this.label39.Text = "A3";
+            // 
+            // lb_A2
+            // 
+            this.lb_A2.Font = new System.Drawing.Font("Courier New", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lb_A2.Location = new System.Drawing.Point(53, 45);
+            this.lb_A2.Name = "lb_A2";
+            this.lb_A2.Size = new System.Drawing.Size(70, 20);
+            this.lb_A2.TabIndex = 35;
+            this.lb_A2.Text = "Y";
+            this.lb_A2.TextAlign = System.Drawing.ContentAlignment.TopRight;
+            // 
+            // label40
+            // 
+            this.label40.Location = new System.Drawing.Point(8, 126);
+            this.label40.Name = "label40";
+            this.label40.Size = new System.Drawing.Size(30, 20);
+            this.label40.TabIndex = 27;
+            this.label40.Text = "A6";
+            // 
+            // lb_A5
+            // 
+            this.lb_A5.Font = new System.Drawing.Font("Courier New", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lb_A5.Location = new System.Drawing.Point(53, 105);
+            this.lb_A5.Name = "lb_A5";
+            this.lb_A5.Size = new System.Drawing.Size(70, 20);
+            this.lb_A5.TabIndex = 38;
+            this.lb_A5.Text = "Y";
+            this.lb_A5.TextAlign = System.Drawing.ContentAlignment.TopRight;
+            // 
+            // label44
+            // 
+            this.label44.Location = new System.Drawing.Point(8, 86);
+            this.label44.Name = "label44";
+            this.label44.Size = new System.Drawing.Size(30, 20);
+            this.label44.TabIndex = 23;
+            this.label44.Text = "A4";
+            // 
+            // lb_A1
+            // 
+            this.lb_A1.Font = new System.Drawing.Font("Courier New", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lb_A1.Location = new System.Drawing.Point(53, 25);
+            this.lb_A1.Name = "lb_A1";
+            this.lb_A1.Size = new System.Drawing.Size(70, 20);
+            this.lb_A1.TabIndex = 34;
+            this.lb_A1.Text = "Y";
+            this.lb_A1.TextAlign = System.Drawing.ContentAlignment.TopRight;
+            // 
+            // lb_A4
+            // 
+            this.lb_A4.Font = new System.Drawing.Font("Courier New", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lb_A4.Location = new System.Drawing.Point(53, 85);
+            this.lb_A4.Name = "lb_A4";
+            this.lb_A4.Size = new System.Drawing.Size(70, 20);
+            this.lb_A4.TabIndex = 37;
+            this.lb_A4.Text = "Y";
+            this.lb_A4.TextAlign = System.Drawing.ContentAlignment.TopRight;
+            // 
+            // label46
+            // 
+            this.label46.Location = new System.Drawing.Point(8, 46);
+            this.label46.Name = "label46";
+            this.label46.Size = new System.Drawing.Size(30, 20);
+            this.label46.TabIndex = 19;
+            this.label46.Text = "A2";
+            // 
+            // label47
+            // 
+            this.label47.Location = new System.Drawing.Point(8, 106);
+            this.label47.Name = "label47";
+            this.label47.Size = new System.Drawing.Size(30, 20);
+            this.label47.TabIndex = 25;
+            this.label47.Text = "A5";
+            // 
+            // grp_TCP
+            // 
+            this.grp_TCP.Controls.Add(this.lb_OV);
+            this.grp_TCP.Controls.Add(this.label33);
+            this.grp_TCP.Controls.Add(this.lb_S);
+            this.grp_TCP.Controls.Add(this.label55);
+            this.grp_TCP.Controls.Add(this.lb_T);
+            this.grp_TCP.Controls.Add(this.label65);
+            this.grp_TCP.Controls.Add(this.lb_C);
+            this.grp_TCP.Controls.Add(this.label25);
+            this.grp_TCP.Controls.Add(this.label30);
+            this.grp_TCP.Controls.Add(this.label36);
+            this.grp_TCP.Controls.Add(this.lb_Z);
+            this.grp_TCP.Controls.Add(this.lb_Y);
+            this.grp_TCP.Controls.Add(this.lb_B);
+            this.grp_TCP.Controls.Add(this.label32);
+            this.grp_TCP.Controls.Add(this.lb_X);
+            this.grp_TCP.Controls.Add(this.label28);
+            this.grp_TCP.Controls.Add(this.label34);
+            this.grp_TCP.Controls.Add(this.lb_A);
+            this.grp_TCP.Enabled = false;
+            this.grp_TCP.ForeColor = System.Drawing.Color.Red;
+            this.grp_TCP.Location = new System.Drawing.Point(35, 38);
+            this.grp_TCP.Margin = new System.Windows.Forms.Padding(5);
+            this.grp_TCP.Name = "grp_TCP";
+            this.grp_TCP.Padding = new System.Windows.Forms.Padding(5);
+            this.grp_TCP.Size = new System.Drawing.Size(141, 314);
+            this.grp_TCP.TabIndex = 22;
+            this.grp_TCP.TabStop = false;
+            this.grp_TCP.Text = "TCP";
+            // 
+            // lb_OV
+            // 
+            this.lb_OV.Font = new System.Drawing.Font("Courier New", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lb_OV.Location = new System.Drawing.Point(53, 285);
+            this.lb_OV.Name = "lb_OV";
+            this.lb_OV.Size = new System.Drawing.Size(70, 20);
+            this.lb_OV.TabIndex = 32;
+            this.lb_OV.Text = "Y";
+            this.lb_OV.TextAlign = System.Drawing.ContentAlignment.TopRight;
+            // 
+            // label33
+            // 
+            this.label33.Location = new System.Drawing.Point(8, 286);
+            this.label33.Name = "label33";
+            this.label33.Size = new System.Drawing.Size(30, 20);
+            this.label33.TabIndex = 33;
+            this.label33.Text = "$OV";
+            // 
+            // lb_S
+            // 
+            this.lb_S.Font = new System.Drawing.Font("Courier New", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lb_S.Location = new System.Drawing.Point(53, 165);
+            this.lb_S.Name = "lb_S";
+            this.lb_S.Size = new System.Drawing.Size(70, 20);
+            this.lb_S.TabIndex = 30;
+            this.lb_S.Text = "Y";
+            this.lb_S.TextAlign = System.Drawing.ContentAlignment.TopRight;
+            // 
+            // label55
+            // 
+            this.label55.Location = new System.Drawing.Point(8, 166);
+            this.label55.Name = "label55";
+            this.label55.Size = new System.Drawing.Size(30, 20);
+            this.label55.TabIndex = 31;
+            this.label55.Text = "S";
+            // 
+            // lb_T
+            // 
+            this.lb_T.Font = new System.Drawing.Font("Courier New", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lb_T.Location = new System.Drawing.Point(53, 185);
+            this.lb_T.Name = "lb_T";
+            this.lb_T.Size = new System.Drawing.Size(70, 20);
+            this.lb_T.TabIndex = 28;
+            this.lb_T.Text = "Y";
+            this.lb_T.TextAlign = System.Drawing.ContentAlignment.TopRight;
+            // 
+            // label65
+            // 
+            this.label65.Location = new System.Drawing.Point(8, 186);
+            this.label65.Name = "label65";
+            this.label65.Size = new System.Drawing.Size(30, 20);
+            this.label65.TabIndex = 29;
+            this.label65.Text = "T";
+            // 
+            // lb_C
+            // 
+            this.lb_C.Font = new System.Drawing.Font("Courier New", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lb_C.Location = new System.Drawing.Point(53, 125);
+            this.lb_C.Name = "lb_C";
+            this.lb_C.Size = new System.Drawing.Size(70, 20);
+            this.lb_C.TabIndex = 26;
+            this.lb_C.Text = "Y";
+            this.lb_C.TextAlign = System.Drawing.ContentAlignment.TopRight;
+            // 
+            // label25
+            // 
+            this.label25.Location = new System.Drawing.Point(8, 26);
+            this.label25.Name = "label25";
+            this.label25.Size = new System.Drawing.Size(30, 20);
+            this.label25.TabIndex = 17;
+            this.label25.Text = "X";
+            // 
+            // label30
+            // 
+            this.label30.Location = new System.Drawing.Point(8, 66);
+            this.label30.Name = "label30";
+            this.label30.Size = new System.Drawing.Size(30, 20);
+            this.label30.TabIndex = 21;
+            this.label30.Text = "Z";
+            // 
+            // label36
+            // 
+            this.label36.Location = new System.Drawing.Point(8, 126);
+            this.label36.Name = "label36";
+            this.label36.Size = new System.Drawing.Size(30, 20);
+            this.label36.TabIndex = 27;
+            this.label36.Text = "C";
+            // 
+            // lb_Z
+            // 
+            this.lb_Z.Font = new System.Drawing.Font("Courier New", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lb_Z.Location = new System.Drawing.Point(53, 65);
+            this.lb_Z.Name = "lb_Z";
+            this.lb_Z.Size = new System.Drawing.Size(70, 20);
+            this.lb_Z.TabIndex = 20;
+            this.lb_Z.Text = "Y";
+            this.lb_Z.TextAlign = System.Drawing.ContentAlignment.TopRight;
+            // 
+            // lb_Y
+            // 
+            this.lb_Y.Font = new System.Drawing.Font("Courier New", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lb_Y.Location = new System.Drawing.Point(53, 45);
+            this.lb_Y.Name = "lb_Y";
+            this.lb_Y.Size = new System.Drawing.Size(70, 20);
+            this.lb_Y.TabIndex = 18;
+            this.lb_Y.Text = "Y";
+            this.lb_Y.TextAlign = System.Drawing.ContentAlignment.TopRight;
+            // 
+            // lb_B
+            // 
+            this.lb_B.Font = new System.Drawing.Font("Courier New", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lb_B.Location = new System.Drawing.Point(53, 105);
+            this.lb_B.Name = "lb_B";
+            this.lb_B.Size = new System.Drawing.Size(70, 20);
+            this.lb_B.TabIndex = 24;
+            this.lb_B.Text = "Y";
+            this.lb_B.TextAlign = System.Drawing.ContentAlignment.TopRight;
+            // 
+            // label32
+            // 
+            this.label32.Location = new System.Drawing.Point(8, 86);
+            this.label32.Name = "label32";
+            this.label32.Size = new System.Drawing.Size(30, 20);
+            this.label32.TabIndex = 23;
+            this.label32.Text = "A";
+            // 
+            // lb_X
+            // 
+            this.lb_X.Font = new System.Drawing.Font("Courier New", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lb_X.Location = new System.Drawing.Point(53, 25);
+            this.lb_X.Name = "lb_X";
+            this.lb_X.Size = new System.Drawing.Size(70, 20);
+            this.lb_X.TabIndex = 16;
+            this.lb_X.Text = "Y";
+            this.lb_X.TextAlign = System.Drawing.ContentAlignment.TopRight;
+            // 
+            // label28
+            // 
+            this.label28.Location = new System.Drawing.Point(8, 46);
+            this.label28.Name = "label28";
+            this.label28.Size = new System.Drawing.Size(30, 20);
+            this.label28.TabIndex = 19;
+            this.label28.Text = "Y";
+            // 
+            // label34
+            // 
+            this.label34.Location = new System.Drawing.Point(8, 106);
+            this.label34.Name = "label34";
+            this.label34.Size = new System.Drawing.Size(30, 20);
+            this.label34.TabIndex = 25;
+            this.label34.Text = "B";
+            // 
+            // lb_A
+            // 
+            this.lb_A.Font = new System.Drawing.Font("Courier New", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lb_A.Location = new System.Drawing.Point(53, 85);
+            this.lb_A.Name = "lb_A";
+            this.lb_A.Size = new System.Drawing.Size(70, 20);
+            this.lb_A.TabIndex = 22;
+            this.lb_A.Text = "Y";
+            this.lb_A.TextAlign = System.Drawing.ContentAlignment.TopRight;
+            // 
+            // tabPage6
+            // 
+            this.tabPage6.Controls.Add(this.textBoxFilterData);
+            this.tabPage6.Controls.Add(this.objectListView);
+            this.tabPage6.Controls.Add(this.cb_IO);
+            this.tabPage6.Controls.Add(this.button3);
+            this.tabPage6.Controls.Add(this.button4);
+            this.tabPage6.Controls.Add(this.button5);
+            this.tabPage6.Controls.Add(this.btIO_Add);
+            this.tabPage6.Controls.Add(this.btIO_Remove);
+            this.tabPage6.Controls.Add(this.button8);
+            this.tabPage6.Controls.Add(this.label35);
+            this.tabPage6.Location = new System.Drawing.Point(4, 22);
+            this.tabPage6.Name = "tabPage6";
+            this.tabPage6.Size = new System.Drawing.Size(687, 393);
+            this.tabPage6.TabIndex = 5;
+            this.tabPage6.Text = "Monitoring IO";
+            this.tabPage6.UseVisualStyleBackColor = true;
+            // 
+            // textBoxFilterData
+            // 
+            this.textBoxFilterData.Location = new System.Drawing.Point(315, 22);
+            this.textBoxFilterData.Name = "textBoxFilterData";
+            this.textBoxFilterData.Size = new System.Drawing.Size(100, 20);
+            this.textBoxFilterData.TabIndex = 70;
+            this.textBoxFilterData.TextChanged += new System.EventHandler(this.textBoxFilterData_TextChanged);
+            // 
+            // objectListView
+            // 
+            this.objectListView.AllColumns.Add(this.olvColName);
+            this.objectListView.AllColumns.Add(this.olvColTag);
+            this.objectListView.AllColumns.Add(this.olvColGroup);
+            this.objectListView.AllColumns.Add(this.olvColValue);
+            this.objectListView.AllColumns.Add(this.olvColType);
+            this.objectListView.CellEditUseWholeCell = false;
+            this.objectListView.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
+            this.olvColName,
+            this.olvColTag,
+            this.olvColGroup,
+            this.olvColValue,
+            this.olvColType});
+            this.objectListView.Cursor = System.Windows.Forms.Cursors.Default;
+            this.objectListView.DataSource = null;
+            this.objectListView.Location = new System.Drawing.Point(15, 64);
+            this.objectListView.Name = "objectListView";
+            this.objectListView.Size = new System.Drawing.Size(400, 296);
+            this.objectListView.TabIndex = 68;
+            this.objectListView.UseCompatibleStateImageBehavior = false;
+            this.objectListView.UseFiltering = true;
+            this.objectListView.View = System.Windows.Forms.View.Details;
+            // 
+            // olvColName
+            // 
+            this.olvColName.AspectName = "Name";
+            this.olvColName.Groupable = false;
+            this.olvColName.Sortable = false;
+            this.olvColName.Text = "Name";
+            // 
+            // olvColTag
+            // 
+            this.olvColTag.AspectName = "Tag";
+            this.olvColTag.Groupable = false;
+            this.olvColTag.Sortable = false;
+            this.olvColTag.Text = "Tag";
+            // 
+            // olvColGroup
+            // 
+            this.olvColGroup.AspectName = "Group";
+            this.olvColGroup.Text = "Group";
+            // 
+            // olvColValue
+            // 
+            this.olvColValue.AspectName = "Value";
+            this.olvColValue.Groupable = false;
+            this.olvColValue.Sortable = false;
+            this.olvColValue.Text = "Value";
+            // 
+            // olvColType
+            // 
+            this.olvColType.AspectName = "Type";
+            this.olvColType.IsEditable = false;
+            this.olvColType.Text = "Type";
+            // 
+            // cb_IO
+            // 
+            this.cb_IO.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cb_IO.FormattingEnabled = true;
+            this.cb_IO.Location = new System.Drawing.Point(15, 22);
+            this.cb_IO.Name = "cb_IO";
+            this.cb_IO.Size = new System.Drawing.Size(150, 21);
+            this.cb_IO.TabIndex = 59;
+            // 
+            // label35
+            // 
+            this.label35.AutoSize = true;
+            this.label35.Location = new System.Drawing.Point(12, 6);
+            this.label35.Name = "label35";
+            this.label35.Size = new System.Drawing.Size(76, 13);
+            this.label35.TabIndex = 51;
+            this.label35.Text = "Select a group";
             // 
             // tabPage5
             // 
@@ -1078,8 +1895,8 @@
             // 
             // groupBox3
             // 
-            this.groupBox3.Controls.Add(this.btStop);
-            this.groupBox3.Controls.Add(this.btStart);
+            this.groupBox3.Controls.Add(this.ckMonitor);
+            this.groupBox3.Controls.Add(this.ckConnect);
             this.groupBox3.Controls.Add(this.lbConnectionStatus);
             this.groupBox3.Controls.Add(this.label6);
             this.groupBox3.Location = new System.Drawing.Point(12, 12);
@@ -1089,753 +1906,281 @@
             this.groupBox3.TabStop = false;
             this.groupBox3.Text = "Start/Stop";
             // 
-            // btMonitor
-            // 
-            this.btMonitor.Location = new System.Drawing.Point(201, 242);
-            this.btMonitor.Name = "btMonitor";
-            this.btMonitor.Size = new System.Drawing.Size(100, 24);
-            this.btMonitor.TabIndex = 12;
-            this.btMonitor.Text = "Start";
-            this.btMonitor.UseVisualStyleBackColor = true;
-            this.btMonitor.Click += new System.EventHandler(this.btMonitor_Click);
-            // 
-            // lb_X
-            // 
-            this.lb_X.Location = new System.Drawing.Point(49, 26);
-            this.lb_X.Name = "lb_X";
-            this.lb_X.Size = new System.Drawing.Size(80, 20);
-            this.lb_X.TabIndex = 16;
-            this.lb_X.Text = "Y";
-            // 
-            // label25
-            // 
-            this.label25.Location = new System.Drawing.Point(8, 26);
-            this.label25.Name = "label25";
-            this.label25.Size = new System.Drawing.Size(30, 20);
-            this.label25.TabIndex = 17;
-            this.label25.Text = "X";
-            // 
-            // grp_TCP
-            // 
-            this.grp_TCP.Controls.Add(this.lb_C);
-            this.grp_TCP.Controls.Add(this.label25);
-            this.grp_TCP.Controls.Add(this.label30);
-            this.grp_TCP.Controls.Add(this.label36);
-            this.grp_TCP.Controls.Add(this.lb_Z);
-            this.grp_TCP.Controls.Add(this.lb_Y);
-            this.grp_TCP.Controls.Add(this.lb_B);
-            this.grp_TCP.Controls.Add(this.label32);
-            this.grp_TCP.Controls.Add(this.lb_X);
-            this.grp_TCP.Controls.Add(this.label28);
-            this.grp_TCP.Controls.Add(this.label34);
-            this.grp_TCP.Controls.Add(this.lb_A);
-            this.grp_TCP.Enabled = false;
-            this.grp_TCP.ForeColor = System.Drawing.Color.Red;
-            this.grp_TCP.Location = new System.Drawing.Point(24, 38);
-            this.grp_TCP.Margin = new System.Windows.Forms.Padding(5);
-            this.grp_TCP.Name = "grp_TCP";
-            this.grp_TCP.Padding = new System.Windows.Forms.Padding(5);
-            this.grp_TCP.Size = new System.Drawing.Size(141, 152);
-            this.grp_TCP.TabIndex = 22;
-            this.grp_TCP.TabStop = false;
-            this.grp_TCP.Text = "TCP";
-            // 
-            // lb_Y
-            // 
-            this.lb_Y.Location = new System.Drawing.Point(49, 46);
-            this.lb_Y.Name = "lb_Y";
-            this.lb_Y.Size = new System.Drawing.Size(80, 20);
-            this.lb_Y.TabIndex = 18;
-            this.lb_Y.Text = "Y";
-            // 
-            // label28
-            // 
-            this.label28.Location = new System.Drawing.Point(8, 46);
-            this.label28.Name = "label28";
-            this.label28.Size = new System.Drawing.Size(30, 20);
-            this.label28.TabIndex = 19;
-            this.label28.Text = "Y";
-            // 
-            // lb_Z
-            // 
-            this.lb_Z.Location = new System.Drawing.Point(49, 66);
-            this.lb_Z.Name = "lb_Z";
-            this.lb_Z.Size = new System.Drawing.Size(80, 20);
-            this.lb_Z.TabIndex = 20;
-            this.lb_Z.Text = "Y";
-            // 
-            // label30
-            // 
-            this.label30.Location = new System.Drawing.Point(8, 66);
-            this.label30.Name = "label30";
-            this.label30.Size = new System.Drawing.Size(30, 20);
-            this.label30.TabIndex = 21;
-            this.label30.Text = "Z";
-            // 
-            // lb_A
-            // 
-            this.lb_A.Location = new System.Drawing.Point(49, 86);
-            this.lb_A.Name = "lb_A";
-            this.lb_A.Size = new System.Drawing.Size(80, 20);
-            this.lb_A.TabIndex = 22;
-            this.lb_A.Text = "Y";
-            // 
-            // label32
-            // 
-            this.label32.Location = new System.Drawing.Point(8, 86);
-            this.label32.Name = "label32";
-            this.label32.Size = new System.Drawing.Size(30, 20);
-            this.label32.TabIndex = 23;
-            this.label32.Text = "A";
-            // 
-            // lb_B
-            // 
-            this.lb_B.Location = new System.Drawing.Point(49, 106);
-            this.lb_B.Name = "lb_B";
-            this.lb_B.Size = new System.Drawing.Size(80, 20);
-            this.lb_B.TabIndex = 24;
-            this.lb_B.Text = "Y";
-            // 
-            // label34
-            // 
-            this.label34.Location = new System.Drawing.Point(8, 106);
-            this.label34.Name = "label34";
-            this.label34.Size = new System.Drawing.Size(30, 20);
-            this.label34.TabIndex = 25;
-            this.label34.Text = "B";
-            // 
-            // lb_C
-            // 
-            this.lb_C.Location = new System.Drawing.Point(49, 126);
-            this.lb_C.Name = "lb_C";
-            this.lb_C.Size = new System.Drawing.Size(80, 20);
-            this.lb_C.TabIndex = 26;
-            this.lb_C.Text = "Y";
-            // 
-            // label36
-            // 
-            this.label36.Location = new System.Drawing.Point(8, 126);
-            this.label36.Name = "label36";
-            this.label36.Size = new System.Drawing.Size(30, 20);
-            this.label36.TabIndex = 27;
-            this.label36.Text = "C";
-            // 
-            // grp_AXIS
-            // 
-            this.grp_AXIS.Controls.Add(this.lb_A6);
-            this.grp_AXIS.Controls.Add(this.label38);
-            this.grp_AXIS.Controls.Add(this.lb_A3);
-            this.grp_AXIS.Controls.Add(this.label39);
-            this.grp_AXIS.Controls.Add(this.lb_A2);
-            this.grp_AXIS.Controls.Add(this.label40);
-            this.grp_AXIS.Controls.Add(this.lb_A5);
-            this.grp_AXIS.Controls.Add(this.label44);
-            this.grp_AXIS.Controls.Add(this.lb_A1);
-            this.grp_AXIS.Controls.Add(this.lb_A4);
-            this.grp_AXIS.Controls.Add(this.label46);
-            this.grp_AXIS.Controls.Add(this.label47);
-            this.grp_AXIS.Enabled = false;
-            this.grp_AXIS.ForeColor = System.Drawing.Color.Blue;
-            this.grp_AXIS.Location = new System.Drawing.Point(24, 200);
-            this.grp_AXIS.Margin = new System.Windows.Forms.Padding(5);
-            this.grp_AXIS.Name = "grp_AXIS";
-            this.grp_AXIS.Padding = new System.Windows.Forms.Padding(5);
-            this.grp_AXIS.Size = new System.Drawing.Size(141, 152);
-            this.grp_AXIS.TabIndex = 28;
-            this.grp_AXIS.TabStop = false;
-            this.grp_AXIS.Text = "ROB AXIS";
-            // 
-            // label38
-            // 
-            this.label38.Location = new System.Drawing.Point(8, 26);
-            this.label38.Name = "label38";
-            this.label38.Size = new System.Drawing.Size(30, 20);
-            this.label38.TabIndex = 17;
-            this.label38.Text = "A1";
-            // 
-            // label39
-            // 
-            this.label39.Location = new System.Drawing.Point(8, 66);
-            this.label39.Name = "label39";
-            this.label39.Size = new System.Drawing.Size(30, 20);
-            this.label39.TabIndex = 21;
-            this.label39.Text = "A3";
-            // 
-            // label40
-            // 
-            this.label40.Location = new System.Drawing.Point(8, 126);
-            this.label40.Name = "label40";
-            this.label40.Size = new System.Drawing.Size(30, 20);
-            this.label40.TabIndex = 27;
-            this.label40.Text = "A6";
-            // 
-            // label44
-            // 
-            this.label44.Location = new System.Drawing.Point(8, 86);
-            this.label44.Name = "label44";
-            this.label44.Size = new System.Drawing.Size(30, 20);
-            this.label44.TabIndex = 23;
-            this.label44.Text = "A4";
-            // 
-            // label46
-            // 
-            this.label46.Location = new System.Drawing.Point(8, 46);
-            this.label46.Name = "label46";
-            this.label46.Size = new System.Drawing.Size(30, 20);
-            this.label46.TabIndex = 19;
-            this.label46.Text = "A2";
-            // 
-            // label47
-            // 
-            this.label47.Location = new System.Drawing.Point(8, 106);
-            this.label47.Name = "label47";
-            this.label47.Size = new System.Drawing.Size(30, 20);
-            this.label47.TabIndex = 25;
-            this.label47.Text = "A5";
-            // 
-            // grp_EXT
-            // 
-            this.grp_EXT.Controls.Add(this.lb_E6);
-            this.grp_EXT.Controls.Add(this.label50);
-            this.grp_EXT.Controls.Add(this.lb_E3);
-            this.grp_EXT.Controls.Add(this.label51);
-            this.grp_EXT.Controls.Add(this.lb_E2);
-            this.grp_EXT.Controls.Add(this.label52);
-            this.grp_EXT.Controls.Add(this.lb_E5);
-            this.grp_EXT.Controls.Add(this.label56);
-            this.grp_EXT.Controls.Add(this.lb_E1);
-            this.grp_EXT.Controls.Add(this.lb_E4);
-            this.grp_EXT.Controls.Add(this.label58);
-            this.grp_EXT.Controls.Add(this.label59);
-            this.grp_EXT.Enabled = false;
-            this.grp_EXT.ForeColor = System.Drawing.Color.Black;
-            this.grp_EXT.Location = new System.Drawing.Point(175, 38);
-            this.grp_EXT.Margin = new System.Windows.Forms.Padding(5);
-            this.grp_EXT.Name = "grp_EXT";
-            this.grp_EXT.Padding = new System.Windows.Forms.Padding(5);
-            this.grp_EXT.Size = new System.Drawing.Size(141, 152);
-            this.grp_EXT.TabIndex = 29;
-            this.grp_EXT.TabStop = false;
-            this.grp_EXT.Text = "EXT AXIS";
-            // 
-            // label50
-            // 
-            this.label50.Location = new System.Drawing.Point(8, 26);
-            this.label50.Name = "label50";
-            this.label50.Size = new System.Drawing.Size(30, 20);
-            this.label50.TabIndex = 17;
-            this.label50.Text = "E1";
-            // 
-            // label51
-            // 
-            this.label51.Location = new System.Drawing.Point(8, 66);
-            this.label51.Name = "label51";
-            this.label51.Size = new System.Drawing.Size(30, 20);
-            this.label51.TabIndex = 21;
-            this.label51.Text = "E3";
-            // 
-            // label52
-            // 
-            this.label52.Location = new System.Drawing.Point(8, 126);
-            this.label52.Name = "label52";
-            this.label52.Size = new System.Drawing.Size(30, 20);
-            this.label52.TabIndex = 27;
-            this.label52.Text = "E6";
-            // 
-            // label56
-            // 
-            this.label56.Location = new System.Drawing.Point(8, 86);
-            this.label56.Name = "label56";
-            this.label56.Size = new System.Drawing.Size(30, 20);
-            this.label56.TabIndex = 23;
-            this.label56.Text = "E4";
-            // 
-            // label58
-            // 
-            this.label58.Location = new System.Drawing.Point(8, 46);
-            this.label58.Name = "label58";
-            this.label58.Size = new System.Drawing.Size(30, 20);
-            this.label58.TabIndex = 19;
-            this.label58.Text = "E2";
-            // 
-            // label59
-            // 
-            this.label59.Location = new System.Drawing.Point(8, 106);
-            this.label59.Name = "label59";
-            this.label59.Size = new System.Drawing.Size(30, 20);
-            this.label59.TabIndex = 25;
-            this.label59.Text = "E5";
-            // 
-            // grp_VEL
-            // 
-            this.grp_VEL.Controls.Add(this.label62);
-            this.grp_VEL.Controls.Add(this.lb_VelORI2);
-            this.grp_VEL.Controls.Add(this.label63);
-            this.grp_VEL.Controls.Add(this.lb_VelORI1);
-            this.grp_VEL.Controls.Add(this.label70);
-            this.grp_VEL.Controls.Add(this.lb_VelCP);
-            this.grp_VEL.Enabled = false;
-            this.grp_VEL.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.grp_VEL.Location = new System.Drawing.Point(378, 200);
-            this.grp_VEL.Margin = new System.Windows.Forms.Padding(5);
-            this.grp_VEL.Name = "grp_VEL";
-            this.grp_VEL.Padding = new System.Windows.Forms.Padding(5);
-            this.grp_VEL.Size = new System.Drawing.Size(141, 92);
-            this.grp_VEL.TabIndex = 28;
-            this.grp_VEL.TabStop = false;
-            this.grp_VEL.Text = "VEL";
-            // 
-            // label62
-            // 
-            this.label62.Location = new System.Drawing.Point(15, 32);
-            this.label62.Name = "label62";
-            this.label62.Size = new System.Drawing.Size(40, 20);
-            this.label62.TabIndex = 17;
-            this.label62.Text = "CP";
-            // 
-            // label63
-            // 
-            this.label63.Location = new System.Drawing.Point(15, 72);
-            this.label63.Name = "label63";
-            this.label63.Size = new System.Drawing.Size(40, 20);
-            this.label63.TabIndex = 21;
-            this.label63.Text = "ORI2";
-            // 
-            // label70
-            // 
-            this.label70.Location = new System.Drawing.Point(15, 52);
-            this.label70.Name = "label70";
-            this.label70.Size = new System.Drawing.Size(40, 20);
-            this.label70.TabIndex = 19;
-            this.label70.Text = "ORI1";
-            // 
-            // grp_ACC
-            // 
-            this.grp_ACC.Controls.Add(this.lb_AccORI2);
-            this.grp_ACC.Controls.Add(this.label37);
-            this.grp_ACC.Controls.Add(this.lb_AccORI1);
-            this.grp_ACC.Controls.Add(this.label41);
-            this.grp_ACC.Controls.Add(this.lb_AccCP);
-            this.grp_ACC.Controls.Add(this.label42);
-            this.grp_ACC.Enabled = false;
-            this.grp_ACC.Location = new System.Drawing.Point(529, 200);
-            this.grp_ACC.Margin = new System.Windows.Forms.Padding(5);
-            this.grp_ACC.Name = "grp_ACC";
-            this.grp_ACC.Padding = new System.Windows.Forms.Padding(5);
-            this.grp_ACC.Size = new System.Drawing.Size(141, 92);
-            this.grp_ACC.TabIndex = 29;
-            this.grp_ACC.TabStop = false;
-            this.grp_ACC.Text = "ACC";
-            // 
-            // label37
-            // 
-            this.label37.Location = new System.Drawing.Point(15, 32);
-            this.label37.Name = "label37";
-            this.label37.Size = new System.Drawing.Size(40, 20);
-            this.label37.TabIndex = 17;
-            this.label37.Text = "CP";
-            // 
-            // label41
-            // 
-            this.label41.Location = new System.Drawing.Point(15, 72);
-            this.label41.Name = "label41";
-            this.label41.Size = new System.Drawing.Size(40, 20);
-            this.label41.TabIndex = 21;
-            this.label41.Text = "ORI2";
-            // 
-            // label42
-            // 
-            this.label42.Location = new System.Drawing.Point(15, 52);
-            this.label42.Name = "label42";
-            this.label42.Size = new System.Drawing.Size(40, 20);
-            this.label42.TabIndex = 19;
-            this.label42.Text = "ORI1";
-            // 
-            // grp_BASE
-            // 
-            this.grp_BASE.Controls.Add(this.lb_BC);
-            this.grp_BASE.Controls.Add(this.label27);
-            this.grp_BASE.Controls.Add(this.label29);
-            this.grp_BASE.Controls.Add(this.label31);
-            this.grp_BASE.Controls.Add(this.lb_BZ);
-            this.grp_BASE.Controls.Add(this.lb_BY);
-            this.grp_BASE.Controls.Add(this.lb_BB);
-            this.grp_BASE.Controls.Add(this.label45);
-            this.grp_BASE.Controls.Add(this.lb_BX);
-            this.grp_BASE.Controls.Add(this.label49);
-            this.grp_BASE.Controls.Add(this.label53);
-            this.grp_BASE.Controls.Add(this.lb_BA);
-            this.grp_BASE.Enabled = false;
-            this.grp_BASE.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(128)))), ((int)(((byte)(0)))));
-            this.grp_BASE.Location = new System.Drawing.Point(378, 38);
-            this.grp_BASE.Margin = new System.Windows.Forms.Padding(5);
-            this.grp_BASE.Name = "grp_BASE";
-            this.grp_BASE.Padding = new System.Windows.Forms.Padding(5);
-            this.grp_BASE.Size = new System.Drawing.Size(141, 152);
-            this.grp_BASE.TabIndex = 28;
-            this.grp_BASE.TabStop = false;
-            this.grp_BASE.Text = "BASE";
-            // 
-            // lb_BC
-            // 
-            this.lb_BC.Location = new System.Drawing.Point(49, 126);
-            this.lb_BC.Name = "lb_BC";
-            this.lb_BC.Size = new System.Drawing.Size(80, 20);
-            this.lb_BC.TabIndex = 26;
-            this.lb_BC.Text = "Y";
-            // 
-            // label27
-            // 
-            this.label27.Location = new System.Drawing.Point(8, 26);
-            this.label27.Name = "label27";
-            this.label27.Size = new System.Drawing.Size(30, 20);
-            this.label27.TabIndex = 17;
-            this.label27.Text = "X";
-            // 
-            // label29
-            // 
-            this.label29.Location = new System.Drawing.Point(8, 66);
-            this.label29.Name = "label29";
-            this.label29.Size = new System.Drawing.Size(30, 20);
-            this.label29.TabIndex = 21;
-            this.label29.Text = "Z";
-            // 
-            // label31
-            // 
-            this.label31.Location = new System.Drawing.Point(8, 126);
-            this.label31.Name = "label31";
-            this.label31.Size = new System.Drawing.Size(30, 20);
-            this.label31.TabIndex = 27;
-            this.label31.Text = "C";
-            // 
-            // lb_BZ
-            // 
-            this.lb_BZ.Location = new System.Drawing.Point(49, 66);
-            this.lb_BZ.Name = "lb_BZ";
-            this.lb_BZ.Size = new System.Drawing.Size(80, 20);
-            this.lb_BZ.TabIndex = 20;
-            this.lb_BZ.Text = "Y";
-            // 
-            // lb_BY
-            // 
-            this.lb_BY.Location = new System.Drawing.Point(49, 46);
-            this.lb_BY.Name = "lb_BY";
-            this.lb_BY.Size = new System.Drawing.Size(80, 20);
-            this.lb_BY.TabIndex = 18;
-            this.lb_BY.Text = "Y";
-            // 
-            // lb_BB
-            // 
-            this.lb_BB.Location = new System.Drawing.Point(49, 106);
-            this.lb_BB.Name = "lb_BB";
-            this.lb_BB.Size = new System.Drawing.Size(80, 20);
-            this.lb_BB.TabIndex = 24;
-            this.lb_BB.Text = "Y";
-            // 
-            // label45
-            // 
-            this.label45.Location = new System.Drawing.Point(8, 86);
-            this.label45.Name = "label45";
-            this.label45.Size = new System.Drawing.Size(30, 20);
-            this.label45.TabIndex = 23;
-            this.label45.Text = "A";
-            // 
-            // lb_BX
-            // 
-            this.lb_BX.Location = new System.Drawing.Point(49, 26);
-            this.lb_BX.Name = "lb_BX";
-            this.lb_BX.Size = new System.Drawing.Size(80, 20);
-            this.lb_BX.TabIndex = 16;
-            this.lb_BX.Text = "Y";
-            // 
-            // label49
-            // 
-            this.label49.Location = new System.Drawing.Point(8, 46);
-            this.label49.Name = "label49";
-            this.label49.Size = new System.Drawing.Size(30, 20);
-            this.label49.TabIndex = 19;
-            this.label49.Text = "Y";
-            // 
-            // label53
-            // 
-            this.label53.Location = new System.Drawing.Point(8, 106);
-            this.label53.Name = "label53";
-            this.label53.Size = new System.Drawing.Size(30, 20);
-            this.label53.TabIndex = 25;
-            this.label53.Text = "B";
-            // 
-            // lb_BA
-            // 
-            this.lb_BA.Location = new System.Drawing.Point(49, 86);
-            this.lb_BA.Name = "lb_BA";
-            this.lb_BA.Size = new System.Drawing.Size(80, 20);
-            this.lb_BA.TabIndex = 22;
-            this.lb_BA.Text = "Y";
-            // 
-            // grp_TOOL
-            // 
-            this.grp_TOOL.Controls.Add(this.lb_TC);
-            this.grp_TOOL.Controls.Add(this.label57);
-            this.grp_TOOL.Controls.Add(this.label60);
-            this.grp_TOOL.Controls.Add(this.label61);
-            this.grp_TOOL.Controls.Add(this.lb_TZ);
-            this.grp_TOOL.Controls.Add(this.lb_TY);
-            this.grp_TOOL.Controls.Add(this.lb_TB);
-            this.grp_TOOL.Controls.Add(this.label67);
-            this.grp_TOOL.Controls.Add(this.lb_TX);
-            this.grp_TOOL.Controls.Add(this.label69);
-            this.grp_TOOL.Controls.Add(this.label71);
-            this.grp_TOOL.Controls.Add(this.lb_TA);
-            this.grp_TOOL.Enabled = false;
-            this.grp_TOOL.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(128)))), ((int)(((byte)(0)))));
-            this.grp_TOOL.Location = new System.Drawing.Point(529, 38);
-            this.grp_TOOL.Margin = new System.Windows.Forms.Padding(5);
-            this.grp_TOOL.Name = "grp_TOOL";
-            this.grp_TOOL.Padding = new System.Windows.Forms.Padding(5);
-            this.grp_TOOL.Size = new System.Drawing.Size(141, 152);
-            this.grp_TOOL.TabIndex = 29;
-            this.grp_TOOL.TabStop = false;
-            this.grp_TOOL.Text = "TOOL";
-            // 
-            // lb_TC
-            // 
-            this.lb_TC.Location = new System.Drawing.Point(49, 126);
-            this.lb_TC.Name = "lb_TC";
-            this.lb_TC.Size = new System.Drawing.Size(80, 20);
-            this.lb_TC.TabIndex = 26;
-            this.lb_TC.Text = "Y";
-            // 
-            // label57
-            // 
-            this.label57.Location = new System.Drawing.Point(8, 26);
-            this.label57.Name = "label57";
-            this.label57.Size = new System.Drawing.Size(30, 20);
-            this.label57.TabIndex = 17;
-            this.label57.Text = "X";
-            // 
-            // label60
-            // 
-            this.label60.Location = new System.Drawing.Point(8, 66);
-            this.label60.Name = "label60";
-            this.label60.Size = new System.Drawing.Size(30, 20);
-            this.label60.TabIndex = 21;
-            this.label60.Text = "Z";
-            // 
-            // label61
-            // 
-            this.label61.Location = new System.Drawing.Point(8, 126);
-            this.label61.Name = "label61";
-            this.label61.Size = new System.Drawing.Size(30, 20);
-            this.label61.TabIndex = 27;
-            this.label61.Text = "C";
-            // 
-            // lb_TZ
-            // 
-            this.lb_TZ.Location = new System.Drawing.Point(49, 66);
-            this.lb_TZ.Name = "lb_TZ";
-            this.lb_TZ.Size = new System.Drawing.Size(80, 20);
-            this.lb_TZ.TabIndex = 20;
-            this.lb_TZ.Text = "Y";
-            // 
-            // lb_TY
-            // 
-            this.lb_TY.Location = new System.Drawing.Point(49, 46);
-            this.lb_TY.Name = "lb_TY";
-            this.lb_TY.Size = new System.Drawing.Size(80, 20);
-            this.lb_TY.TabIndex = 18;
-            this.lb_TY.Text = "Y";
-            // 
-            // lb_TB
-            // 
-            this.lb_TB.Location = new System.Drawing.Point(49, 106);
-            this.lb_TB.Name = "lb_TB";
-            this.lb_TB.Size = new System.Drawing.Size(80, 20);
-            this.lb_TB.TabIndex = 24;
-            this.lb_TB.Text = "Y";
-            // 
-            // label67
-            // 
-            this.label67.Location = new System.Drawing.Point(8, 86);
-            this.label67.Name = "label67";
-            this.label67.Size = new System.Drawing.Size(30, 20);
-            this.label67.TabIndex = 23;
-            this.label67.Text = "A";
-            // 
-            // lb_TX
-            // 
-            this.lb_TX.Location = new System.Drawing.Point(49, 26);
-            this.lb_TX.Name = "lb_TX";
-            this.lb_TX.Size = new System.Drawing.Size(80, 20);
-            this.lb_TX.TabIndex = 16;
-            this.lb_TX.Text = "Y";
-            // 
-            // label69
-            // 
-            this.label69.Location = new System.Drawing.Point(8, 46);
-            this.label69.Name = "label69";
-            this.label69.Size = new System.Drawing.Size(30, 20);
-            this.label69.TabIndex = 19;
-            this.label69.Text = "Y";
-            // 
-            // label71
-            // 
-            this.label71.Location = new System.Drawing.Point(8, 106);
-            this.label71.Name = "label71";
-            this.label71.Size = new System.Drawing.Size(30, 20);
-            this.label71.TabIndex = 25;
-            this.label71.Text = "B";
-            // 
-            // lb_TA
-            // 
-            this.lb_TA.Location = new System.Drawing.Point(49, 86);
-            this.lb_TA.Name = "lb_TA";
-            this.lb_TA.Size = new System.Drawing.Size(80, 20);
-            this.lb_TA.TabIndex = 22;
-            this.lb_TA.Text = "Y";
-            // 
-            // lb_E6
-            // 
-            this.lb_E6.Location = new System.Drawing.Point(53, 126);
-            this.lb_E6.Name = "lb_E6";
-            this.lb_E6.Size = new System.Drawing.Size(80, 20);
-            this.lb_E6.TabIndex = 33;
-            this.lb_E6.Text = "Y";
-            // 
-            // lb_E3
-            // 
-            this.lb_E3.Location = new System.Drawing.Point(53, 66);
-            this.lb_E3.Name = "lb_E3";
-            this.lb_E3.Size = new System.Drawing.Size(80, 20);
-            this.lb_E3.TabIndex = 30;
-            this.lb_E3.Text = "Y";
-            // 
-            // lb_E2
-            // 
-            this.lb_E2.Location = new System.Drawing.Point(53, 46);
-            this.lb_E2.Name = "lb_E2";
-            this.lb_E2.Size = new System.Drawing.Size(80, 20);
-            this.lb_E2.TabIndex = 29;
-            this.lb_E2.Text = "Y";
-            // 
-            // lb_E5
-            // 
-            this.lb_E5.Location = new System.Drawing.Point(53, 106);
-            this.lb_E5.Name = "lb_E5";
-            this.lb_E5.Size = new System.Drawing.Size(80, 20);
-            this.lb_E5.TabIndex = 32;
-            this.lb_E5.Text = "Y";
-            // 
-            // lb_E1
-            // 
-            this.lb_E1.Location = new System.Drawing.Point(53, 26);
-            this.lb_E1.Name = "lb_E1";
-            this.lb_E1.Size = new System.Drawing.Size(80, 20);
-            this.lb_E1.TabIndex = 28;
-            this.lb_E1.Text = "Y";
-            // 
-            // lb_E4
-            // 
-            this.lb_E4.Location = new System.Drawing.Point(53, 86);
-            this.lb_E4.Name = "lb_E4";
-            this.lb_E4.Size = new System.Drawing.Size(80, 20);
-            this.lb_E4.TabIndex = 31;
-            this.lb_E4.Text = "Y";
-            // 
-            // lb_A6
-            // 
-            this.lb_A6.Location = new System.Drawing.Point(53, 126);
-            this.lb_A6.Name = "lb_A6";
-            this.lb_A6.Size = new System.Drawing.Size(80, 20);
-            this.lb_A6.TabIndex = 39;
-            this.lb_A6.Text = "Y";
-            // 
-            // lb_A3
-            // 
-            this.lb_A3.Location = new System.Drawing.Point(53, 66);
-            this.lb_A3.Name = "lb_A3";
-            this.lb_A3.Size = new System.Drawing.Size(80, 20);
-            this.lb_A3.TabIndex = 36;
-            this.lb_A3.Text = "Y";
-            // 
-            // lb_A2
-            // 
-            this.lb_A2.Location = new System.Drawing.Point(53, 46);
-            this.lb_A2.Name = "lb_A2";
-            this.lb_A2.Size = new System.Drawing.Size(80, 20);
-            this.lb_A2.TabIndex = 35;
-            this.lb_A2.Text = "Y";
-            // 
-            // lb_A5
-            // 
-            this.lb_A5.Location = new System.Drawing.Point(53, 106);
-            this.lb_A5.Name = "lb_A5";
-            this.lb_A5.Size = new System.Drawing.Size(80, 20);
-            this.lb_A5.TabIndex = 38;
-            this.lb_A5.Text = "Y";
-            // 
-            // lb_A1
-            // 
-            this.lb_A1.Location = new System.Drawing.Point(53, 26);
-            this.lb_A1.Name = "lb_A1";
-            this.lb_A1.Size = new System.Drawing.Size(80, 20);
-            this.lb_A1.TabIndex = 34;
-            this.lb_A1.Text = "Y";
-            // 
-            // lb_A4
-            // 
-            this.lb_A4.Location = new System.Drawing.Point(53, 86);
-            this.lb_A4.Name = "lb_A4";
-            this.lb_A4.Size = new System.Drawing.Size(80, 20);
-            this.lb_A4.TabIndex = 37;
-            this.lb_A4.Text = "Y";
-            // 
-            // lb_VelORI2
-            // 
-            this.lb_VelORI2.Location = new System.Drawing.Point(53, 72);
-            this.lb_VelORI2.Name = "lb_VelORI2";
-            this.lb_VelORI2.Size = new System.Drawing.Size(80, 20);
-            this.lb_VelORI2.TabIndex = 42;
-            this.lb_VelORI2.Text = "Y";
-            // 
-            // lb_VelORI1
-            // 
-            this.lb_VelORI1.Location = new System.Drawing.Point(53, 52);
-            this.lb_VelORI1.Name = "lb_VelORI1";
-            this.lb_VelORI1.Size = new System.Drawing.Size(80, 20);
-            this.lb_VelORI1.TabIndex = 41;
-            this.lb_VelORI1.Text = "Y";
-            // 
-            // lb_VelCP
-            // 
-            this.lb_VelCP.Location = new System.Drawing.Point(53, 32);
-            this.lb_VelCP.Name = "lb_VelCP";
-            this.lb_VelCP.Size = new System.Drawing.Size(80, 20);
-            this.lb_VelCP.TabIndex = 40;
-            this.lb_VelCP.Text = "Y";
-            // 
-            // lb_AccORI2
-            // 
-            this.lb_AccORI2.Location = new System.Drawing.Point(53, 72);
-            this.lb_AccORI2.Name = "lb_AccORI2";
-            this.lb_AccORI2.Size = new System.Drawing.Size(80, 20);
-            this.lb_AccORI2.TabIndex = 45;
-            this.lb_AccORI2.Text = "Y";
-            // 
-            // lb_AccORI1
-            // 
-            this.lb_AccORI1.Location = new System.Drawing.Point(53, 52);
-            this.lb_AccORI1.Name = "lb_AccORI1";
-            this.lb_AccORI1.Size = new System.Drawing.Size(80, 20);
-            this.lb_AccORI1.TabIndex = 44;
-            this.lb_AccORI1.Text = "Y";
-            // 
-            // lb_AccCP
-            // 
-            this.lb_AccCP.Location = new System.Drawing.Point(53, 32);
-            this.lb_AccCP.Name = "lb_AccCP";
-            this.lb_AccCP.Size = new System.Drawing.Size(80, 20);
-            this.lb_AccCP.TabIndex = 43;
-            this.lb_AccCP.Text = "Y";
+            // ckMonitor
+            // 
+            this.ckMonitor.Appearance = System.Windows.Forms.Appearance.Button;
+            this.ckMonitor.Location = new System.Drawing.Point(39, 76);
+            this.ckMonitor.Name = "ckMonitor";
+            this.ckMonitor.Size = new System.Drawing.Size(120, 28);
+            this.ckMonitor.TabIndex = 14;
+            this.ckMonitor.Text = "Monitoring: START";
+            this.ckMonitor.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.ckMonitor.UseVisualStyleBackColor = true;
+            this.ckMonitor.CheckedChanged += new System.EventHandler(this.ckMonitor_CheckedChanged);
+            // 
+            // ckConnect
+            // 
+            this.ckConnect.Appearance = System.Windows.Forms.Appearance.Button;
+            this.ckConnect.Location = new System.Drawing.Point(39, 42);
+            this.ckConnect.Name = "ckConnect";
+            this.ckConnect.Size = new System.Drawing.Size(120, 28);
+            this.ckConnect.TabIndex = 13;
+            this.ckConnect.Text = "Connect";
+            this.ckConnect.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.ckConnect.UseVisualStyleBackColor = true;
+            this.ckConnect.CheckedChanged += new System.EventHandler(this.ckConnect_CheckedChanged);
+            // 
+            // imageList1
+            // 
+            this.imageList1.ColorDepth = System.Windows.Forms.ColorDepth.Depth8Bit;
+            this.imageList1.ImageSize = new System.Drawing.Size(16, 16);
+            this.imageList1.TransparentColor = System.Drawing.Color.Transparent;
+            // 
+            // btExpandAll
+            // 
+            this.btExpandAll.Image = global::Kukavar.DemoApp.Properties.Resources.unfold;
+            this.btExpandAll.Location = new System.Drawing.Point(615, 14);
+            this.btExpandAll.Name = "btExpandAll";
+            this.btExpandAll.Size = new System.Drawing.Size(24, 28);
+            this.btExpandAll.TabIndex = 49;
+            this.toolTip.SetToolTip(this.btExpandAll, "Expand All");
+            this.btExpandAll.UseVisualStyleBackColor = true;
+            this.btExpandAll.Click += new System.EventHandler(this.btExpandAll_Click);
+            // 
+            // btCollapseAll
+            // 
+            this.btCollapseAll.Image = global::Kukavar.DemoApp.Properties.Resources.fold;
+            this.btCollapseAll.Location = new System.Drawing.Point(645, 14);
+            this.btCollapseAll.Name = "btCollapseAll";
+            this.btCollapseAll.Size = new System.Drawing.Size(24, 28);
+            this.btCollapseAll.TabIndex = 48;
+            this.toolTip.SetToolTip(this.btCollapseAll, "Collapse All");
+            this.btCollapseAll.UseVisualStyleBackColor = true;
+            this.btCollapseAll.Click += new System.EventHandler(this.btCollapseAll_Click);
+            // 
+            // btRemoveHistory
+            // 
+            this.btRemoveHistory.Image = global::Kukavar.DemoApp.Properties.Resources.remove;
+            this.btRemoveHistory.Location = new System.Drawing.Point(171, 48);
+            this.btRemoveHistory.Name = "btRemoveHistory";
+            this.btRemoveHistory.Size = new System.Drawing.Size(24, 24);
+            this.btRemoveHistory.TabIndex = 46;
+            this.btRemoveHistory.Text = " ";
+            this.toolTip.SetToolTip(this.btRemoveHistory, "Remove selected item from history");
+            this.btRemoveHistory.UseVisualStyleBackColor = true;
+            this.btRemoveHistory.Click += new System.EventHandler(this.btRemoveHistory_Click);
+            // 
+            // btEditTemplateName
+            // 
+            this.btEditTemplateName.CausesValidation = false;
+            this.btEditTemplateName.Image = global::Kukavar.DemoApp.Properties.Resources.edit;
+            this.btEditTemplateName.Location = new System.Drawing.Point(171, 163);
+            this.btEditTemplateName.Name = "btEditTemplateName";
+            this.btEditTemplateName.Size = new System.Drawing.Size(24, 24);
+            this.btEditTemplateName.TabIndex = 36;
+            this.btEditTemplateName.Text = " ";
+            this.toolTip.SetToolTip(this.btEditTemplateName, "Edit template name");
+            this.btEditTemplateName.UseVisualStyleBackColor = true;
+            this.btEditTemplateName.Click += new System.EventHandler(this.btEditTemplateName_Click);
+            // 
+            // btAddReadTemplate
+            // 
+            this.btAddReadTemplate.Image = global::Kukavar.DemoApp.Properties.Resources.addfilled;
+            this.btAddReadTemplate.Location = new System.Drawing.Point(172, 117);
+            this.btAddReadTemplate.Name = "btAddReadTemplate";
+            this.btAddReadTemplate.Size = new System.Drawing.Size(24, 24);
+            this.btAddReadTemplate.TabIndex = 34;
+            this.btAddReadTemplate.Text = " ";
+            this.toolTip.SetToolTip(this.btAddReadTemplate, "Add a new template");
+            this.btAddReadTemplate.UseVisualStyleBackColor = true;
+            this.btAddReadTemplate.Click += new System.EventHandler(this.btAddReadTemplate_Click);
+            // 
+            // btRemoveReadTemplate
+            // 
+            this.btRemoveReadTemplate.Image = global::Kukavar.DemoApp.Properties.Resources.delete;
+            this.btRemoveReadTemplate.Location = new System.Drawing.Point(198, 117);
+            this.btRemoveReadTemplate.Name = "btRemoveReadTemplate";
+            this.btRemoveReadTemplate.Size = new System.Drawing.Size(24, 24);
+            this.btRemoveReadTemplate.TabIndex = 31;
+            this.btRemoveReadTemplate.Text = " ";
+            this.toolTip.SetToolTip(this.btRemoveReadTemplate, "Delete the selected template");
+            this.btRemoveReadTemplate.UseVisualStyleBackColor = true;
+            this.btRemoveReadTemplate.Click += new System.EventHandler(this.btRemoveReadTemplate_Click);
+            // 
+            // btUp
+            // 
+            this.btUp.Image = global::Kukavar.DemoApp.Properties.Resources.up;
+            this.btUp.Location = new System.Drawing.Point(171, 213);
+            this.btUp.Name = "btUp";
+            this.btUp.Size = new System.Drawing.Size(24, 24);
+            this.btUp.TabIndex = 30;
+            this.toolTip.SetToolTip(this.btUp, "Move item Up");
+            this.btUp.UseVisualStyleBackColor = true;
+            this.btUp.Click += new System.EventHandler(this.btUp_Click);
+            // 
+            // btAddTemplateVar
+            // 
+            this.btAddTemplateVar.Image = global::Kukavar.DemoApp.Properties.Resources.add;
+            this.btAddTemplateVar.Location = new System.Drawing.Point(171, 306);
+            this.btAddTemplateVar.Name = "btAddTemplateVar";
+            this.btAddTemplateVar.Size = new System.Drawing.Size(24, 24);
+            this.btAddTemplateVar.TabIndex = 29;
+            this.btAddTemplateVar.Text = " ";
+            this.toolTip.SetToolTip(this.btAddTemplateVar, "Add the variable to the list");
+            this.btAddTemplateVar.UseVisualStyleBackColor = true;
+            this.btAddTemplateVar.Click += new System.EventHandler(this.btAddTemplateVar_Click);
+            // 
+            // btRemoveTemplateVar
+            // 
+            this.btRemoveTemplateVar.Image = global::Kukavar.DemoApp.Properties.Resources.remove;
+            this.btRemoveTemplateVar.Location = new System.Drawing.Point(171, 336);
+            this.btRemoveTemplateVar.Name = "btRemoveTemplateVar";
+            this.btRemoveTemplateVar.Size = new System.Drawing.Size(24, 24);
+            this.btRemoveTemplateVar.TabIndex = 28;
+            this.btRemoveTemplateVar.Text = " ";
+            this.toolTip.SetToolTip(this.btRemoveTemplateVar, "Remove the selected item from the variable list");
+            this.btRemoveTemplateVar.UseVisualStyleBackColor = true;
+            this.btRemoveTemplateVar.Click += new System.EventHandler(this.btRemoveTemplateVar_Click);
+            // 
+            // btDown
+            // 
+            this.btDown.Image = global::Kukavar.DemoApp.Properties.Resources.down;
+            this.btDown.Location = new System.Drawing.Point(171, 243);
+            this.btDown.Name = "btDown";
+            this.btDown.Size = new System.Drawing.Size(24, 24);
+            this.btDown.TabIndex = 25;
+            this.toolTip.SetToolTip(this.btDown, "Move item Down");
+            this.btDown.UseVisualStyleBackColor = true;
+            this.btDown.Click += new System.EventHandler(this.btDown_Click);
+            // 
+            // btRecordReset
+            // 
+            this.btRecordReset.Image = global::Kukavar.DemoApp.Properties.Resources.delete;
+            this.btRecordReset.Location = new System.Drawing.Point(100, 40);
+            this.btRecordReset.Name = "btRecordReset";
+            this.btRecordReset.Size = new System.Drawing.Size(24, 24);
+            this.btRecordReset.TabIndex = 61;
+            this.btRecordReset.Text = " ";
+            this.toolTip.SetToolTip(this.btRecordReset, "Reset the recorder. Delete all records.");
+            this.btRecordReset.UseVisualStyleBackColor = true;
+            this.btRecordReset.Click += new System.EventHandler(this.btRecordReset_Click);
+            // 
+            // btRemoveRecord
+            // 
+            this.btRemoveRecord.Image = global::Kukavar.DemoApp.Properties.Resources.clear;
+            this.btRemoveRecord.Location = new System.Drawing.Point(44, 40);
+            this.btRemoveRecord.Name = "btRemoveRecord";
+            this.btRemoveRecord.Size = new System.Drawing.Size(24, 24);
+            this.btRemoveRecord.TabIndex = 48;
+            this.btRemoveRecord.Text = " ";
+            this.toolTip.SetToolTip(this.btRemoveRecord, "Remove the selected records from the table.");
+            this.btRemoveRecord.UseVisualStyleBackColor = true;
+            this.btRemoveRecord.Click += new System.EventHandler(this.btRemoveRecord_Click);
+            // 
+            // btAddRecord
+            // 
+            this.btAddRecord.Image = global::Kukavar.DemoApp.Properties.Resources.record;
+            this.btAddRecord.Location = new System.Drawing.Point(14, 40);
+            this.btAddRecord.Name = "btAddRecord";
+            this.btAddRecord.Size = new System.Drawing.Size(24, 24);
+            this.btAddRecord.TabIndex = 47;
+            this.btAddRecord.Text = " ";
+            this.toolTip.SetToolTip(this.btAddRecord, "Record the current position of the robot.");
+            this.btAddRecord.UseVisualStyleBackColor = true;
+            this.btAddRecord.Click += new System.EventHandler(this.btAddRecord_Click);
+            // 
+            // button3
+            // 
+            this.button3.Image = global::Kukavar.DemoApp.Properties.Resources.addfilled;
+            this.button3.Location = new System.Drawing.Point(175, 22);
+            this.button3.Name = "button3";
+            this.button3.Size = new System.Drawing.Size(24, 24);
+            this.button3.TabIndex = 58;
+            this.button3.Text = " ";
+            this.toolTip.SetToolTip(this.button3, "Add a new template");
+            this.button3.UseVisualStyleBackColor = true;
+            // 
+            // button4
+            // 
+            this.button4.Image = global::Kukavar.DemoApp.Properties.Resources.delete;
+            this.button4.Location = new System.Drawing.Point(201, 22);
+            this.button4.Name = "button4";
+            this.button4.Size = new System.Drawing.Size(24, 24);
+            this.button4.TabIndex = 56;
+            this.button4.Text = " ";
+            this.toolTip.SetToolTip(this.button4, "Delete the selected template");
+            this.button4.UseVisualStyleBackColor = true;
+            // 
+            // button5
+            // 
+            this.button5.Image = global::Kukavar.DemoApp.Properties.Resources.up;
+            this.button5.Location = new System.Drawing.Point(421, 63);
+            this.button5.Name = "button5";
+            this.button5.Size = new System.Drawing.Size(24, 24);
+            this.button5.TabIndex = 55;
+            this.toolTip.SetToolTip(this.button5, "Move item Up");
+            this.button5.UseVisualStyleBackColor = true;
+            // 
+            // btIO_Add
+            // 
+            this.btIO_Add.Image = global::Kukavar.DemoApp.Properties.Resources.add;
+            this.btIO_Add.Location = new System.Drawing.Point(421, 306);
+            this.btIO_Add.Name = "btIO_Add";
+            this.btIO_Add.Size = new System.Drawing.Size(24, 24);
+            this.btIO_Add.TabIndex = 54;
+            this.btIO_Add.Text = " ";
+            this.toolTip.SetToolTip(this.btIO_Add, "Add the variable to the list");
+            this.btIO_Add.UseVisualStyleBackColor = true;
+            this.btIO_Add.Click += new System.EventHandler(this.btIO_Add_Click);
+            // 
+            // btIO_Remove
+            // 
+            this.btIO_Remove.Image = global::Kukavar.DemoApp.Properties.Resources.remove;
+            this.btIO_Remove.Location = new System.Drawing.Point(421, 336);
+            this.btIO_Remove.Name = "btIO_Remove";
+            this.btIO_Remove.Size = new System.Drawing.Size(24, 24);
+            this.btIO_Remove.TabIndex = 53;
+            this.btIO_Remove.Text = " ";
+            this.toolTip.SetToolTip(this.btIO_Remove, "Remove the selected item from the variable list");
+            this.btIO_Remove.UseVisualStyleBackColor = true;
+            this.btIO_Remove.Click += new System.EventHandler(this.btIO_Remove_Click);
+            // 
+            // button8
+            // 
+            this.button8.Image = global::Kukavar.DemoApp.Properties.Resources.down;
+            this.button8.Location = new System.Drawing.Point(421, 93);
+            this.button8.Name = "button8";
+            this.button8.Size = new System.Drawing.Size(24, 24);
+            this.button8.TabIndex = 52;
+            this.toolTip.SetToolTip(this.button8, "Move item Down");
+            this.button8.UseVisualStyleBackColor = true;
+            // 
+            // scbRead
+            // 
+            this.scbRead.FilterRule = null;
+            this.scbRead.FormattingEnabled = true;
+            this.scbRead.Location = new System.Drawing.Point(15, 50);
+            this.scbRead.Name = "scbRead";
+            this.scbRead.PropertySelector = null;
+            this.scbRead.Size = new System.Drawing.Size(150, 21);
+            this.scbRead.SuggestBoxHeight = 96;
+            this.scbRead.SuggestListOrderRule = null;
+            this.scbRead.TabIndex = 20;
+            this.scbRead.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.scbRead_KeyPress);
+            // 
+            // scbWrite
+            // 
+            this.scbWrite.DisplayMember = "VarName";
+            this.scbWrite.FilterRule = null;
+            this.scbWrite.FormattingEnabled = true;
+            this.scbWrite.Location = new System.Drawing.Point(15, 50);
+            this.scbWrite.Name = "scbWrite";
+            this.scbWrite.PropertySelector = null;
+            this.scbWrite.Size = new System.Drawing.Size(150, 21);
+            this.scbWrite.SuggestBoxHeight = 96;
+            this.scbWrite.SuggestListOrderRule = null;
+            this.scbWrite.TabIndex = 24;
+            this.scbWrite.ValueMember = "VarValue";
             // 
             // Form1
             // 
@@ -1863,17 +2208,20 @@
             ((System.ComponentModel.ISupportInitialize)(this.rblRecordFilter)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.dgvRecords)).EndInit();
             this.tabPage4.ResumeLayout(false);
+            this.grp_TOOL.ResumeLayout(false);
+            this.grp_BASE.ResumeLayout(false);
+            this.grp_ACC.ResumeLayout(false);
+            this.grp_VEL.ResumeLayout(false);
+            this.grp_EXT.ResumeLayout(false);
+            this.grp_AXIS.ResumeLayout(false);
+            this.grp_TCP.ResumeLayout(false);
+            this.tabPage6.ResumeLayout(false);
+            this.tabPage6.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.objectListView)).EndInit();
             this.groupBox2.ResumeLayout(false);
             this.groupBox2.PerformLayout();
             this.groupBox3.ResumeLayout(false);
             this.groupBox3.PerformLayout();
-            this.grp_TCP.ResumeLayout(false);
-            this.grp_AXIS.ResumeLayout(false);
-            this.grp_EXT.ResumeLayout(false);
-            this.grp_VEL.ResumeLayout(false);
-            this.grp_ACC.ResumeLayout(false);
-            this.grp_BASE.ResumeLayout(false);
-            this.grp_TOOL.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -1884,7 +2232,6 @@
         private System.Windows.Forms.TextBox tbServerPort;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.Button btStart;
         private System.Windows.Forms.GroupBox grpCSettings;
         private System.Windows.Forms.TextBox tbReconnectionTO;
         private System.Windows.Forms.Label label4;
@@ -1893,7 +2240,6 @@
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.CheckBox ckAutoReconnect;
         private System.Windows.Forms.Label label6;
-        private System.Windows.Forms.Button btStop;
         private System.Windows.Forms.TextBox lbConnectionStatus;
         private System.Windows.Forms.TabControl tabControl1;
         private System.Windows.Forms.TabPage tabPage1;
@@ -1990,7 +2336,6 @@
         private System.Windows.Forms.Label label28;
         private System.Windows.Forms.Label label34;
         private System.Windows.Forms.Label lb_A;
-        private System.Windows.Forms.Button btMonitor;
         private System.Windows.Forms.GroupBox grp_ACC;
         private System.Windows.Forms.Label label37;
         private System.Windows.Forms.Label label41;
@@ -2039,5 +2384,32 @@
         private System.Windows.Forms.Label lb_A5;
         private System.Windows.Forms.Label lb_A1;
         private System.Windows.Forms.Label lb_A4;
+        private System.Windows.Forms.Label lb_S;
+        private System.Windows.Forms.Label label55;
+        private System.Windows.Forms.Label lb_T;
+        private System.Windows.Forms.Label label65;
+        private System.Windows.Forms.Label lbMonitoTime;
+        private System.Windows.Forms.Label lb_OV;
+        private System.Windows.Forms.Label label33;
+        private System.Windows.Forms.Label lbMonitoRate;
+        private System.Windows.Forms.TabPage tabPage6;
+        private System.Windows.Forms.CheckBox ckConnect;
+        private System.Windows.Forms.CheckBox ckMonitor;
+        private System.Windows.Forms.ComboBox cb_IO;
+        private System.Windows.Forms.Button button3;
+        private System.Windows.Forms.Button button4;
+        private System.Windows.Forms.Button button5;
+        private System.Windows.Forms.Button btIO_Add;
+        private System.Windows.Forms.Button btIO_Remove;
+        private System.Windows.Forms.Button button8;
+        private System.Windows.Forms.Label label35;
+        private BrightIdeasSoftware.DataListView objectListView;
+        private BrightIdeasSoftware.OLVColumn olvColName;
+        private BrightIdeasSoftware.OLVColumn olvColValue;
+        private BrightIdeasSoftware.OLVColumn olvColGroup;
+        private BrightIdeasSoftware.OLVColumn olvColTag;
+        private BrightIdeasSoftware.OLVColumn olvColType;
+        private System.Windows.Forms.TextBox textBoxFilterData;
+        private System.Windows.Forms.ImageList imageList1;
     }
 }

@@ -43,6 +43,7 @@ namespace OpenKuka.KukavarClient
 
     public class KukavarClient : AsyncTcpClient
     {
+        private object lockObject = new object();
         private Stopwatch chrono = new Stopwatch();
         private ConcurrentDictionary<int, KVReply> ReplyQueue;
         
@@ -65,7 +66,11 @@ namespace OpenKuka.KukavarClient
         }
         public async Task<int> SendAsync(IKVMessage query, KVReplyCallback callback = null)
         {
-            query.Id = ++MsgId;
+            lock (lockObject)
+            {
+                query.Id = ++MsgId;
+            }
+
             await SendAsync(query.Message, 0, query.MessageLength);
 
             var reply = new KVReply(query, chrono, callback);

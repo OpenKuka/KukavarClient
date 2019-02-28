@@ -16,25 +16,32 @@ using OpenKuka.KukavarClient;
 using System.Collections.Concurrent;
 using OpenKuka.KRL.Types;
 using System.Threading;
+using BrightIdeasSoftware;
+using System.Collections;
 
 namespace Kukavar.DemoApp
 {
     public partial class Form1 : Form
     {
+        private bool bConnect = false;
+        private bool bMonitor = false;
+
         internal AppSettings settings = JsonSettings.Load<AppSettings>();
 
-        private System.Threading.Timer infoTimer, monitoringTimer;
+        private System.Threading.Timer infoTimer, monitoringTimer, ioTimer;
+
+        int cmdinfoRefreshRate = 1000;
+        int monitoRefreshRate = 200;
 
         private const int readHistoryMaxCount = 30;
         private const int readTemplatesMaxCount = 10;
 
         private KukavarClient client;
         private Stopwatch chrono = Stopwatch.StartNew();
-        private DataTable records;
+        private DataTable dtrecords, dtio;
         public Form1()
         {
             InitializeComponent();
-
 
             // Load Settings
             settings.ReadHistory = settings.ReadHistory ?? new List<string>();
@@ -53,6 +60,8 @@ namespace Kukavar.DemoApp
             tbMaxIdleTime.Text = settings.MaxIdleTime.ToString();
             tbReconnectionTO.Text = settings.ReconnectionTimeout.ToString();
             ckAutoReconnect.Checked = settings.AutoReconnect;
+
+            InitList();
 
             // info timer
             infoTimer = new System.Threading.Timer((state) =>
@@ -97,6 +106,7 @@ namespace Kukavar.DemoApp
             }, null, Timeout.Infinite, Timeout.Infinite);
 
             // monitoring timer
+            lbMonitoRate.Text = string.Format("elapsed time : {0,4:F0} ms", monitoRefreshRate);
             monitoringTimer = new System.Threading.Timer((state) =>
             {
                 if (client.Status == ClientStatus.Connected)
@@ -108,26 +118,38 @@ namespace Kukavar.DemoApp
                             this.BeginInvoke((Action)delegate ()
                             {
                                 var varName1 = ((KVReadQuery)reply.Query).VarName;
+                                lbMonitoTime.Text = string.Format("elapsed time : {0,4:F0} ms", reply.RoundTripTime.TotalMilliseconds);
                                 var ast = reply.Answer.GetAST();
-                                var format = "{0:F3}";
+                                var format = "{0:F1}";
                                 switch (varName1)
                                 {
+                                    case "$OV_PRO":
+                                        try
+                                        {
+                                            lb_OV.Text = FormatNumber("{0}", (ast as IntData).Value);
+                                        }
+                                        catch { }
+                                        break;
+
                                     case "$POS_ACT":
                                         try
                                         {
                                             var e6pos = new E6POS(ast);
-                                            lb_X.Text = string.Format(format, e6pos.X);
-                                            lb_Y.Text = string.Format(format, e6pos.Y);
-                                            lb_Z.Text = string.Format(format, e6pos.Z);
-                                            lb_A.Text = string.Format(format, e6pos.A);
-                                            lb_B.Text = string.Format(format, e6pos.B);
-                                            lb_C.Text = string.Format(format, e6pos.C);
-                                            lb_E1.Text = string.Format(format, e6pos.E1);
-                                            lb_E2.Text = string.Format(format, e6pos.E2);
-                                            lb_E3.Text = string.Format(format, e6pos.E3);
-                                            lb_E4.Text = string.Format(format, e6pos.E4);
-                                            lb_E5.Text = string.Format(format, e6pos.E5);
-                                            lb_E6.Text = string.Format(format, e6pos.E6);
+                                            lb_X.Text = FormatNumber(format, e6pos.X);
+                                            lb_Y.Text = FormatNumber(format, e6pos.Y);
+                                            lb_Z.Text = FormatNumber(format, e6pos.Z);
+                                            lb_A.Text = FormatNumber(format, e6pos.A);
+                                            lb_B.Text = FormatNumber(format, e6pos.B);
+                                            lb_C.Text = FormatNumber(format, e6pos.C);
+                                            lb_E1.Text = FormatNumber(format, e6pos.E1);
+                                            lb_E2.Text = FormatNumber(format, e6pos.E2);
+                                            lb_E3.Text = FormatNumber(format, e6pos.E3);
+                                            lb_E4.Text = FormatNumber(format, e6pos.E4);
+                                            lb_E5.Text = FormatNumber(format, e6pos.E5);
+                                            lb_E6.Text = FormatNumber(format, e6pos.E6);
+
+                                            lb_S.Text = (e6pos.GetStatus()).Value.ToString(true);
+                                            lb_T.Text = (e6pos.GetTurn()).Value.ToString(true);
                                         }
                                         catch (Exception)
                                         {
@@ -139,18 +161,18 @@ namespace Kukavar.DemoApp
                                         try
                                         {
                                             var e6axis = new E6AXIS(ast);
-                                            lb_A1.Text = string.Format(format, e6axis.A1);
-                                            lb_A2.Text = string.Format(format, e6axis.A2);
-                                            lb_A3.Text = string.Format(format, e6axis.A3);
-                                            lb_A4.Text = string.Format(format, e6axis.A4);
-                                            lb_A5.Text = string.Format(format, e6axis.A5);
-                                            lb_A6.Text = string.Format(format, e6axis.A6);
-                                            lb_E1.Text = string.Format(format, e6axis.E1);
-                                            lb_E2.Text = string.Format(format, e6axis.E2);
-                                            lb_E3.Text = string.Format(format, e6axis.E3);
-                                            lb_E4.Text = string.Format(format, e6axis.E4);
-                                            lb_E5.Text = string.Format(format, e6axis.E5);
-                                            lb_E6.Text = string.Format(format, e6axis.E6);
+                                            lb_A1.Text = FormatNumber(format, e6axis.A1);
+                                            lb_A2.Text = FormatNumber(format, e6axis.A2);
+                                            lb_A3.Text = FormatNumber(format, e6axis.A3);
+                                            lb_A4.Text = FormatNumber(format, e6axis.A4);
+                                            lb_A5.Text = FormatNumber(format, e6axis.A5);
+                                            lb_A6.Text = FormatNumber(format, e6axis.A6);
+                                            lb_E1.Text = FormatNumber(format, e6axis.E1);
+                                            lb_E2.Text = FormatNumber(format, e6axis.E2);
+                                            lb_E3.Text = FormatNumber(format, e6axis.E3);
+                                            lb_E4.Text = FormatNumber(format, e6axis.E4);
+                                            lb_E5.Text = FormatNumber(format, e6axis.E5);
+                                            lb_E6.Text = FormatNumber(format, e6axis.E6);
                                         }
                                         catch (Exception)
                                         {
@@ -163,9 +185,9 @@ namespace Kukavar.DemoApp
                                         try
                                         {
                                             var vel = new CP(ast);
-                                            lb_VelCP.Text = string.Format(format, vel.LIN);
-                                            lb_VelORI1.Text = string.Format(format, vel.ORI1);
-                                            lb_VelORI2.Text = string.Format(format, vel.ORI2);
+                                            lb_VelCP.Text = FormatNumber(format, vel.LIN);
+                                            lb_VelORI1.Text = FormatNumber(format, vel.ORI1);
+                                            lb_VelORI2.Text = FormatNumber(format, vel.ORI2);
                                         }
                                         catch (Exception)
                                         {
@@ -178,9 +200,9 @@ namespace Kukavar.DemoApp
                                         try
                                         {
                                             var acc = new CP(ast);
-                                            lb_AccCP.Text = string.Format(format, acc.LIN);
-                                            lb_AccORI1.Text = string.Format(format, acc.ORI1);
-                                            lb_AccORI2.Text = string.Format(format, acc.ORI2);
+                                            lb_AccCP.Text = FormatNumber(format, acc.LIN);
+                                            lb_AccORI1.Text = FormatNumber(format, acc.ORI1);
+                                            lb_AccORI2.Text = FormatNumber(format, acc.ORI2);
                                         }
                                         catch (Exception)
                                         {
@@ -193,13 +215,13 @@ namespace Kukavar.DemoApp
                                         try
                                         {
                                             var frame = new FRAME(ast);
-                                            lb_BX.Text = string.Format(format, frame.X);
-                                            lb_BY.Text = string.Format(format, frame.Y);
-                                            lb_BZ.Text = string.Format(format, frame.Z);
-                                            lb_BA.Text = string.Format(format, frame.A);
-                                            lb_BB.Text = string.Format(format, frame.B);
-                                            lb_BC.Text = string.Format(format, frame.C);
-   
+                                            lb_BX.Text = FormatNumber(format, frame.X);
+                                            lb_BY.Text = FormatNumber(format, frame.Y);
+                                            lb_BZ.Text = FormatNumber(format, frame.Z);
+                                            lb_BA.Text = FormatNumber(format, frame.A);
+                                            lb_BB.Text = FormatNumber(format, frame.B);
+                                            lb_BC.Text = FormatNumber(format, frame.C);
+
                                         }
                                         catch (Exception)
                                         {
@@ -211,12 +233,12 @@ namespace Kukavar.DemoApp
                                         try
                                         {
                                             var frame = new FRAME(ast);
-                                            lb_TX.Text = string.Format(format, frame.X);
-                                            lb_TY.Text = string.Format(format, frame.Y);
-                                            lb_TZ.Text = string.Format(format, frame.Z);
-                                            lb_TA.Text = string.Format(format, frame.A);
-                                            lb_TB.Text = string.Format(format, frame.B);
-                                            lb_TC.Text = string.Format(format, frame.C);
+                                            lb_TX.Text = FormatNumber(format, frame.X);
+                                            lb_TY.Text = FormatNumber(format, frame.Y);
+                                            lb_TZ.Text = FormatNumber(format, frame.Z);
+                                            lb_TA.Text = FormatNumber(format, frame.A);
+                                            lb_TB.Text = FormatNumber(format, frame.B);
+                                            lb_TC.Text = FormatNumber(format, frame.C);
 
                                         }
                                         catch (Exception)
@@ -237,14 +259,9 @@ namespace Kukavar.DemoApp
                     var t4 = client.SendAsync(KVReadQuery.Build(0, "$ACC"), callback);
                     var t5 = client.SendAsync(KVReadQuery.Build(0, "$BASE"), callback);
                     var t6 = client.SendAsync(KVReadQuery.Build(0, "$TOOL"), callback);
+                    var t7 = client.SendAsync(KVReadQuery.Build(0, "$OV_PRO"), callback);
                 }
             }, null, Timeout.Infinite, Timeout.Infinite);
-
-            //infoTimer.Interval = 5000;
-            //infoTimer.Tick += (s, ev) => 
-            //{
-
-            //};
 
             // Init Tree
             InitTree();
@@ -264,28 +281,177 @@ namespace Kukavar.DemoApp
             client.ConnectionError += ConnectionErrorHandler;
             client.Closing += ClosingErrorHandler;
             client.Closed += ClosedErrorHandler;
-
-            var varName = scbRead.Text;
         }
+
+        private void InitList()
+        {
+            dtio = new DataTable("IO");
+            dtio.Columns.Add("Name");
+            dtio.Columns.Add("Tag");
+            dtio.Columns.Add("Group");
+            dtio.Columns.Add("Value");
+            dtio.Columns.Add("Type");
+
+            AddIOItem("X_RPMDemande_Broche", "RPM prog", "Usinage");
+            AddIOItem("X_FacteurRPM_Broche", "+/- RPM (50-150%)", "Usinage");
+            AddIOItem("X_RPMModifie_Broche", "RPM actuel", "Usinage");
+
+            AddIOItem("X_AUEnCours", "Arret d'urgence", "Etats");
+            AddIOItem("X_InterStopRob", "Arret general", "Etats");
+            AddIOItem("X_RPMNonAtteint_Broche", "Stop vitesse broche", "Etats");
+
+            //olvIO.DataSource = dtio;
+
+            
+            objectListView.CellEditActivation = ObjectListView.CellEditActivateMode.DoubleClick;
+            objectListView.SortGroupItemsByPrimaryColumn = true;
+
+            // Do that here because of Internet Zone pb woth image strem and VMWare network share.
+            var imglist = new ImageList();
+            imglist.Images.Add("bfalse", Properties.Resources.bfalse);
+            imglist.Images.Add("btrue", Properties.Resources.btrue);
+            objectListView.SmallImageList = imglist;
+
+            objectListView.Refresh();
+            olvColValue.ImageGetter = delegate (object model)
+            {   
+                var drv = model as DataRowView;
+                if (drv["Type"].ToString() == "BOOL")
+                {
+                    if (drv["Value"].ToString() == "TRUE")
+                        return "btrue";
+                    else
+                        return "bfalse";
+                }
+                return "";
+            };
+
+            var ds = new DataSet();
+            ds.Tables.Add(dtio);
+            objectListView.DataSource = new BindingSource(ds, "IO");
+            objectListView.Sort("Group");
+
+            ioTimer = new System.Threading.Timer((state) =>
+            {
+                if (client.Status == ClientStatus.Connected)
+                {
+                    KVReplyCallback callback = async (reply) =>
+                    {
+                        if (reply.Successful)
+                        {
+                            this.BeginInvoke((Action)delegate ()
+                            {
+                                var varName = ((KVReadQuery)reply.Query).VarName;
+                                //lbMonitoTime.Text = string.Format("elapsed time : {0,4:F0} ms", reply.RoundTripTime.TotalMilliseconds);
+                                var ast = reply.Answer.GetAST();
+                                foreach (DataRow dr in dtio.Rows)
+                                {
+                                    if (dr["Name"].ToString() == varName)
+                                    {
+                                        dr["Value"] = ast.ToKrlString();
+                                        dr["Type"] = ast.KrlType;
+                                        return;
+                                    }
+                                }
+                            });
+                        }
+                    };
+
+                    foreach (DataRow dr in dtio.Rows)
+                    {
+                        var varName = dr["Name"].ToString();
+                        client.SendAsync(KVReadQuery.Build(0, varName), callback);
+                    }
+                }
+            }, null, Timeout.Infinite, Timeout.Infinite);
+
+        }
+        private void AddIOItem(string krl, string tag, string group)
+        {
+            DataRow dr;
+
+            dr = dtio.NewRow();
+
+            dr["Name"] = krl;
+            dr["Tag"] = tag;
+            dr["Group"] = group;
+            dr["Value"] = "";
+            dr["Type"] = "";
+
+            dtio.Rows.Add(dr);
+        }
+
+        public void TimedFilter(ObjectListView olv, string txt)
+        {
+            TimedFilter(olv, txt, 0);
+        }
+        public void TimedFilter(ObjectListView olv, string txt, int matchKind)
+        {
+            TextMatchFilter filter = null;
+            if (!String.IsNullOrEmpty(txt))
+            {
+                switch (matchKind)
+                {
+                    case 0:
+                    default:
+                        filter = TextMatchFilter.Contains(olv, txt);
+                        break;
+                    case 1:
+                        filter = TextMatchFilter.Prefix(olv, txt);
+                        break;
+                    case 2:
+                        filter = TextMatchFilter.Regex(olv, txt);
+                        break;
+                }
+            }
+
+            // Text highlighting requires at least a default renderer
+            if (olv.DefaultRenderer == null)
+                olv.DefaultRenderer = new HighlightTextRenderer(filter);
+
+            Stopwatch stopWatch = new Stopwatch();
+            stopWatch.Start();
+            olv.ModelFilter = filter;
+            //olv.Invalidate();
+            stopWatch.Stop();
+
+            //IList objects = olv.Objects as IList;
+            //if (objects == null)
+            //    this.ToolStripStatus1 = prefixForNextSelectionMessage =
+            //        String.Format("Filtered in {0}ms", stopWatch.ElapsedMilliseconds);
+            //else
+            //    this.ToolStripStatus1 = prefixForNextSelectionMessage =
+            //        String.Format("Filtered {0} items down to {1} items in {2}ms",
+            //                      objects.Count,
+            //                      olv.Items.Count,
+            //                      stopWatch.ElapsedMilliseconds);
+        }
+
 
         #region Connection
-        private async void btStart_Click(object sender, EventArgs e)
+        private async void ckConnect_CheckedChanged(object sender, EventArgs e)
         {
-            grpCSettings.Enabled = false;
-            settings.ServerIP = tbServerIP.Text;
-            settings.ServerPort = int.Parse(tbServerPort.Text);
-            settings.MaxIdleTime = int.Parse(tbMaxIdleTime.Text);
-            settings.ReconnectionTimeout = int.Parse(tbReconnectionTO.Text);
-            settings.AutoReconnect = ckAutoReconnect.Checked;
-            settings.Save();
-            await client.ConnectAsync();
-            Task.Run(() => client.EnqueuingAsync());
-        }
-        private void btStop_Click(object sender, EventArgs e)
-        {
-            client.Close();
-            grpCSettings.Enabled = true;
-
+            if (ckConnect.Checked)
+            {
+                // start connection
+                ckConnect.Text = "Disconnect";
+                grpCSettings.Enabled = false;
+                settings.ServerIP = tbServerIP.Text;
+                settings.ServerPort = int.Parse(tbServerPort.Text);
+                settings.MaxIdleTime = int.Parse(tbMaxIdleTime.Text);
+                settings.ReconnectionTimeout = int.Parse(tbReconnectionTO.Text);
+                settings.AutoReconnect = ckAutoReconnect.Checked;
+                settings.Save();
+                await client.ConnectAsync();
+                Task.Run(() => client.EnqueuingAsync());
+            }
+            else
+            {
+                // stop connection
+                ckConnect.Text = "Connect";
+                client.Close();
+                grpCSettings.Enabled = true;
+            }
         }
         private Task ConnectingHandler(object sender, EventArgs e)
         {
@@ -306,6 +472,7 @@ namespace Kukavar.DemoApp
                 lbConnectionStatus.Text = "connected";
                 lbConnectionStatus.BackColor = Color.LimeGreen;
                 tabControl1.Enabled = true;
+                ckMonitor.Enabled = true;
             });
               
             var t1 = client.SendAsync(KVReadQuery.Build(0, "$MODEL_NAME[]"), async (reply) =>
@@ -337,7 +504,8 @@ namespace Kukavar.DemoApp
                     tbRobHours.Text = string.Format("{0}:{1:00}", min / 60, min % 60);
                 });
             });
-            infoTimer.Change(TimeSpan.FromMilliseconds(0), TimeSpan.FromMilliseconds(1000));
+
+            infoTimer.Change(TimeSpan.FromMilliseconds(0), TimeSpan.FromMilliseconds(cmdinfoRefreshRate));
             return Task.CompletedTask;
         }
         private Task ConnectionErrorHandler(object sender, ConnectionErrorEventArgs e)
@@ -351,6 +519,7 @@ namespace Kukavar.DemoApp
                 lbConnectionStatus.Text = "disconnected";
                 lbConnectionStatus.BackColor = Color.Red;
                 tabControl1.Enabled = false;
+                ckMonitor.Enabled = false;
             });
             return Task.CompletedTask;
         }
@@ -365,6 +534,7 @@ namespace Kukavar.DemoApp
                 lbConnectionStatus.Text = "closing...";
                 lbConnectionStatus.BackColor = Color.Yellow;
                 tabControl1.Enabled = false;
+                ckMonitor.Enabled = false;
             });
             return Task.CompletedTask;
         }
@@ -379,6 +549,7 @@ namespace Kukavar.DemoApp
                 lbConnectionStatus.Text = "closed";
                 lbConnectionStatus.BackColor = Color.Gray;
                 tabControl1.Enabled = false;
+                ckMonitor.Enabled = false;
             });
             return Task.CompletedTask;
         }
@@ -929,7 +1100,7 @@ namespace Kukavar.DemoApp
         #region Record
         private void InitRecord()
         {
-            records = new DataTable("Positions");
+            dtrecords = new DataTable("Positions");
 
             // record ID
             DataColumn colId = new DataColumn("Id");
@@ -943,60 +1114,60 @@ namespace Kukavar.DemoApp
             colDate.DataType = System.Type.GetType("System.DateTime");
 
             // data fields
-            records.Columns.Add(colId);
-            records.Columns.Add(colDate);
+            dtrecords.Columns.Add(colId);
+            dtrecords.Columns.Add(colDate);
 
-            records.Columns.Add("$POS_ACT.X");
-            records.Columns.Add("$POS_ACT.Y");
-            records.Columns.Add("$POS_ACT.Z");
-            records.Columns.Add("$POS_ACT.A");
-            records.Columns.Add("$POS_ACT.B");
-            records.Columns.Add("$POS_ACT.C");
-            records.Columns.Add("$POS_ACT.E1");
-            records.Columns.Add("$POS_ACT.E2");
-            records.Columns.Add("$POS_ACT.E3");
-            records.Columns.Add("$POS_ACT.E4");
-            records.Columns.Add("$POS_ACT.E5");
-            records.Columns.Add("$POS_ACT.E6");
-            records.Columns.Add("$POS_ACT.S");
-            records.Columns.Add("$POS_ACT.T");
+            dtrecords.Columns.Add("$POS_ACT.X");
+            dtrecords.Columns.Add("$POS_ACT.Y");
+            dtrecords.Columns.Add("$POS_ACT.Z");
+            dtrecords.Columns.Add("$POS_ACT.A");
+            dtrecords.Columns.Add("$POS_ACT.B");
+            dtrecords.Columns.Add("$POS_ACT.C");
+            dtrecords.Columns.Add("$POS_ACT.E1");
+            dtrecords.Columns.Add("$POS_ACT.E2");
+            dtrecords.Columns.Add("$POS_ACT.E3");
+            dtrecords.Columns.Add("$POS_ACT.E4");
+            dtrecords.Columns.Add("$POS_ACT.E5");
+            dtrecords.Columns.Add("$POS_ACT.E6");
+            dtrecords.Columns.Add("$POS_ACT.S");
+            dtrecords.Columns.Add("$POS_ACT.T");
 
-            records.Columns.Add("$AXIS_ACT.A1");
-            records.Columns.Add("$AXIS_ACT.A2");
-            records.Columns.Add("$AXIS_ACT.A3");
-            records.Columns.Add("$AXIS_ACT.A4");
-            records.Columns.Add("$AXIS_ACT.A5");
-            records.Columns.Add("$AXIS_ACT.A6");
-            records.Columns.Add("$AXIS_ACT.E1");
-            records.Columns.Add("$AXIS_ACT.E2");
-            records.Columns.Add("$AXIS_ACT.E3");
-            records.Columns.Add("$AXIS_ACT.E4");
-            records.Columns.Add("$AXIS_ACT.E5");
-            records.Columns.Add("$AXIS_ACT.E6");
+            dtrecords.Columns.Add("$AXIS_ACT.A1");
+            dtrecords.Columns.Add("$AXIS_ACT.A2");
+            dtrecords.Columns.Add("$AXIS_ACT.A3");
+            dtrecords.Columns.Add("$AXIS_ACT.A4");
+            dtrecords.Columns.Add("$AXIS_ACT.A5");
+            dtrecords.Columns.Add("$AXIS_ACT.A6");
+            dtrecords.Columns.Add("$AXIS_ACT.E1");
+            dtrecords.Columns.Add("$AXIS_ACT.E2");
+            dtrecords.Columns.Add("$AXIS_ACT.E3");
+            dtrecords.Columns.Add("$AXIS_ACT.E4");
+            dtrecords.Columns.Add("$AXIS_ACT.E5");
+            dtrecords.Columns.Add("$AXIS_ACT.E6");
 
-            records.Columns.Add("$BASE.X");
-            records.Columns.Add("$BASE.Y");
-            records.Columns.Add("$BASE.Z");
-            records.Columns.Add("$BASE.A");
-            records.Columns.Add("$BASE.B");
-            records.Columns.Add("$BASE.C");
+            dtrecords.Columns.Add("$BASE.X");
+            dtrecords.Columns.Add("$BASE.Y");
+            dtrecords.Columns.Add("$BASE.Z");
+            dtrecords.Columns.Add("$BASE.A");
+            dtrecords.Columns.Add("$BASE.B");
+            dtrecords.Columns.Add("$BASE.C");
 
-            records.Columns.Add("$TOOL.X");
-            records.Columns.Add("$TOOL.Y");
-            records.Columns.Add("$TOOL.Z");
-            records.Columns.Add("$TOOL.A");
-            records.Columns.Add("$TOOL.B");
-            records.Columns.Add("$TOOL.C");
+            dtrecords.Columns.Add("$TOOL.X");
+            dtrecords.Columns.Add("$TOOL.Y");
+            dtrecords.Columns.Add("$TOOL.Z");
+            dtrecords.Columns.Add("$TOOL.A");
+            dtrecords.Columns.Add("$TOOL.B");
+            dtrecords.Columns.Add("$TOOL.C");
 
-            for (int i = 2; i < records.Columns.Count; i++)
+            for (int i = 2; i < dtrecords.Columns.Count; i++)
             {
-                if (records.Columns[i].ColumnName == "$POS_ACT.S" || records.Columns[i].ColumnName == "$POS_ACT.T")
+                if (dtrecords.Columns[i].ColumnName == "$POS_ACT.S" || dtrecords.Columns[i].ColumnName == "$POS_ACT.T")
                 {
-                    records.Columns[i].DataType = System.Type.GetType("System.Int32");
+                    dtrecords.Columns[i].DataType = System.Type.GetType("System.Int32");
                 }
                 else
                 {
-                    records.Columns[i].DataType = System.Type.GetType("System.Double");
+                    dtrecords.Columns[i].DataType = System.Type.GetType("System.Double");
                 }
             }
 
@@ -1006,12 +1177,12 @@ namespace Kukavar.DemoApp
             {
                 foreach (var record in settings.Records)
                 {
-                    records.Rows.Add(record.ToArray());
+                    dtrecords.Rows.Add(record.ToArray());
                 }
             }
 
             // Bind the view
-            dgvRecords.DataSource = records;
+            dgvRecords.DataSource = dtrecords;
 
             // Clipboard
             dgvRecords.SelectionMode = DataGridViewSelectionMode.RowHeaderSelect;
@@ -1032,14 +1203,14 @@ namespace Kukavar.DemoApp
             dgvRecords.Columns["$DATE"].DefaultCellStyle.BackColor = Color.Gray;
             dgvRecords.Columns["$DATE"].DefaultCellStyle.Format = "yyyy/MM/dd HH:mm:ss";
 
-            for (int i = 0; i < records.Columns.Count; i++)
+            for (int i = 0; i < dtrecords.Columns.Count; i++)
             {
                 dgvRecords.Columns[i].SortMode = DataGridViewColumnSortMode.NotSortable;
                 dgvRecords.Columns[i].FillWeight = 1;
             }
 
-            records.TableNewRow += (s, e) => {
-                if (records.Rows.Count == 0)
+            dtrecords.TableNewRow += (s, e) => {
+                if (dtrecords.Rows.Count == 0)
                     rblRecordFilter_SelectedIndexChanged(null, null);
             };
 
@@ -1086,7 +1257,7 @@ namespace Kukavar.DemoApp
             if (!replyTimeout)
             {
                 //MessageBox.Show("All replies recieved !");
-                var row = records.NewRow();
+                var row = dtrecords.NewRow();
                 while (!queue.IsEmpty)
                 {
                     KVReply reply;
@@ -1167,10 +1338,10 @@ namespace Kukavar.DemoApp
                         Debug.WriteLine("CommunicationGroup.TryDequeue : false");
                     }
                 }
-                records.Rows.Add(row);
+                dtrecords.Rows.Add(row);
 
                 settings.Records.Clear();
-                foreach (var dr in records.Rows.OfType<DataRow>())
+                foreach (var dr in dtrecords.Rows.OfType<DataRow>())
                 {
                     var rec = Record.FromDatarow(dr);
                     settings.Records.Add(rec);
@@ -1214,12 +1385,12 @@ namespace Kukavar.DemoApp
             switch (res)
             {
                 case DialogResult.OK:
-                    records.Rows.Clear();
+                    dtrecords.Rows.Clear();
                     // us this too reset auto-increment
-                    records.Columns["Id"].AutoIncrementStep = -1;
-                    records.Columns["Id"].AutoIncrementSeed = -1;
-                    records.Columns["Id"].AutoIncrementStep = 1;
-                    records.Columns["Id"].AutoIncrementSeed = 1;
+                    dtrecords.Columns["Id"].AutoIncrementStep = -1;
+                    dtrecords.Columns["Id"].AutoIncrementSeed = -1;
+                    dtrecords.Columns["Id"].AutoIncrementStep = 1;
+                    dtrecords.Columns["Id"].AutoIncrementSeed = 1;
 
                     settings.Records.Clear();
                     settings.Save();
@@ -1228,10 +1399,10 @@ namespace Kukavar.DemoApp
         }
         private void rblRecordFilter_SelectedIndexChanged(object sender, EventArgs e)
         {
-            if (records == null) return;
-            if (records.Columns == null) return;
+            if (dtrecords == null) return;
+            if (dtrecords.Columns == null) return;
 
-            var cols = records.Columns.OfType<DataColumn>();
+            var cols = dtrecords.Columns.OfType<DataColumn>();
             switch (rblRecordFilter.SelectedIndex)
             {
                 case 0:
@@ -1338,8 +1509,8 @@ namespace Kukavar.DemoApp
             }
         }
         #endregion
-        
 
+        #region Write
         private async void btWrite_Click(object sender, EventArgs e)
         {
             var varName = scbWrite.Text;
@@ -1386,38 +1557,74 @@ namespace Kukavar.DemoApp
                 settings.Save();
             }
         }
+        #endregion
 
         private void label24_Click(object sender, EventArgs e)
         {
 
         }
 
-        private void tabPage4_Click(object sender, EventArgs e)
-        {
 
+        private void textBoxFilterData_TextChanged(object sender, EventArgs e)
+        {
+            TimedFilter(objectListView, ((TextBox)sender).Text);
         }
 
-        private void btMonitor_Click(object sender, EventArgs e)
+        private void btIO_Remove_Click(object sender, EventArgs e)
         {
-            grp_TCP.Enabled = !grp_TCP.Enabled;
-            grp_EXT.Enabled = !grp_EXT.Enabled;
-            grp_AXIS.Enabled = !grp_AXIS.Enabled;
-            grp_BASE.Enabled = !grp_BASE.Enabled;
-            grp_TOOL.Enabled = !grp_TOOL.Enabled;
-            grp_VEL.Enabled = !grp_VEL.Enabled;
-            grp_ACC.Enabled = !grp_ACC.Enabled;
-
-            if (btMonitor.Text == "Start")
+            var index = objectListView.SelectedIndex;
+            if (index > -1)
             {
-                btMonitor.Text = "Stop";
-                monitoringTimer.Change(TimeSpan.FromMilliseconds(0), TimeSpan.FromMilliseconds(200));
+                objectListView.Items.RemoveAt(index);
+            }
+        }
+
+        private void btIO_Add_Click(object sender, EventArgs e)
+        {
+            var dr = dtio.NewRow();
+            dr["Name"] = "KrlName";
+            dr["Tag"] = "Insert your description";
+            dr["Group"] = "New";
+            dr["Value"] = "";
+            dr["Type"] = "";
+
+            dtio.Rows.Add(dr);
+        }
+
+        private void ckMonitor_CheckedChanged(object sender, EventArgs e)
+        {
+            foreach (Control ctrl in tabPage4.Controls) ctrl.Enabled = !ctrl.Enabled;
+            if (ckMonitor.Checked)
+            {
+                // start monitoring
+                ckMonitor.Text = "Monitoring : STOP";
+                monitoringTimer.Change(TimeSpan.FromMilliseconds(0), TimeSpan.FromMilliseconds(monitoRefreshRate));
+                ioTimer.Change(TimeSpan.FromMilliseconds(0), TimeSpan.FromMilliseconds(monitoRefreshRate));
             }
             else
             {
-                btMonitor.Text = "Start";
+                // stop monitoring
+                ckMonitor.Text = "Monitoring : START";
                 monitoringTimer.Change(Timeout.Infinite, Timeout.Infinite);
+                ioTimer.Change(Timeout.Infinite, Timeout.Infinite);
             }
+        }
 
+        private string FormatNumber(string format, double? number, int length = 6)
+        {
+            if (number.HasValue)
+            {
+                var str = string.Format(format, number);
+                //return str;
+                int pos = str.IndexOf(',');
+                if (pos == -1)
+                    pos = str.Length;
+                return new String(' ', length - pos) + str;
+            }
+            else
+            {
+                return "";
+            }
         }
     }
 }

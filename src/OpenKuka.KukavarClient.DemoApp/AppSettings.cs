@@ -37,6 +37,9 @@ namespace Kukavar.DemoApp
         // RECORD
         public List<Record> Records { get; set; }
 
+        // IO GROUPS
+        public List<IOItem> IOItems { get; set; }
+
         #endregion
         //Step 3: Override parent's constructors
         public AppSettings() { }
@@ -173,5 +176,18 @@ namespace Kukavar.DemoApp
     {
         public string VarName { get; set; }
         public string VarValue { get; set; }
+    }
+    internal class IOItem
+    {
+        public string Group { get; set; }
+        public string Tag { get; set; }
+        public string Name { get; set; }
+
+        public IOItem(string name, string tag, string grp)
+        {
+            Name = name;
+            Tag = tag;
+            Group = grp;
+        }
     }
 }
