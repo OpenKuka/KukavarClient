@@ -17,7 +17,7 @@ using System.Collections.Concurrent;
 using OpenKuka.KRL.Types;
 using System.Threading;
 using BrightIdeasSoftware;
-using System.Collections;
+using EWSoftware.ListControls;
 
 namespace Kukavar.DemoApp
 {
@@ -27,6 +27,7 @@ namespace Kukavar.DemoApp
         private bool bMonitor = false;
 
         internal AppSettings settings = JsonSettings.Load<AppSettings>();
+        private ImageList ioValueImageList;
 
         private System.Threading.Timer infoTimer, monitoringTimer, ioTimer;
 
@@ -77,6 +78,10 @@ namespace Kukavar.DemoApp
                                 var varName1 = ((KVReadQuery)reply.Query).VarName;
                                 switch (varName1)
                                 {
+                                    case "$MODE_OP":
+                                        lbModeOP.Text = reply.Answer.VarValue;
+                                        break;
+
                                     case "$PRO_STATE0":
                                         lbProState0.Text = reply.Answer.VarValue;
                                         CmdInfoColors(lbProState0, reply.Answer.VarValue);
@@ -98,10 +103,11 @@ namespace Kukavar.DemoApp
                             });
                         }
                     };
-                    var t1 = client.SendAsync(KVReadQuery.Build(0, "$PRO_STATE0"), callback);
-                    var t2 = client.SendAsync(KVReadQuery.Build(0, "$PRO_STATE1"), callback);
-                    var t3 = client.SendAsync(KVReadQuery.Build(0, "$PRO_NAME0[]"), callback);
-                    var t4 = client.SendAsync(KVReadQuery.Build(0, "$PRO_NAME1[]"), callback);
+                    client.SendAsync(KVReadQuery.Build(0, "$MODE_OP"), callback);
+                    client.SendAsync(KVReadQuery.Build(0, "$PRO_STATE0"), callback);
+                    client.SendAsync(KVReadQuery.Build(0, "$PRO_STATE1"), callback);
+                    client.SendAsync(KVReadQuery.Build(0, "$PRO_NAME0[]"), callback);
+                    client.SendAsync(KVReadQuery.Build(0, "$PRO_NAME1[]"), callback);
                 }
             }, null, Timeout.Infinite, Timeout.Infinite);
 
@@ -281,150 +287,6 @@ namespace Kukavar.DemoApp
             client.ConnectionError += ConnectionErrorHandler;
             client.Closing += ClosingErrorHandler;
             client.Closed += ClosedErrorHandler;
-        }
-
-        private void InitList()
-        {
-            dtio = new DataTable("IO");
-            dtio.Columns.Add("Name");
-            dtio.Columns.Add("Tag");
-            dtio.Columns.Add("Group");
-            dtio.Columns.Add("Value");
-            dtio.Columns.Add("Type");
-
-            AddIOItem("X_RPMDemande_Broche", "RPM prog", "Usinage");
-            AddIOItem("X_FacteurRPM_Broche", "+/- RPM (50-150%)", "Usinage");
-            AddIOItem("X_RPMModifie_Broche", "RPM actuel", "Usinage");
-
-            AddIOItem("X_AUEnCours", "Arret d'urgence", "Etats");
-            AddIOItem("X_InterStopRob", "Arret general", "Etats");
-            AddIOItem("X_RPMNonAtteint_Broche", "Stop vitesse broche", "Etats");
-
-            //olvIO.DataSource = dtio;
-
-            
-            objectListView.CellEditActivation = ObjectListView.CellEditActivateMode.DoubleClick;
-            objectListView.SortGroupItemsByPrimaryColumn = true;
-
-            // Do that here because of Internet Zone pb woth image strem and VMWare network share.
-            var imglist = new ImageList();
-            imglist.Images.Add("bfalse", Properties.Resources.bfalse);
-            imglist.Images.Add("btrue", Properties.Resources.btrue);
-            objectListView.SmallImageList = imglist;
-
-            objectListView.Refresh();
-            olvColValue.ImageGetter = delegate (object model)
-            {   
-                var drv = model as DataRowView;
-                if (drv["Type"].ToString() == "BOOL")
-                {
-                    if (drv["Value"].ToString() == "TRUE")
-                        return "btrue";
-                    else
-                        return "bfalse";
-                }
-                return "";
-            };
-
-            var ds = new DataSet();
-            ds.Tables.Add(dtio);
-            objectListView.DataSource = new BindingSource(ds, "IO");
-            objectListView.Sort("Group");
-
-            ioTimer = new System.Threading.Timer((state) =>
-            {
-                if (client.Status == ClientStatus.Connected)
-                {
-                    KVReplyCallback callback = async (reply) =>
-                    {
-                        if (reply.Successful)
-                        {
-                            this.BeginInvoke((Action)delegate ()
-                            {
-                                var varName = ((KVReadQuery)reply.Query).VarName;
-                                //lbMonitoTime.Text = string.Format("elapsed time : {0,4:F0} ms", reply.RoundTripTime.TotalMilliseconds);
-                                var ast = reply.Answer.GetAST();
-                                foreach (DataRow dr in dtio.Rows)
-                                {
-                                    if (dr["Name"].ToString() == varName)
-                                    {
-                                        dr["Value"] = ast.ToKrlString();
-                                        dr["Type"] = ast.KrlType;
-                                        return;
-                                    }
-                                }
-                            });
-                        }
-                    };
-
-                    foreach (DataRow dr in dtio.Rows)
-                    {
-                        var varName = dr["Name"].ToString();
-                        client.SendAsync(KVReadQuery.Build(0, varName), callback);
-                    }
-                }
-            }, null, Timeout.Infinite, Timeout.Infinite);
-
-        }
-        private void AddIOItem(string krl, string tag, string group)
-        {
-            DataRow dr;
-
-            dr = dtio.NewRow();
-
-            dr["Name"] = krl;
-            dr["Tag"] = tag;
-            dr["Group"] = group;
-            dr["Value"] = "";
-            dr["Type"] = "";
-
-            dtio.Rows.Add(dr);
-        }
-
-        public void TimedFilter(ObjectListView olv, string txt)
-        {
-            TimedFilter(olv, txt, 0);
-        }
-        public void TimedFilter(ObjectListView olv, string txt, int matchKind)
-        {
-            TextMatchFilter filter = null;
-            if (!String.IsNullOrEmpty(txt))
-            {
-                switch (matchKind)
-                {
-                    case 0:
-                    default:
-                        filter = TextMatchFilter.Contains(olv, txt);
-                        break;
-                    case 1:
-                        filter = TextMatchFilter.Prefix(olv, txt);
-                        break;
-                    case 2:
-                        filter = TextMatchFilter.Regex(olv, txt);
-                        break;
-                }
-            }
-
-            // Text highlighting requires at least a default renderer
-            if (olv.DefaultRenderer == null)
-                olv.DefaultRenderer = new HighlightTextRenderer(filter);
-
-            Stopwatch stopWatch = new Stopwatch();
-            stopWatch.Start();
-            olv.ModelFilter = filter;
-            //olv.Invalidate();
-            stopWatch.Stop();
-
-            //IList objects = olv.Objects as IList;
-            //if (objects == null)
-            //    this.ToolStripStatus1 = prefixForNextSelectionMessage =
-            //        String.Format("Filtered in {0}ms", stopWatch.ElapsedMilliseconds);
-            //else
-            //    this.ToolStripStatus1 = prefixForNextSelectionMessage =
-            //        String.Format("Filtered {0} items down to {1} items in {2}ms",
-            //                      objects.Count,
-            //                      olv.Items.Count,
-            //                      stopWatch.ElapsedMilliseconds);
         }
 
 
@@ -1565,32 +1427,10 @@ namespace Kukavar.DemoApp
         }
 
 
-        private void textBoxFilterData_TextChanged(object sender, EventArgs e)
-        {
-            TimedFilter(objectListView, ((TextBox)sender).Text);
-        }
 
-        private void btIO_Remove_Click(object sender, EventArgs e)
-        {
-            var index = objectListView.SelectedIndex;
-            if (index > -1)
-            {
-                objectListView.Items.RemoveAt(index);
-            }
-        }
 
-        private void btIO_Add_Click(object sender, EventArgs e)
-        {
-            var dr = dtio.NewRow();
-            dr["Name"] = "KrlName";
-            dr["Tag"] = "Insert your description";
-            dr["Group"] = "New";
-            dr["Value"] = "";
-            dr["Type"] = "";
 
-            dtio.Rows.Add(dr);
-        }
-
+        #region Monitor
         private void ckMonitor_CheckedChanged(object sender, EventArgs e)
         {
             foreach (Control ctrl in tabPage4.Controls) ctrl.Enabled = !ctrl.Enabled;
@@ -1609,7 +1449,6 @@ namespace Kukavar.DemoApp
                 ioTimer.Change(Timeout.Infinite, Timeout.Infinite);
             }
         }
-
         private string FormatNumber(string format, double? number, int length = 6)
         {
             if (number.HasValue)
@@ -1626,5 +1465,286 @@ namespace Kukavar.DemoApp
                 return "";
             }
         }
+
+        private void InitList()
+        {
+            dtio = new DataTable("IO");
+            dtio.Columns.Add("Name");
+            dtio.Columns.Add("Tag");
+            dtio.Columns.Add("Group");
+            dtio.Columns.Add("Value");
+            dtio.Columns.Add("Type");
+
+            AddIOItem("X_RPMDemande_Broche", "RPM prog", "Usinage");
+            AddIOItem("X_FacteurRPM_Broche", "+/- RPM (50-150%)", "Usinage");
+            AddIOItem("X_RPMModifie_Broche", "RPM actuel", "Usinage");
+
+            AddIOItem("X_AUEnCours", "Arret d'urgence", "Etats");
+            AddIOItem("X_InterStopRob", "Arret general", "Etats");
+            AddIOItem("X_RPMNonAtteint_Broche", "Stop vitesse broche", "Etats");
+
+            //olvIO.DataSource = dtio;
+
+
+
+            //imageComboBox1.Items.Add(new ImageComboBoxItem("Item without image"));
+            //imageComboBox1.Items.Add(new ImageComboBoxItem("Exclamation", SystemIcons.Exclamation.ToBitmap()));
+            //imageComboBox1.Items.Add(new ImageComboBoxItem("Information", SystemIcons.Information.ToBitmap()));
+            //imageComboBox1.Items.Add(new ImageComboBoxItem("Error", SystemIcons.Error.ToBitmap()));
+            //imageComboBox1.SelectedIndex = 1;
+
+            objectListView.CellEditActivation = ObjectListView.CellEditActivateMode.DoubleClick;
+            objectListView.SortGroupItemsByPrimaryColumn = true;
+            objectListView.CellEditStarting += new CellEditEventHandler((o,e) =>
+            {
+                string val = e.Value.ToString();
+                if (val.Equals("TRUE", StringComparison.OrdinalIgnoreCase) || val.Equals("FALSE", StringComparison.OrdinalIgnoreCase))
+                {
+                    var cb = new IconComboBox();
+                    cb.SetData(new List<(string, Image)>() { ("FALSE", Properties.Resources.round_grey), ("TRUE", Properties.Resources.round_red) });
+                    cb.Bounds = e.CellBounds;
+                    cb.Text = e.Value.ToString();
+                    e.Control = cb;
+                }
+                else
+                {
+                    var tb = new TextBox();
+                    tb.TextAlign = HorizontalAlignment.Center;
+                    tb.Bounds = e.CellBounds;
+                    tb.Text = e.Value.ToString();
+                    e.Control = tb;
+                }    
+            });
+            objectListView.CellEditFinishing += new CellEditEventHandler((o, e) =>
+            {
+                // The edition was not cancelled
+                if (!e.Cancel)
+                {
+                    // Its a value so we push it to the robot 
+                    if (e.Column.AspectName == "Value")
+                    {
+                        var dr = e.RowObject as DataRowView;
+                        var varName = dr["Name"].ToString(); ;
+                        var varPrevValue = e.Value;
+                        var varNewValue = e.Control.Text;
+                        //MessageBox.Show("Cell was : " + e.Value + " and is now : " + e.Control.Text);
+                        client.SendAsync(KVPWriteQuery.Build(0, varName, varNewValue));
+                    }
+                }                
+            });
+
+            // Do that here because of Internet Zone pb woth image strem and VMWare network share.
+            ioValueImageList = new ImageList();
+            ioValueImageList.Images.Add("bfalse", Properties.Resources.round_grey);
+            ioValueImageList.Images.Add("btrue", Properties.Resources.round_red);
+            objectListView.SmallImageList = ioValueImageList;
+
+            objectListView.Refresh();
+            olvColValue.TextAlign = HorizontalAlignment.Center;
+            olvColValue.AspectToStringConverter = delegate (object model) {
+                var varValue = model.ToString();
+                if (varValue == "FALSE" || varValue == "TRUE")
+                {
+                    return "";
+                }
+                return varValue;
+            };
+            olvColValue.ImageGetter = delegate (object model)
+            {
+                var drv = model as DataRowView;
+                if (drv["Type"].ToString() == "BOOL")
+                {
+                    if (drv["Value"].ToString() == "TRUE")
+                        return "btrue";
+                    else
+                        return "bfalse";
+                }
+                return "";
+            };
+
+            var ds = new DataSet();
+            ds.Tables.Add(dtio);
+            objectListView.DataSource = new BindingSource(ds, "IO");
+            objectListView.Sort("Group");
+
+            cbIO_Refresh();
+
+            ioTimer = new System.Threading.Timer((state) =>
+            {
+                if (client.Status == ClientStatus.Connected)
+                {
+                    KVReplyCallback callback = async (reply) =>
+                    {
+                        if (reply.Successful)
+                        {
+                            this.BeginInvoke((Action)delegate ()
+                            {
+                                var varName = ((KVReadQuery)reply.Query).VarName;
+                                //lbMonitoTime.Text = string.Format("elapsed time : {0,4:F0} ms", reply.RoundTripTime.TotalMilliseconds);
+                                var ast = reply.Answer.GetAST();
+                                foreach (DataRow dr in dtio.Rows)
+                                {
+                                    if (dr["Name"].ToString() == varName)
+                                    {
+                                        dr["Value"] = ast.ToKrlString();
+                                        dr["Type"] = ast.KrlType;
+                                        return;
+                                    }
+                                }
+                            });
+                        }
+                    };
+
+                    foreach (DataRow dr in dtio.Rows)
+                    {
+                        var varName = dr["Name"].ToString();
+                        client.SendAsync(KVReadQuery.Build(0, varName), callback);
+                    }
+                }
+            }, null, Timeout.Infinite, Timeout.Infinite);
+
+        }
+        
+
+        // filter
+        private void tbIOSearch_TextChanged(object sender, EventArgs e)
+        {
+            RebuildFilters(objectListView, cb_IOGroup.Text, tbIOSearch.Text, 0);
+        }
+        private void cb_IOGroup_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            RebuildFilters(objectListView, cb_IOGroup.Text, tbIOSearch.Text, 0);
+        }
+        private void RebuildFilters(ObjectListView olv, string group, string search, int matchKind)
+        {
+
+            // Build a composite filter that unify the three possible filtering criteria
+
+            List<IModelFilter> filters = new List<IModelFilter>();
+
+            // filter by group
+            if (group != "Select")
+            {
+                filters.Add(new ModelFilter((model) => 
+                {
+                    return (model as DataRowView)["Group"].ToString() == group;
+                }));
+            }
+
+            // fiter by search
+            if (!String.IsNullOrEmpty(search))
+            {
+                TextMatchFilter filter;
+                switch (matchKind)
+                {
+                    case 0:
+                    default:
+                        filter = TextMatchFilter.Contains(olv, search);
+                        break;
+                    case 1:
+                        filter = TextMatchFilter.Prefix(olv, search);
+                        break;
+                    case 2:
+                        filter = TextMatchFilter.Regex(olv, search);
+                        break;
+                }
+
+                filters.Add(filter);
+                if (olv.DefaultRenderer == null)
+                    olv.DefaultRenderer = new HighlightTextRenderer(filter);
+            }
+
+            // Use AdditionalFilter (instead of ModelFilter) since AdditionalFilter plays well with any
+            // extra filtering the user might specify via the column header
+            olv.AdditionalFilter = filters.Count == 0 ? null : new CompositeAllFilter(filters);
+        }
+
+        private void btIOGrpDelete_Click(object sender, EventArgs e)
+        {
+            if (cb_IOGroup.Text == "Select")
+            {
+                var res = MessageBox.Show("Do you want to delete all groups and associated variables ?\nThis action cannot be undone.", "Delete Group", MessageBoxButtons.YesNo);
+                if (res == DialogResult.Yes)
+                {
+                    dtio.AcceptChanges();
+                    dtio.Clear();
+                    dtio.AcceptChanges();
+                    cbIO_Refresh();
+                }
+            }
+            else
+            {
+                var res = MessageBox.Show(string.Format("Do you want to delete the group '{0}' and all associated variables ?\nThis action cannot be undone.", cb_IOGroup.Text), "Delete Group", MessageBoxButtons.YesNo);
+                if (res == DialogResult.Yes)
+                {
+                    dtio.AcceptChanges();
+                    foreach (DataRow dr in dtio.Rows)
+                    {
+                        if (dr["Group"].ToString() == cb_IOGroup.Text)
+                        {
+                            dr.Delete();
+                        }
+                    }
+                    dtio.AcceptChanges();
+                    cbIO_Refresh();
+                }
+            }
+        }
+
+        private void btIO_Add_Click(object sender, EventArgs e)
+        {
+            var dr = dtio.NewRow();
+            dr["Name"] = "KrlName";
+            dr["Tag"] = "Insert your description";
+            dr["Group"] = "New";
+            dr["Value"] = "";
+            dr["Type"] = "";
+
+            dtio.Rows.Add(dr);
+        }
+        private void AddIOItem(string krl, string tag, string group)
+        {
+            DataRow dr;
+
+            dr = dtio.NewRow();
+
+            dr["Name"] = krl;
+            dr["Tag"] = tag;
+            dr["Group"] = group;
+            dr["Value"] = "";
+            dr["Type"] = "";
+
+            dtio.Rows.Add(dr);
+        }
+        private void btIO_Remove_Click(object sender, EventArgs e)
+        {
+            var index = objectListView.SelectedIndex;
+            if (index > -1)
+            {
+                var res = MessageBox.Show("Are you sure you want to delete the selected item ?\nThis action cannot be undone.", "Delete Item", MessageBoxButtons.YesNo);
+                if (res == DialogResult.Yes)
+                {
+                    objectListView.Items.RemoveAt(index);
+                }
+            }
+            else
+            {
+                MessageBox.Show("Select an item to delete.", "Delete Item");
+            }
+        }
+
+        private void cbIO_Refresh()
+        {
+            cb_IOGroup.Items.Clear();
+            cb_IOGroup.Items.Add("Select");
+            cb_IOGroup.Items.AddRange(dtio.AsEnumerable()
+                .Select(dr => dr["Group"].ToString())
+                .Distinct()
+                .OrderBy(s => s)
+                .ToArray());
+            cb_IOGroup.SelectedIndex = 0;
+        }
+
+        #endregion
     }
 }

@@ -45,11 +45,21 @@
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
             this.lbReadTime = new System.Windows.Forms.Label();
+            this.btExpandAll = new System.Windows.Forms.Button();
+            this.btCollapseAll = new System.Windows.Forms.Button();
+            this.btRemoveHistory = new System.Windows.Forms.Button();
             this.btReadTemplate = new System.Windows.Forms.Button();
             this.label10 = new System.Windows.Forms.Label();
             this.tbTemplateName = new System.Windows.Forms.TextBox();
+            this.btEditTemplateName = new System.Windows.Forms.Button();
             this.cbTemplate = new System.Windows.Forms.ComboBox();
+            this.btAddReadTemplate = new System.Windows.Forms.Button();
             this.lstbRead = new System.Windows.Forms.ListBox();
+            this.btRemoveReadTemplate = new System.Windows.Forms.Button();
+            this.btUp = new System.Windows.Forms.Button();
+            this.btAddTemplateVar = new System.Windows.Forms.Button();
+            this.btRemoveTemplateVar = new System.Windows.Forms.Button();
+            this.btDown = new System.Windows.Forms.Button();
             this.label9 = new System.Windows.Forms.Label();
             this.label8 = new System.Windows.Forms.Label();
             this.btReadSingle = new System.Windows.Forms.Button();
@@ -74,6 +84,9 @@
             this.rblRecordFilter = new EWSoftware.ListControls.RadioButtonList();
             this.label14 = new System.Windows.Forms.Label();
             this.dgvRecords = new System.Windows.Forms.DataGridView();
+            this.btRecordReset = new System.Windows.Forms.Button();
+            this.btRemoveRecord = new System.Windows.Forms.Button();
+            this.btAddRecord = new System.Windows.Forms.Button();
             this.tabPage4 = new System.Windows.Forms.TabPage();
             this.lbMonitoRate = new System.Windows.Forms.Label();
             this.lbMonitoTime = new System.Windows.Forms.Label();
@@ -163,17 +176,25 @@
             this.label34 = new System.Windows.Forms.Label();
             this.lb_A = new System.Windows.Forms.Label();
             this.tabPage6 = new System.Windows.Forms.TabPage();
-            this.textBoxFilterData = new System.Windows.Forms.TextBox();
+            this.label48 = new System.Windows.Forms.Label();
+            this.label26 = new System.Windows.Forms.Label();
+            this.tbIOSearch = new System.Windows.Forms.TextBox();
             this.objectListView = new BrightIdeasSoftware.DataListView();
-            this.olvColName = ((BrightIdeasSoftware.OLVColumn)(new BrightIdeasSoftware.OLVColumn()));
             this.olvColTag = ((BrightIdeasSoftware.OLVColumn)(new BrightIdeasSoftware.OLVColumn()));
-            this.olvColGroup = ((BrightIdeasSoftware.OLVColumn)(new BrightIdeasSoftware.OLVColumn()));
             this.olvColValue = ((BrightIdeasSoftware.OLVColumn)(new BrightIdeasSoftware.OLVColumn()));
+            this.olvColFiller = ((BrightIdeasSoftware.OLVColumn)(new BrightIdeasSoftware.OLVColumn()));
+            this.olvColName = ((BrightIdeasSoftware.OLVColumn)(new BrightIdeasSoftware.OLVColumn()));
+            this.olvColGroup = ((BrightIdeasSoftware.OLVColumn)(new BrightIdeasSoftware.OLVColumn()));
             this.olvColType = ((BrightIdeasSoftware.OLVColumn)(new BrightIdeasSoftware.OLVColumn()));
-            this.cb_IO = new System.Windows.Forms.ComboBox();
+            this.cb_IOGroup = new System.Windows.Forms.ComboBox();
+            this.btIOGrpDelete = new System.Windows.Forms.Button();
+            this.btIO_Add = new System.Windows.Forms.Button();
+            this.btIO_Remove = new System.Windows.Forms.Button();
             this.label35 = new System.Windows.Forms.Label();
             this.tabPage5 = new System.Windows.Forms.TabPage();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
+            this.lbModeOP = new System.Windows.Forms.Label();
+            this.label43 = new System.Windows.Forms.Label();
             this.lbProName1 = new System.Windows.Forms.Label();
             this.lbProState1 = new System.Windows.Forms.Label();
             this.lbProState0 = new System.Windows.Forms.Label();
@@ -191,25 +212,6 @@
             this.ckConnect = new System.Windows.Forms.CheckBox();
             this.toolTip = new System.Windows.Forms.ToolTip(this.components);
             this.imageList1 = new System.Windows.Forms.ImageList(this.components);
-            this.btExpandAll = new System.Windows.Forms.Button();
-            this.btCollapseAll = new System.Windows.Forms.Button();
-            this.btRemoveHistory = new System.Windows.Forms.Button();
-            this.btEditTemplateName = new System.Windows.Forms.Button();
-            this.btAddReadTemplate = new System.Windows.Forms.Button();
-            this.btRemoveReadTemplate = new System.Windows.Forms.Button();
-            this.btUp = new System.Windows.Forms.Button();
-            this.btAddTemplateVar = new System.Windows.Forms.Button();
-            this.btRemoveTemplateVar = new System.Windows.Forms.Button();
-            this.btDown = new System.Windows.Forms.Button();
-            this.btRecordReset = new System.Windows.Forms.Button();
-            this.btRemoveRecord = new System.Windows.Forms.Button();
-            this.btAddRecord = new System.Windows.Forms.Button();
-            this.button3 = new System.Windows.Forms.Button();
-            this.button4 = new System.Windows.Forms.Button();
-            this.button5 = new System.Windows.Forms.Button();
-            this.btIO_Add = new System.Windows.Forms.Button();
-            this.btIO_Remove = new System.Windows.Forms.Button();
-            this.button8 = new System.Windows.Forms.Button();
             this.scbRead = new AutoCompleteComboBox.SuggestComboBox();
             this.scbWrite = new AutoCompleteComboBox.SuggestComboBox();
             this.grpCSettings.SuspendLayout();
@@ -417,6 +419,40 @@
             this.lbReadTime.Text = "elapsed time : ms";
             this.lbReadTime.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             // 
+            // btExpandAll
+            // 
+            this.btExpandAll.Image = global::Kukavar.DemoApp.Properties.Resources.unfold;
+            this.btExpandAll.Location = new System.Drawing.Point(615, 14);
+            this.btExpandAll.Name = "btExpandAll";
+            this.btExpandAll.Size = new System.Drawing.Size(24, 28);
+            this.btExpandAll.TabIndex = 49;
+            this.toolTip.SetToolTip(this.btExpandAll, "Expand All");
+            this.btExpandAll.UseVisualStyleBackColor = true;
+            this.btExpandAll.Click += new System.EventHandler(this.btExpandAll_Click);
+            // 
+            // btCollapseAll
+            // 
+            this.btCollapseAll.Image = global::Kukavar.DemoApp.Properties.Resources.fold;
+            this.btCollapseAll.Location = new System.Drawing.Point(645, 14);
+            this.btCollapseAll.Name = "btCollapseAll";
+            this.btCollapseAll.Size = new System.Drawing.Size(24, 28);
+            this.btCollapseAll.TabIndex = 48;
+            this.toolTip.SetToolTip(this.btCollapseAll, "Collapse All");
+            this.btCollapseAll.UseVisualStyleBackColor = true;
+            this.btCollapseAll.Click += new System.EventHandler(this.btCollapseAll_Click);
+            // 
+            // btRemoveHistory
+            // 
+            this.btRemoveHistory.Image = global::Kukavar.DemoApp.Properties.Resources.remove;
+            this.btRemoveHistory.Location = new System.Drawing.Point(171, 48);
+            this.btRemoveHistory.Name = "btRemoveHistory";
+            this.btRemoveHistory.Size = new System.Drawing.Size(24, 24);
+            this.btRemoveHistory.TabIndex = 46;
+            this.btRemoveHistory.Text = " ";
+            this.toolTip.SetToolTip(this.btRemoveHistory, "Remove selected item from history");
+            this.btRemoveHistory.UseVisualStyleBackColor = true;
+            this.btRemoveHistory.Click += new System.EventHandler(this.btRemoveHistory_Click);
+            // 
             // btReadTemplate
             // 
             this.btReadTemplate.Location = new System.Drawing.Point(262, 117);
@@ -447,6 +483,19 @@
             this.tbTemplateName.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.tbTemplateName_KeyPress);
             this.tbTemplateName.Validating += new System.ComponentModel.CancelEventHandler(this.tbTemplateName_Validating);
             // 
+            // btEditTemplateName
+            // 
+            this.btEditTemplateName.CausesValidation = false;
+            this.btEditTemplateName.Image = global::Kukavar.DemoApp.Properties.Resources.edit;
+            this.btEditTemplateName.Location = new System.Drawing.Point(171, 163);
+            this.btEditTemplateName.Name = "btEditTemplateName";
+            this.btEditTemplateName.Size = new System.Drawing.Size(24, 24);
+            this.btEditTemplateName.TabIndex = 36;
+            this.btEditTemplateName.Text = " ";
+            this.toolTip.SetToolTip(this.btEditTemplateName, "Edit template name");
+            this.btEditTemplateName.UseVisualStyleBackColor = true;
+            this.btEditTemplateName.Click += new System.EventHandler(this.btEditTemplateName_Click);
+            // 
             // cbTemplate
             // 
             this.cbTemplate.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
@@ -457,6 +506,18 @@
             this.cbTemplate.TabIndex = 35;
             this.cbTemplate.SelectedIndexChanged += new System.EventHandler(this.cbTemplate_SelectedIndexChanged);
             // 
+            // btAddReadTemplate
+            // 
+            this.btAddReadTemplate.Image = global::Kukavar.DemoApp.Properties.Resources.addfilled;
+            this.btAddReadTemplate.Location = new System.Drawing.Point(172, 117);
+            this.btAddReadTemplate.Name = "btAddReadTemplate";
+            this.btAddReadTemplate.Size = new System.Drawing.Size(24, 24);
+            this.btAddReadTemplate.TabIndex = 34;
+            this.btAddReadTemplate.Text = " ";
+            this.toolTip.SetToolTip(this.btAddReadTemplate, "Add a new template");
+            this.btAddReadTemplate.UseVisualStyleBackColor = true;
+            this.btAddReadTemplate.Click += new System.EventHandler(this.btAddReadTemplate_Click);
+            // 
             // lstbRead
             // 
             this.lstbRead.FormattingEnabled = true;
@@ -464,6 +525,64 @@
             this.lstbRead.Name = "lstbRead";
             this.lstbRead.Size = new System.Drawing.Size(150, 147);
             this.lstbRead.TabIndex = 33;
+            // 
+            // btRemoveReadTemplate
+            // 
+            this.btRemoveReadTemplate.Image = global::Kukavar.DemoApp.Properties.Resources.delete;
+            this.btRemoveReadTemplate.Location = new System.Drawing.Point(198, 117);
+            this.btRemoveReadTemplate.Name = "btRemoveReadTemplate";
+            this.btRemoveReadTemplate.Size = new System.Drawing.Size(24, 24);
+            this.btRemoveReadTemplate.TabIndex = 31;
+            this.btRemoveReadTemplate.Text = " ";
+            this.toolTip.SetToolTip(this.btRemoveReadTemplate, "Delete the selected template");
+            this.btRemoveReadTemplate.UseVisualStyleBackColor = true;
+            this.btRemoveReadTemplate.Click += new System.EventHandler(this.btRemoveReadTemplate_Click);
+            // 
+            // btUp
+            // 
+            this.btUp.Image = global::Kukavar.DemoApp.Properties.Resources.up;
+            this.btUp.Location = new System.Drawing.Point(171, 213);
+            this.btUp.Name = "btUp";
+            this.btUp.Size = new System.Drawing.Size(24, 24);
+            this.btUp.TabIndex = 30;
+            this.toolTip.SetToolTip(this.btUp, "Move item Up");
+            this.btUp.UseVisualStyleBackColor = true;
+            this.btUp.Click += new System.EventHandler(this.btUp_Click);
+            // 
+            // btAddTemplateVar
+            // 
+            this.btAddTemplateVar.Image = global::Kukavar.DemoApp.Properties.Resources.add;
+            this.btAddTemplateVar.Location = new System.Drawing.Point(171, 306);
+            this.btAddTemplateVar.Name = "btAddTemplateVar";
+            this.btAddTemplateVar.Size = new System.Drawing.Size(24, 24);
+            this.btAddTemplateVar.TabIndex = 29;
+            this.btAddTemplateVar.Text = " ";
+            this.toolTip.SetToolTip(this.btAddTemplateVar, "Add the variable to the list");
+            this.btAddTemplateVar.UseVisualStyleBackColor = true;
+            this.btAddTemplateVar.Click += new System.EventHandler(this.btAddTemplateVar_Click);
+            // 
+            // btRemoveTemplateVar
+            // 
+            this.btRemoveTemplateVar.Image = global::Kukavar.DemoApp.Properties.Resources.remove;
+            this.btRemoveTemplateVar.Location = new System.Drawing.Point(171, 336);
+            this.btRemoveTemplateVar.Name = "btRemoveTemplateVar";
+            this.btRemoveTemplateVar.Size = new System.Drawing.Size(24, 24);
+            this.btRemoveTemplateVar.TabIndex = 28;
+            this.btRemoveTemplateVar.Text = " ";
+            this.toolTip.SetToolTip(this.btRemoveTemplateVar, "Remove the selected item from the variable list");
+            this.btRemoveTemplateVar.UseVisualStyleBackColor = true;
+            this.btRemoveTemplateVar.Click += new System.EventHandler(this.btRemoveTemplateVar_Click);
+            // 
+            // btDown
+            // 
+            this.btDown.Image = global::Kukavar.DemoApp.Properties.Resources.down;
+            this.btDown.Location = new System.Drawing.Point(171, 243);
+            this.btDown.Name = "btDown";
+            this.btDown.Size = new System.Drawing.Size(24, 24);
+            this.btDown.TabIndex = 25;
+            this.toolTip.SetToolTip(this.btDown, "Move item Down");
+            this.btDown.UseVisualStyleBackColor = true;
+            this.btDown.Click += new System.EventHandler(this.btDown_Click);
             // 
             // label9
             // 
@@ -747,6 +866,42 @@
             this.dgvRecords.ReadOnly = true;
             this.dgvRecords.Size = new System.Drawing.Size(666, 288);
             this.dgvRecords.TabIndex = 0;
+            // 
+            // btRecordReset
+            // 
+            this.btRecordReset.Image = global::Kukavar.DemoApp.Properties.Resources.delete;
+            this.btRecordReset.Location = new System.Drawing.Point(100, 40);
+            this.btRecordReset.Name = "btRecordReset";
+            this.btRecordReset.Size = new System.Drawing.Size(24, 24);
+            this.btRecordReset.TabIndex = 61;
+            this.btRecordReset.Text = " ";
+            this.toolTip.SetToolTip(this.btRecordReset, "Reset the recorder. Delete all records.");
+            this.btRecordReset.UseVisualStyleBackColor = true;
+            this.btRecordReset.Click += new System.EventHandler(this.btRecordReset_Click);
+            // 
+            // btRemoveRecord
+            // 
+            this.btRemoveRecord.Image = global::Kukavar.DemoApp.Properties.Resources.clear;
+            this.btRemoveRecord.Location = new System.Drawing.Point(44, 40);
+            this.btRemoveRecord.Name = "btRemoveRecord";
+            this.btRemoveRecord.Size = new System.Drawing.Size(24, 24);
+            this.btRemoveRecord.TabIndex = 48;
+            this.btRemoveRecord.Text = " ";
+            this.toolTip.SetToolTip(this.btRemoveRecord, "Remove the selected records from the table.");
+            this.btRemoveRecord.UseVisualStyleBackColor = true;
+            this.btRemoveRecord.Click += new System.EventHandler(this.btRemoveRecord_Click);
+            // 
+            // btAddRecord
+            // 
+            this.btAddRecord.Image = global::Kukavar.DemoApp.Properties.Resources.record;
+            this.btAddRecord.Location = new System.Drawing.Point(14, 40);
+            this.btAddRecord.Name = "btAddRecord";
+            this.btAddRecord.Size = new System.Drawing.Size(24, 24);
+            this.btAddRecord.TabIndex = 47;
+            this.btAddRecord.Text = " ";
+            this.toolTip.SetToolTip(this.btAddRecord, "Record the current position of the robot.");
+            this.btAddRecord.UseVisualStyleBackColor = true;
+            this.btAddRecord.Click += new System.EventHandler(this.btAddRecord_Click);
             // 
             // tabPage4
             // 
@@ -1658,15 +1813,14 @@
             // 
             // tabPage6
             // 
-            this.tabPage6.Controls.Add(this.textBoxFilterData);
+            this.tabPage6.Controls.Add(this.label48);
+            this.tabPage6.Controls.Add(this.label26);
+            this.tabPage6.Controls.Add(this.tbIOSearch);
             this.tabPage6.Controls.Add(this.objectListView);
-            this.tabPage6.Controls.Add(this.cb_IO);
-            this.tabPage6.Controls.Add(this.button3);
-            this.tabPage6.Controls.Add(this.button4);
-            this.tabPage6.Controls.Add(this.button5);
+            this.tabPage6.Controls.Add(this.cb_IOGroup);
+            this.tabPage6.Controls.Add(this.btIOGrpDelete);
             this.tabPage6.Controls.Add(this.btIO_Add);
             this.tabPage6.Controls.Add(this.btIO_Remove);
-            this.tabPage6.Controls.Add(this.button8);
             this.tabPage6.Controls.Add(this.label35);
             this.tabPage6.Location = new System.Drawing.Point(4, 22);
             this.tabPage6.Name = "tabPage6";
@@ -1675,44 +1829,57 @@
             this.tabPage6.Text = "Monitoring IO";
             this.tabPage6.UseVisualStyleBackColor = true;
             // 
-            // textBoxFilterData
+            // label48
             // 
-            this.textBoxFilterData.Location = new System.Drawing.Point(315, 22);
-            this.textBoxFilterData.Name = "textBoxFilterData";
-            this.textBoxFilterData.Size = new System.Drawing.Size(100, 20);
-            this.textBoxFilterData.TabIndex = 70;
-            this.textBoxFilterData.TextChanged += new System.EventHandler(this.textBoxFilterData_TextChanged);
+            this.label48.AutoSize = true;
+            this.label48.Location = new System.Drawing.Point(257, 24);
+            this.label48.Name = "label48";
+            this.label48.Size = new System.Drawing.Size(126, 13);
+            this.label48.TabIndex = 72;
+            this.label48.Text = "Add/Remove a variable :";
+            // 
+            // label26
+            // 
+            this.label26.AutoSize = true;
+            this.label26.Location = new System.Drawing.Point(575, 24);
+            this.label26.Name = "label26";
+            this.label26.Size = new System.Drawing.Size(47, 13);
+            this.label26.TabIndex = 71;
+            this.label26.Text = "Search :";
+            // 
+            // tbIOSearch
+            // 
+            this.tbIOSearch.Location = new System.Drawing.Point(578, 44);
+            this.tbIOSearch.Name = "tbIOSearch";
+            this.tbIOSearch.Size = new System.Drawing.Size(100, 20);
+            this.tbIOSearch.TabIndex = 70;
+            this.tbIOSearch.TextChanged += new System.EventHandler(this.tbIOSearch_TextChanged);
             // 
             // objectListView
             // 
-            this.objectListView.AllColumns.Add(this.olvColName);
             this.objectListView.AllColumns.Add(this.olvColTag);
-            this.objectListView.AllColumns.Add(this.olvColGroup);
             this.objectListView.AllColumns.Add(this.olvColValue);
+            this.objectListView.AllColumns.Add(this.olvColFiller);
+            this.objectListView.AllColumns.Add(this.olvColName);
+            this.objectListView.AllColumns.Add(this.olvColGroup);
             this.objectListView.AllColumns.Add(this.olvColType);
             this.objectListView.CellEditUseWholeCell = false;
             this.objectListView.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
-            this.olvColName,
             this.olvColTag,
-            this.olvColGroup,
             this.olvColValue,
+            this.olvColFiller,
+            this.olvColName,
+            this.olvColGroup,
             this.olvColType});
             this.objectListView.Cursor = System.Windows.Forms.Cursors.Default;
             this.objectListView.DataSource = null;
-            this.objectListView.Location = new System.Drawing.Point(15, 64);
+            this.objectListView.Location = new System.Drawing.Point(15, 70);
             this.objectListView.Name = "objectListView";
-            this.objectListView.Size = new System.Drawing.Size(400, 296);
+            this.objectListView.Size = new System.Drawing.Size(663, 288);
             this.objectListView.TabIndex = 68;
             this.objectListView.UseCompatibleStateImageBehavior = false;
             this.objectListView.UseFiltering = true;
             this.objectListView.View = System.Windows.Forms.View.Details;
-            // 
-            // olvColName
-            // 
-            this.olvColName.AspectName = "Name";
-            this.olvColName.Groupable = false;
-            this.olvColName.Sortable = false;
-            this.olvColName.Text = "Name";
             // 
             // olvColTag
             // 
@@ -1720,11 +1887,7 @@
             this.olvColTag.Groupable = false;
             this.olvColTag.Sortable = false;
             this.olvColTag.Text = "Tag";
-            // 
-            // olvColGroup
-            // 
-            this.olvColGroup.AspectName = "Group";
-            this.olvColGroup.Text = "Group";
+            this.olvColTag.Width = 150;
             // 
             // olvColValue
             // 
@@ -1732,30 +1895,89 @@
             this.olvColValue.Groupable = false;
             this.olvColValue.Sortable = false;
             this.olvColValue.Text = "Value";
+            this.olvColValue.Width = 100;
+            // 
+            // olvColFiller
+            // 
+            this.olvColFiller.FillsFreeSpace = true;
+            this.olvColFiller.Text = "";
+            // 
+            // olvColName
+            // 
+            this.olvColName.AspectName = "Name";
+            this.olvColName.Groupable = false;
+            this.olvColName.Sortable = false;
+            this.olvColName.Text = "Variable";
+            this.olvColName.Width = 150;
+            // 
+            // olvColGroup
+            // 
+            this.olvColGroup.AspectName = "Group";
+            this.olvColGroup.Text = "Group";
+            this.olvColGroup.Width = 75;
             // 
             // olvColType
             // 
             this.olvColType.AspectName = "Type";
             this.olvColType.IsEditable = false;
             this.olvColType.Text = "Type";
+            this.olvColType.UseFiltering = false;
+            this.olvColType.Width = 75;
             // 
-            // cb_IO
+            // cb_IOGroup
             // 
-            this.cb_IO.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cb_IO.FormattingEnabled = true;
-            this.cb_IO.Location = new System.Drawing.Point(15, 22);
-            this.cb_IO.Name = "cb_IO";
-            this.cb_IO.Size = new System.Drawing.Size(150, 21);
-            this.cb_IO.TabIndex = 59;
+            this.cb_IOGroup.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cb_IOGroup.FormattingEnabled = true;
+            this.cb_IOGroup.Location = new System.Drawing.Point(15, 40);
+            this.cb_IOGroup.Name = "cb_IOGroup";
+            this.cb_IOGroup.Size = new System.Drawing.Size(150, 21);
+            this.cb_IOGroup.TabIndex = 59;
+            this.cb_IOGroup.SelectedIndexChanged += new System.EventHandler(this.cb_IOGroup_SelectedIndexChanged);
+            // 
+            // btIOGrpDelete
+            // 
+            this.btIOGrpDelete.Image = global::Kukavar.DemoApp.Properties.Resources.delete;
+            this.btIOGrpDelete.Location = new System.Drawing.Point(171, 39);
+            this.btIOGrpDelete.Name = "btIOGrpDelete";
+            this.btIOGrpDelete.Size = new System.Drawing.Size(24, 24);
+            this.btIOGrpDelete.TabIndex = 56;
+            this.btIOGrpDelete.Text = " ";
+            this.toolTip.SetToolTip(this.btIOGrpDelete, "Delete the selected template");
+            this.btIOGrpDelete.UseVisualStyleBackColor = true;
+            this.btIOGrpDelete.Click += new System.EventHandler(this.btIOGrpDelete_Click);
+            // 
+            // btIO_Add
+            // 
+            this.btIO_Add.Image = global::Kukavar.DemoApp.Properties.Resources.add;
+            this.btIO_Add.Location = new System.Drawing.Point(255, 39);
+            this.btIO_Add.Name = "btIO_Add";
+            this.btIO_Add.Size = new System.Drawing.Size(24, 24);
+            this.btIO_Add.TabIndex = 54;
+            this.btIO_Add.Text = " ";
+            this.toolTip.SetToolTip(this.btIO_Add, "Add the variable to the list");
+            this.btIO_Add.UseVisualStyleBackColor = true;
+            this.btIO_Add.Click += new System.EventHandler(this.btIO_Add_Click);
+            // 
+            // btIO_Remove
+            // 
+            this.btIO_Remove.Image = global::Kukavar.DemoApp.Properties.Resources.remove;
+            this.btIO_Remove.Location = new System.Drawing.Point(285, 39);
+            this.btIO_Remove.Name = "btIO_Remove";
+            this.btIO_Remove.Size = new System.Drawing.Size(24, 24);
+            this.btIO_Remove.TabIndex = 53;
+            this.btIO_Remove.Text = " ";
+            this.toolTip.SetToolTip(this.btIO_Remove, "Remove the selected item from the variable list");
+            this.btIO_Remove.UseVisualStyleBackColor = true;
+            this.btIO_Remove.Click += new System.EventHandler(this.btIO_Remove_Click);
             // 
             // label35
             // 
             this.label35.AutoSize = true;
-            this.label35.Location = new System.Drawing.Point(12, 6);
+            this.label35.Location = new System.Drawing.Point(12, 24);
             this.label35.Name = "label35";
-            this.label35.Size = new System.Drawing.Size(76, 13);
+            this.label35.Size = new System.Drawing.Size(79, 13);
             this.label35.TabIndex = 51;
-            this.label35.Text = "Select a group";
+            this.label35.Text = "Filter by group :";
             // 
             // tabPage5
             // 
@@ -1768,6 +1990,8 @@
             // 
             // groupBox2
             // 
+            this.groupBox2.Controls.Add(this.lbModeOP);
+            this.groupBox2.Controls.Add(this.label43);
             this.groupBox2.Controls.Add(this.lbProName1);
             this.groupBox2.Controls.Add(this.lbProState1);
             this.groupBox2.Controls.Add(this.lbProState0);
@@ -1786,6 +2010,24 @@
             this.groupBox2.TabIndex = 9;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "System Info";
+            // 
+            // lbModeOP
+            // 
+            this.lbModeOP.BackColor = System.Drawing.Color.LightGray;
+            this.lbModeOP.Font = new System.Drawing.Font("Microsoft Sans Serif", 7F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lbModeOP.Location = new System.Drawing.Point(190, 110);
+            this.lbModeOP.Name = "lbModeOP";
+            this.lbModeOP.Size = new System.Drawing.Size(67, 13);
+            this.lbModeOP.TabIndex = 21;
+            // 
+            // label43
+            // 
+            this.label43.AutoSize = true;
+            this.label43.Location = new System.Drawing.Point(6, 110);
+            this.label43.Name = "label43";
+            this.label43.Size = new System.Drawing.Size(57, 13);
+            this.label43.TabIndex = 20;
+            this.label43.Text = "MODE OP";
             // 
             // lbProName1
             // 
@@ -1936,225 +2178,6 @@
             this.imageList1.ImageSize = new System.Drawing.Size(16, 16);
             this.imageList1.TransparentColor = System.Drawing.Color.Transparent;
             // 
-            // btExpandAll
-            // 
-            this.btExpandAll.Image = global::Kukavar.DemoApp.Properties.Resources.unfold;
-            this.btExpandAll.Location = new System.Drawing.Point(615, 14);
-            this.btExpandAll.Name = "btExpandAll";
-            this.btExpandAll.Size = new System.Drawing.Size(24, 28);
-            this.btExpandAll.TabIndex = 49;
-            this.toolTip.SetToolTip(this.btExpandAll, "Expand All");
-            this.btExpandAll.UseVisualStyleBackColor = true;
-            this.btExpandAll.Click += new System.EventHandler(this.btExpandAll_Click);
-            // 
-            // btCollapseAll
-            // 
-            this.btCollapseAll.Image = global::Kukavar.DemoApp.Properties.Resources.fold;
-            this.btCollapseAll.Location = new System.Drawing.Point(645, 14);
-            this.btCollapseAll.Name = "btCollapseAll";
-            this.btCollapseAll.Size = new System.Drawing.Size(24, 28);
-            this.btCollapseAll.TabIndex = 48;
-            this.toolTip.SetToolTip(this.btCollapseAll, "Collapse All");
-            this.btCollapseAll.UseVisualStyleBackColor = true;
-            this.btCollapseAll.Click += new System.EventHandler(this.btCollapseAll_Click);
-            // 
-            // btRemoveHistory
-            // 
-            this.btRemoveHistory.Image = global::Kukavar.DemoApp.Properties.Resources.remove;
-            this.btRemoveHistory.Location = new System.Drawing.Point(171, 48);
-            this.btRemoveHistory.Name = "btRemoveHistory";
-            this.btRemoveHistory.Size = new System.Drawing.Size(24, 24);
-            this.btRemoveHistory.TabIndex = 46;
-            this.btRemoveHistory.Text = " ";
-            this.toolTip.SetToolTip(this.btRemoveHistory, "Remove selected item from history");
-            this.btRemoveHistory.UseVisualStyleBackColor = true;
-            this.btRemoveHistory.Click += new System.EventHandler(this.btRemoveHistory_Click);
-            // 
-            // btEditTemplateName
-            // 
-            this.btEditTemplateName.CausesValidation = false;
-            this.btEditTemplateName.Image = global::Kukavar.DemoApp.Properties.Resources.edit;
-            this.btEditTemplateName.Location = new System.Drawing.Point(171, 163);
-            this.btEditTemplateName.Name = "btEditTemplateName";
-            this.btEditTemplateName.Size = new System.Drawing.Size(24, 24);
-            this.btEditTemplateName.TabIndex = 36;
-            this.btEditTemplateName.Text = " ";
-            this.toolTip.SetToolTip(this.btEditTemplateName, "Edit template name");
-            this.btEditTemplateName.UseVisualStyleBackColor = true;
-            this.btEditTemplateName.Click += new System.EventHandler(this.btEditTemplateName_Click);
-            // 
-            // btAddReadTemplate
-            // 
-            this.btAddReadTemplate.Image = global::Kukavar.DemoApp.Properties.Resources.addfilled;
-            this.btAddReadTemplate.Location = new System.Drawing.Point(172, 117);
-            this.btAddReadTemplate.Name = "btAddReadTemplate";
-            this.btAddReadTemplate.Size = new System.Drawing.Size(24, 24);
-            this.btAddReadTemplate.TabIndex = 34;
-            this.btAddReadTemplate.Text = " ";
-            this.toolTip.SetToolTip(this.btAddReadTemplate, "Add a new template");
-            this.btAddReadTemplate.UseVisualStyleBackColor = true;
-            this.btAddReadTemplate.Click += new System.EventHandler(this.btAddReadTemplate_Click);
-            // 
-            // btRemoveReadTemplate
-            // 
-            this.btRemoveReadTemplate.Image = global::Kukavar.DemoApp.Properties.Resources.delete;
-            this.btRemoveReadTemplate.Location = new System.Drawing.Point(198, 117);
-            this.btRemoveReadTemplate.Name = "btRemoveReadTemplate";
-            this.btRemoveReadTemplate.Size = new System.Drawing.Size(24, 24);
-            this.btRemoveReadTemplate.TabIndex = 31;
-            this.btRemoveReadTemplate.Text = " ";
-            this.toolTip.SetToolTip(this.btRemoveReadTemplate, "Delete the selected template");
-            this.btRemoveReadTemplate.UseVisualStyleBackColor = true;
-            this.btRemoveReadTemplate.Click += new System.EventHandler(this.btRemoveReadTemplate_Click);
-            // 
-            // btUp
-            // 
-            this.btUp.Image = global::Kukavar.DemoApp.Properties.Resources.up;
-            this.btUp.Location = new System.Drawing.Point(171, 213);
-            this.btUp.Name = "btUp";
-            this.btUp.Size = new System.Drawing.Size(24, 24);
-            this.btUp.TabIndex = 30;
-            this.toolTip.SetToolTip(this.btUp, "Move item Up");
-            this.btUp.UseVisualStyleBackColor = true;
-            this.btUp.Click += new System.EventHandler(this.btUp_Click);
-            // 
-            // btAddTemplateVar
-            // 
-            this.btAddTemplateVar.Image = global::Kukavar.DemoApp.Properties.Resources.add;
-            this.btAddTemplateVar.Location = new System.Drawing.Point(171, 306);
-            this.btAddTemplateVar.Name = "btAddTemplateVar";
-            this.btAddTemplateVar.Size = new System.Drawing.Size(24, 24);
-            this.btAddTemplateVar.TabIndex = 29;
-            this.btAddTemplateVar.Text = " ";
-            this.toolTip.SetToolTip(this.btAddTemplateVar, "Add the variable to the list");
-            this.btAddTemplateVar.UseVisualStyleBackColor = true;
-            this.btAddTemplateVar.Click += new System.EventHandler(this.btAddTemplateVar_Click);
-            // 
-            // btRemoveTemplateVar
-            // 
-            this.btRemoveTemplateVar.Image = global::Kukavar.DemoApp.Properties.Resources.remove;
-            this.btRemoveTemplateVar.Location = new System.Drawing.Point(171, 336);
-            this.btRemoveTemplateVar.Name = "btRemoveTemplateVar";
-            this.btRemoveTemplateVar.Size = new System.Drawing.Size(24, 24);
-            this.btRemoveTemplateVar.TabIndex = 28;
-            this.btRemoveTemplateVar.Text = " ";
-            this.toolTip.SetToolTip(this.btRemoveTemplateVar, "Remove the selected item from the variable list");
-            this.btRemoveTemplateVar.UseVisualStyleBackColor = true;
-            this.btRemoveTemplateVar.Click += new System.EventHandler(this.btRemoveTemplateVar_Click);
-            // 
-            // btDown
-            // 
-            this.btDown.Image = global::Kukavar.DemoApp.Properties.Resources.down;
-            this.btDown.Location = new System.Drawing.Point(171, 243);
-            this.btDown.Name = "btDown";
-            this.btDown.Size = new System.Drawing.Size(24, 24);
-            this.btDown.TabIndex = 25;
-            this.toolTip.SetToolTip(this.btDown, "Move item Down");
-            this.btDown.UseVisualStyleBackColor = true;
-            this.btDown.Click += new System.EventHandler(this.btDown_Click);
-            // 
-            // btRecordReset
-            // 
-            this.btRecordReset.Image = global::Kukavar.DemoApp.Properties.Resources.delete;
-            this.btRecordReset.Location = new System.Drawing.Point(100, 40);
-            this.btRecordReset.Name = "btRecordReset";
-            this.btRecordReset.Size = new System.Drawing.Size(24, 24);
-            this.btRecordReset.TabIndex = 61;
-            this.btRecordReset.Text = " ";
-            this.toolTip.SetToolTip(this.btRecordReset, "Reset the recorder. Delete all records.");
-            this.btRecordReset.UseVisualStyleBackColor = true;
-            this.btRecordReset.Click += new System.EventHandler(this.btRecordReset_Click);
-            // 
-            // btRemoveRecord
-            // 
-            this.btRemoveRecord.Image = global::Kukavar.DemoApp.Properties.Resources.clear;
-            this.btRemoveRecord.Location = new System.Drawing.Point(44, 40);
-            this.btRemoveRecord.Name = "btRemoveRecord";
-            this.btRemoveRecord.Size = new System.Drawing.Size(24, 24);
-            this.btRemoveRecord.TabIndex = 48;
-            this.btRemoveRecord.Text = " ";
-            this.toolTip.SetToolTip(this.btRemoveRecord, "Remove the selected records from the table.");
-            this.btRemoveRecord.UseVisualStyleBackColor = true;
-            this.btRemoveRecord.Click += new System.EventHandler(this.btRemoveRecord_Click);
-            // 
-            // btAddRecord
-            // 
-            this.btAddRecord.Image = global::Kukavar.DemoApp.Properties.Resources.record;
-            this.btAddRecord.Location = new System.Drawing.Point(14, 40);
-            this.btAddRecord.Name = "btAddRecord";
-            this.btAddRecord.Size = new System.Drawing.Size(24, 24);
-            this.btAddRecord.TabIndex = 47;
-            this.btAddRecord.Text = " ";
-            this.toolTip.SetToolTip(this.btAddRecord, "Record the current position of the robot.");
-            this.btAddRecord.UseVisualStyleBackColor = true;
-            this.btAddRecord.Click += new System.EventHandler(this.btAddRecord_Click);
-            // 
-            // button3
-            // 
-            this.button3.Image = global::Kukavar.DemoApp.Properties.Resources.addfilled;
-            this.button3.Location = new System.Drawing.Point(175, 22);
-            this.button3.Name = "button3";
-            this.button3.Size = new System.Drawing.Size(24, 24);
-            this.button3.TabIndex = 58;
-            this.button3.Text = " ";
-            this.toolTip.SetToolTip(this.button3, "Add a new template");
-            this.button3.UseVisualStyleBackColor = true;
-            // 
-            // button4
-            // 
-            this.button4.Image = global::Kukavar.DemoApp.Properties.Resources.delete;
-            this.button4.Location = new System.Drawing.Point(201, 22);
-            this.button4.Name = "button4";
-            this.button4.Size = new System.Drawing.Size(24, 24);
-            this.button4.TabIndex = 56;
-            this.button4.Text = " ";
-            this.toolTip.SetToolTip(this.button4, "Delete the selected template");
-            this.button4.UseVisualStyleBackColor = true;
-            // 
-            // button5
-            // 
-            this.button5.Image = global::Kukavar.DemoApp.Properties.Resources.up;
-            this.button5.Location = new System.Drawing.Point(421, 63);
-            this.button5.Name = "button5";
-            this.button5.Size = new System.Drawing.Size(24, 24);
-            this.button5.TabIndex = 55;
-            this.toolTip.SetToolTip(this.button5, "Move item Up");
-            this.button5.UseVisualStyleBackColor = true;
-            // 
-            // btIO_Add
-            // 
-            this.btIO_Add.Image = global::Kukavar.DemoApp.Properties.Resources.add;
-            this.btIO_Add.Location = new System.Drawing.Point(421, 306);
-            this.btIO_Add.Name = "btIO_Add";
-            this.btIO_Add.Size = new System.Drawing.Size(24, 24);
-            this.btIO_Add.TabIndex = 54;
-            this.btIO_Add.Text = " ";
-            this.toolTip.SetToolTip(this.btIO_Add, "Add the variable to the list");
-            this.btIO_Add.UseVisualStyleBackColor = true;
-            this.btIO_Add.Click += new System.EventHandler(this.btIO_Add_Click);
-            // 
-            // btIO_Remove
-            // 
-            this.btIO_Remove.Image = global::Kukavar.DemoApp.Properties.Resources.remove;
-            this.btIO_Remove.Location = new System.Drawing.Point(421, 336);
-            this.btIO_Remove.Name = "btIO_Remove";
-            this.btIO_Remove.Size = new System.Drawing.Size(24, 24);
-            this.btIO_Remove.TabIndex = 53;
-            this.btIO_Remove.Text = " ";
-            this.toolTip.SetToolTip(this.btIO_Remove, "Remove the selected item from the variable list");
-            this.btIO_Remove.UseVisualStyleBackColor = true;
-            this.btIO_Remove.Click += new System.EventHandler(this.btIO_Remove_Click);
-            // 
-            // button8
-            // 
-            this.button8.Image = global::Kukavar.DemoApp.Properties.Resources.down;
-            this.button8.Location = new System.Drawing.Point(421, 93);
-            this.button8.Name = "button8";
-            this.button8.Size = new System.Drawing.Size(24, 24);
-            this.button8.TabIndex = 52;
-            this.toolTip.SetToolTip(this.button8, "Move item Down");
-            this.button8.UseVisualStyleBackColor = true;
-            // 
             // scbRead
             // 
             this.scbRead.FilterRule = null;
@@ -2192,7 +2215,9 @@
             this.Controls.Add(this.tabControl1);
             this.Controls.Add(this.grpCSettings);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
+            this.MaximizeBox = false;
             this.Name = "Form1";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "OpenKuka | KukavarClient.DemoApp";
             this.grpCSettings.ResumeLayout(false);
             this.grpCSettings.PerformLayout();
@@ -2395,13 +2420,10 @@
         private System.Windows.Forms.TabPage tabPage6;
         private System.Windows.Forms.CheckBox ckConnect;
         private System.Windows.Forms.CheckBox ckMonitor;
-        private System.Windows.Forms.ComboBox cb_IO;
-        private System.Windows.Forms.Button button3;
-        private System.Windows.Forms.Button button4;
-        private System.Windows.Forms.Button button5;
+        private System.Windows.Forms.ComboBox cb_IOGroup;
+        private System.Windows.Forms.Button btIOGrpDelete;
         private System.Windows.Forms.Button btIO_Add;
         private System.Windows.Forms.Button btIO_Remove;
-        private System.Windows.Forms.Button button8;
         private System.Windows.Forms.Label label35;
         private BrightIdeasSoftware.DataListView objectListView;
         private BrightIdeasSoftware.OLVColumn olvColName;
@@ -2409,7 +2431,12 @@
         private BrightIdeasSoftware.OLVColumn olvColGroup;
         private BrightIdeasSoftware.OLVColumn olvColTag;
         private BrightIdeasSoftware.OLVColumn olvColType;
-        private System.Windows.Forms.TextBox textBoxFilterData;
+        private System.Windows.Forms.TextBox tbIOSearch;
         private System.Windows.Forms.ImageList imageList1;
+        private System.Windows.Forms.Label lbModeOP;
+        private System.Windows.Forms.Label label43;
+        private System.Windows.Forms.Label label48;
+        private System.Windows.Forms.Label label26;
+        private BrightIdeasSoftware.OLVColumn olvColFiller;
     }
 }

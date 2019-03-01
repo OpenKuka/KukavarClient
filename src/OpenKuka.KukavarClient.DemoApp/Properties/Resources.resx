@@ -154,10 +154,25 @@
   <data name="clear" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\icon\clear.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="bfalse" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\icon\false.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="round_black" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\icon\round_black.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="btrue" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\icon\true.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="round_blue" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\icon\round_blue.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="round_green" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\icon\round_green.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="round_grey" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\icon\round_grey.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="round_orange" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\icon\round_orange.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="round_red" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\icon\round_red.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="round_yellow" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\icon\round_yellow.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
 </root>
