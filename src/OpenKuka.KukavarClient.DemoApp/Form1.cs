@@ -280,13 +280,14 @@ namespace Kukavar.DemoApp
             {
                 ServerIP = IPAddress.Parse("192.168.10.4"),
                 ServerPort = 7000,
+                MaxIdleTime = TimeSpan.FromSeconds(2)
             };
 
             client.Connecting += ConnectingHandler;
             client.Connected += Connected;
             client.ConnectionError += ConnectionErrorHandler;
-            client.Closing += ClosingErrorHandler;
-            client.Closed += ClosedErrorHandler;
+            client.Closing += ClosingHandler;
+            client.Closed += ClosedHandler;
         }
 
 
@@ -305,7 +306,6 @@ namespace Kukavar.DemoApp
                 settings.AutoReconnect = ckAutoReconnect.Checked;
                 settings.Save();
                 await client.ConnectAsync();
-                Task.Run(() => client.EnqueuingAsync());
             }
             else
             {
@@ -328,6 +328,11 @@ namespace Kukavar.DemoApp
         }
         private Task Connected(object sender, EventArgs e)
         {
+            if (client.ConnectionCount == 1)
+            {
+                client.Run();
+            }
+
             this.BeginInvoke((Action)delegate ()
             {
                 //code to update UI
@@ -336,14 +341,14 @@ namespace Kukavar.DemoApp
                 tabControl1.Enabled = true;
                 ckMonitor.Enabled = true;
             });
-              
+
             var t1 = client.SendAsync(KVReadQuery.Build(0, "$MODEL_NAME[]"), async (reply) =>
             {
                 if (!reply.Answer.Successful) return;
                 this.BeginInvoke((Action)delegate ()
                 {
                     var name = reply.Answer.VarValue;
-                    tbRobName.Text = name.Substring(1, name.Length - 2); 
+                    tbRobName.Text = name.Substring(1, name.Length - 2);
                 });
             });
 
@@ -383,9 +388,16 @@ namespace Kukavar.DemoApp
                 tabControl1.Enabled = false;
                 ckMonitor.Enabled = false;
             });
+
+
+            //// stop connection
+            //ckConnect.Text = "Connect";
+            //client.Close();
+            //grpCSettings.Enabled = true;
+
             return Task.CompletedTask;
         }
-        private Task ClosingErrorHandler(object sender, ClosingEventArgs e)
+        private Task ClosingHandler(object sender, ClosingEventArgs e)
         {
             infoTimer.Change(Timeout.Infinite, Timeout.Infinite);
             CmdInfoReset();
@@ -400,7 +412,7 @@ namespace Kukavar.DemoApp
             });
             return Task.CompletedTask;
         }
-        private Task ClosedErrorHandler(object sender, EventArgs e)
+        private Task ClosedHandler(object sender, EventArgs e)
         {
             infoTimer.Change(Timeout.Infinite, Timeout.Infinite);
             CmdInfoReset();

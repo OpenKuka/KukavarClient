@@ -1,5 +1,6 @@
 ﻿using NLog;
 using System;
+using System.Collections.Concurrent;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
@@ -65,7 +66,8 @@ namespace OpenKuka.KukavarClient.TCP
     {
         private TcpClient tcpClient;
         private NetworkStream stream;
-        private CancellationTokenSource cts = new CancellationTokenSource();
+        private CancellationTokenSource _cts = new CancellationTokenSource();
+        private ByteQueue ByteSendQueue;
 
         #region Properties
         public bool AutoReconnect { get; set; }             = true;
@@ -174,25 +176,32 @@ namespace OpenKuka.KukavarClient.TCP
             Logger = logger ?? NLog.LogManager.CreateNullLogger();
 
             Id = guid;
-            ByteBuffer = new ByteQueue(initialBufferCapacity, minBufferCapacity, maxBufferCapacity, Logger);
+            ByteBuffer = new ByteQueue("RQueue ", initialBufferCapacity, minBufferCapacity, maxBufferCapacity, Logger);
+            ByteSendQueue = new ByteQueue("WQueue ", 1024, 1024, 8192, Logger);
         }
-
-        
-        public async Task EnqueuingAsync()
+     
+        public void Run()
         {
-            byte[] buffer = new byte[1024];
+            var t1 = Task.Run(() => ReceivingAsync());
+            var t2 = Task.Run(() => SendingAsync());
+        }
+        private async Task ReceivingAsync()
+        {
+            byte[] rbuffer = new byte[1024];
             int readCount = 0;
-            Stopwatch timer = new Stopwatch();
+            var timer = Stopwatch.StartNew();
+            var delay = TimeSpan.FromMilliseconds(0.5);
 
-            while (!cts.Token.IsCancellationRequested)
+            while (!_cts.Token.IsCancellationRequested)
             {
-                readCount = await ReadAsync(buffer, 0, buffer.Length);
-
+                await Task.Delay(delay);
+                // poll a bunch of bytes
+                readCount = await ReadAsync(rbuffer, 0, rbuffer.Length);
                 if (readCount > 0)
                 {
                     timer.Stop();
                     await OnBytesReceived(readCount);
-                    ByteBuffer.Enqueue(buffer, 0, readCount);
+                    ByteBuffer.Enqueue(rbuffer, 0, readCount);
                     await BytesEnqueuedCallback(this, readCount);
                 }
                 else
@@ -217,6 +226,21 @@ namespace OpenKuka.KukavarClient.TCP
                             await ReconnectAsync();
                         }
                     }
+                }
+            }
+        }
+        private async Task SendingAsync()
+        {
+            byte[] wbuffer = new byte[256];
+            var delay = TimeSpan.FromMilliseconds(0.5);
+            while (!_cts.Token.IsCancellationRequested)
+            {
+                await Task.Delay(delay);
+                // push a bunch of bytes
+                if (ByteSendQueue.Count > 0)
+                {
+                    var count = ByteSendQueue.Dequeue(ByteSendQueue.Count, ref wbuffer);
+                    await WriteAsync(wbuffer, 0, count);
                 }
             }
         }
@@ -251,76 +275,81 @@ namespace OpenKuka.KukavarClient.TCP
             }
 
             await OnConnecting();
-            var token = new CancellationTokenSource(ConnectionTimeout).Token;
-            var task = tcpClient.ConnectAsync(ServerIP, ServerPort);
-            var timeoutTask = await Task.WhenAny(task, Task.Delay(-1, token));
+            using (var cts = new CancellationTokenSource(ReconnectionTimeout))
+            {
+                var token = cts.Token;
+                var task = tcpClient.ConnectAsync(ServerIP, ServerPort);
+                var timeoutTask = await Task.WhenAny(task, Task.Delay(-1, token));
 
-           
-            Exception exception = null;
-            var  errorcode = ConnectionErrorCode.UnkownError;
-            var succeed = false;
 
-            try
-            {
-                await timeoutTask; // wait on the returned task to observe any exceptions.
-                succeed = true;
-            }
-            catch (TaskCanceledException ex)
-            {
-                exception = ex;
-                errorcode = ConnectionErrorCode.Timeout;
-            }
-            catch (SocketException ex) when (ex.SocketErrorCode == SocketError.TimedOut)
-            {
-                exception = ex;
-                errorcode = ConnectionErrorCode.Timeout;
-            }
-            catch (SocketException ex)
-            {
-                exception = ex;
-                errorcode = ConnectionErrorCode.SocketError;
-            }
-            catch (IOException ex)
-            {
-                exception = ex;
-                errorcode = ConnectionErrorCode.IOError;
-            }
-            catch (Exception ex)
-            {
-                errorcode = ConnectionErrorCode.UnkownError;
-                Logger.Log(LogLevel.Error, ex, "Connection failed ({0})", errorcode);
-                throw;
-            }
-            finally
-            {
-                if (succeed)
+                Exception exception = null;
+                var errorcode = ConnectionErrorCode.UnkownError;
+                var succeed = false;
+
+                try
                 {
-                    Status = ClientStatus.Connected;
-                    cts = new CancellationTokenSource();
-                    stream = tcpClient.GetStream();
-                    ConnectionCount += 1;
-                    
-                    var local = (IPEndPoint)tcpClient.Client.LocalEndPoint;
-                    var remote = (IPEndPoint)tcpClient.Client.RemoteEndPoint;
-
-                    if (ConnectionCount == 1)
-                        Logger.Log(LogLevel.Info, "Connected for the first time to {0}:{1} from {2}:{3}", remote.Address, remote.Port, local.Address, local.Port);
-  
-                    await OnConnected();
+                    await timeoutTask; // wait on the returned task to observe any exceptions.
+                    succeed = true;
                 }
-                else
+                catch (TaskCanceledException ex)
                 {
-                    Status = ClientStatus.Disconnected;
-                    if (exception != null)
+                    exception = ex;
+                    errorcode = ConnectionErrorCode.Timeout;
+                }
+                catch (SocketException ex) when (ex.SocketErrorCode == SocketError.TimedOut)
+                {
+                    exception = ex;
+                    errorcode = ConnectionErrorCode.Timeout;
+                }
+                catch (SocketException ex)
+                {
+                    exception = ex;
+                    errorcode = ConnectionErrorCode.SocketError;
+                }
+                catch (IOException ex)
+                {
+                    exception = ex;
+                    errorcode = ConnectionErrorCode.IOError;
+                }
+                catch (Exception ex)
+                {
+                    errorcode = ConnectionErrorCode.UnkownError;
+                    Logger.Log(LogLevel.Error, ex, "Connection failed ({0})", errorcode);
+                    throw;
+                }
+                finally
+                {
+                    if (succeed)
                     {
-                        if (ConnectionCount == 0)
-                            Logger.Log(LogLevel.Error, exception, "Connection failed ({0})", errorcode);
-                        else
-                            Logger.Log(LogLevel.Debug, exception, "Reconnection failed ({0})", errorcode);
+                        Status = ClientStatus.Connected;
+                        _cts = new CancellationTokenSource();
+                        stream = tcpClient.GetStream();
+                        ConnectionCount += 1;
+
+                        var local = (IPEndPoint)tcpClient.Client.LocalEndPoint;
+                        var remote = (IPEndPoint)tcpClient.Client.RemoteEndPoint;
+
+                        if (ConnectionCount == 1)
+                            Logger.Log(LogLevel.Info, "Connected for the first time to {0}:{1} from {2}:{3}", remote.Address, remote.Port, local.Address, local.Port);
+
+                        await OnConnected();
+                    }
+                    else
+                    {
+                        Status = ClientStatus.Disconnected;
+                        if (exception != null)
+                        {
+                            if (ConnectionCount == 0)
+                                Logger.Log(LogLevel.Error, exception, "Connection failed ({0})", errorcode);
+                            else
+                                Logger.Log(LogLevel.Debug, exception, "Reconnection failed ({0})", errorcode);
+                        }
+                        await OnConnectionError(errorcode);
                     }
                 }
+
+                return succeed;
             }
-            return succeed;
         }
         private async Task<bool> ReconnectAsync()
         {
@@ -342,35 +371,38 @@ namespace OpenKuka.KukavarClient.TCP
                 try
                 {
                     timer.Start();
-                    var token = new CancellationTokenSource(ReconnectionTimeout).Token;
-                    var success = await Task.Run(async () =>
+                    using (var cts = new CancellationTokenSource(ReconnectionTimeout))
                     {
-                        var chrono = new Stopwatch();
-                        while (!token.IsCancellationRequested)
+                        var token = cts.Token;
+                        var success = await Task.Run(async () =>
                         {
-                            chrono.Restart();
-                            ReconnectionAttemptsCount += 1;
-                            if (await ConnectAsync())
-                                return true;
-                            int t = Math.Max(0, (int)(ReconnectionDelay.TotalMilliseconds - chrono.ElapsedMilliseconds));
-                            await Task.Delay(t);
+                            var chrono = new Stopwatch();
+                            while (!token.IsCancellationRequested)
+                            {
+                                chrono.Restart();
+                                ReconnectionAttemptsCount += 1;
+                                if (await ConnectAsync())
+                                    return true;
+                                int t = Math.Max(0, (int)(ReconnectionDelay.TotalMilliseconds - chrono.ElapsedMilliseconds));
+                                await Task.Delay(t);
+                            }
+                            return false;
+                        }, token);
+                        timer.Stop();
+
+                        if (success)
+                        {
+                            var local = (IPEndPoint)tcpClient.Client.LocalEndPoint;
+                            var remote = (IPEndPoint)tcpClient.Client.RemoteEndPoint;
+                            Logger.Log(LogLevel.Info, "Reconnected to {0}:{1} from {2}:{3} after {4} attempts during {5}", remote.Address, remote.Port, local.Address, local.Port, ReconnectionAttemptsCount, timer.Elapsed.ToString(@"hh\:mm\:ss"));
+                            Logger.Log(LogLevel.Info, "It's been {0} times the client has been successfuly reconnected to the host", ConnectionCount - 1);
+                            return true;
                         }
-                        return false;
-                    }, token);
-                    timer.Stop();
-               
-                    if (success)
-                    {
-                        var local = (IPEndPoint)tcpClient.Client.LocalEndPoint;
-                        var remote = (IPEndPoint)tcpClient.Client.RemoteEndPoint;
-                        Logger.Log(LogLevel.Info, "Reconnected to {0}:{1} from {2}:{3} after {4} attempts during {5}", remote.Address, remote.Port, local.Address, local.Port, ReconnectionAttemptsCount, timer.Elapsed.ToString(@"hh\:mm\:ss"));
-                        Logger.Log(LogLevel.Info, "It's been {0} times the client has been successfuly reconnected to the host", ConnectionCount - 1);
-                        return true;
-                    }
-                    else
-                    {
-                        await Close(brokenConnection: true);
-                        return false;
+                        else
+                        {
+                            await Close(brokenConnection: true);
+                            return false;
+                        }
                     }
                 }
                 catch (Exception ex)
@@ -384,8 +416,10 @@ namespace OpenKuka.KukavarClient.TCP
 
         private async Task<bool> Ping(int id)
         {
-            var token = new CancellationTokenSource(PingTimeout).Token;
-            return await Ping(id, token);
+            using (var cts = new CancellationTokenSource(PingTimeout))
+            {
+                return await Ping(id, cts.Token);
+            }
         }
         private async Task<bool> Ping(int id, CancellationToken token)
         {
@@ -432,7 +466,7 @@ namespace OpenKuka.KukavarClient.TCP
             Logger.Log(LogLevel.Info, "Closing...");
             await OnClosing(brokenConnection);
 
-            cts?.Cancel();
+            _cts?.Cancel();
             Dispose();
             ConnectionCount = 0;
             ReconnectionAttemptsCount = 0;
@@ -451,21 +485,22 @@ namespace OpenKuka.KukavarClient.TCP
         #region Read
         protected async Task<int> ReadAsync(byte[] buffer, int offset, int count)
         {
-            var token = new CancellationTokenSource(ReadTimeout).Token;
-            return await ReadAsync(buffer, offset, count, token);
+            using (var cts = new CancellationTokenSource(ReadTimeout))
+            {
+                return await ReadAsync(buffer, offset, count, cts.Token);
+            }
         }
         private async Task<int> ReadAsync(byte[] buffer, int offset, int count, CancellationToken token)
         {
             if (stream.DataAvailable)
             {
-                var task = stream.ReadAsync(buffer, offset, count, token);
-                var timeoutTask = await Task.WhenAny(task, Task.Delay(-1, token));
-
                 try
                 {
+                    var task = stream.ReadAsync(buffer, offset, count, token);
+                    var timeoutTask = await Task.WhenAny(task, Task.Delay(-1, token));
                     await timeoutTask; // wait on the returned task to observe any exceptions.
                     //await OnBytesReceived(task.Result);
-                    Logger.Log(LogLevel.Trace, "<<{0,6} bytes received : {1}", task.Result, ByteArrayToString(buffer, offset, task.Result));
+                    Logger.Log(LogLevel.Trace, "[RStream] <<{0,3} bytes received : {1}", task.Result, ByteArrayToString(buffer, offset, task.Result));
                     //await BytesReceivedCallback(this, task.Result);
                     return task.Result;
                 }
@@ -481,60 +516,92 @@ namespace OpenKuka.KukavarClient.TCP
         }
         protected async Task<int> WaitAsync(byte[] buffer, int offset, int count)
         {
-            var token = new CancellationTokenSource(ReadTimeout).Token;
-            return await WaitAsync(buffer, offset, count, token);
+            using (var cts = new CancellationTokenSource(ReadTimeout))
+            {
+                return await WaitAsync(buffer, offset, count, cts.Token);
+            }            
         }
         private async Task<int> WaitAsync(byte[] buffer, int offset, int count, CancellationToken token)
         {
-            var task = Task.Run(async () =>
-            {
-                // try to fill the buffer until count is reached or task is cancelled
-                int readLength = 0;
-                while (!token.IsCancellationRequested && count > 0)
-                {
-                    try
-                    {
-                        if (stream.DataAvailable)
-                        {
-                            readLength += await stream.ReadAsync(buffer, offset, count, token);
-                            offset += readLength;
-                            count -= readLength;
-                        }
-                    }
-                    catch (Exception ex)
-                    {
-                        Logger.Log(LogLevel.Trace, ex, "Read : error while reading the stream");
-                        break;
-                    }
-                }
-                return readLength;
-            }, token);
-
             try
             {
+                var task = Task.Run(async () =>
+                {
+                    // try to fill the buffer until count is reached or task is cancelled
+                    int readLength = 0;
+                    while (!token.IsCancellationRequested && count > 0)
+                    {
+                        try
+                        {
+                            if (stream.DataAvailable)
+                            {
+                                readLength += await stream.ReadAsync(buffer, offset, count, token);
+                                offset += readLength;
+                                count -= readLength;
+                            }
+                        }
+                        catch (Exception ex)
+                        {
+                            Logger.Log(LogLevel.Trace, ex, "Read : error while reading the stream");
+                            break;
+                        }
+                    }
+                    return readLength;
+                }, token);
+
                 var timeoutTask = await Task.WhenAny(task, Task.Delay(-1, token));
                 await timeoutTask; // wait on the returned task to observe any exceptions.
+                return task.Result;
             }
             catch (TaskCanceledException ex)
             {
                 Logger.Log(LogLevel.Trace, ex, "Read : timeout with no bytes received");
+                return 0;
             }
-
-            return task.Result;
         }
         #endregion
 
         #region Send
-        private async Task SendAsync(byte[] bytes, int offset, int count, CancellationToken token)
+        protected async Task WriteAsync(byte[] bytes, int offset, int count)
         {
-            await stream.WriteAsync(bytes, offset, count, token);
-            Logger.Log(LogLevel.Trace, ">>{0,6} bytes sent : {1}", count, ByteArrayToString(bytes, offset, count));
-            await OnBytesSent(count);
+            
+            using (var cts = new CancellationTokenSource(WriteTimeout))
+            {
+                await WriteAsync(bytes, offset, count, cts.Token);
+            }
         }
-        protected async Task SendAsync(byte[] bytes, int offset, int count)
+        private async Task WriteAsync(byte[] bytes, int offset, int count, CancellationToken token)
         {
-            var token = new CancellationTokenSource(WriteTimeout).Token;
-            await SendAsync(bytes, offset, count, token);
+            if (bytes.Length == 0)
+                return;
+
+            try
+            {
+                var task = stream.WriteAsync(bytes, offset, count, token);
+                var timeoutTask = await Task.WhenAny(task, Task.Delay(-1, token));
+                await timeoutTask; // wait on the returned task to observe any exceptions.
+                Logger.Log(LogLevel.Debug, "[WStream] >>{0,3} bytes sent : {1}", count, ByteArrayToString(bytes, offset, count));
+                await OnBytesSent(count);
+            }
+            catch (Exception ex)
+            {
+                Logger.Log(LogLevel.Error, "[WStream] writing {0} bytes failed", count, ex);
+                return;
+            }
+        }
+        
+        public async Task SendAsync(byte[] bytes, int offset, int count)
+        {
+            // push to sending queue (does not actually send).
+            while (true)
+            {
+                if (Status == ClientStatus.Connected)
+                {
+                    ByteSendQueue.Enqueue(bytes, offset, count);
+                    return;
+                }
+                await Task.Delay(2);
+            }
         }
         #endregion
 
@@ -552,7 +619,7 @@ namespace OpenKuka.KukavarClient.TCP
                 count += 1;
                 try
                 {
-                    await SendAsync(bytes, 0, bytes.Length);
+                    await WriteAsync(bytes, 0, bytes.Length);
                 }
                 catch (Exception)
                 {

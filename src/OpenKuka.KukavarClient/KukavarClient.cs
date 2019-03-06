@@ -69,14 +69,12 @@ namespace OpenKuka.KukavarClient
             lock (lockObject)
             {
                 query.Id = ++MsgId;
+                SendAsync(query.Message, 0, query.MessageLength).Wait();
+                var reply = new KVReply(query, chrono, callback);
+                ReplyQueue[reply.Id] = reply;
+                Logger.Log(LogLevel.Debug, ">> query enqueue : id={0}, len={1}, mode={2}", query.Id, query.MessageLength, query.Mode);
+                return query.Id;
             }
-
-            await SendAsync(query.Message, 0, query.MessageLength);
-
-            var reply = new KVReply(query, chrono, callback);
-            ReplyQueue[reply.Id] = reply;
-            Logger.Log(LogLevel.Debug, ">> query enqueue : id={0}, len={1}, mode={2}", query.Id, query.MessageLength, query.Mode);
-            return query.Id;
         }
         public void ClearQueue()
         {
@@ -135,7 +133,7 @@ namespace OpenKuka.KukavarClient
         {
             KVReply reply;
             
-            if (ReplyQueue.TryGetValue(answer.Id, out reply))
+            if (ReplyQueue.TryRemove(answer.Id, out reply))
             {
                 reply.SetAnswer(answer, chrono);
                 Logger.Log(LogLevel.Debug, "<< query dequeue : id={0}, len={1}, mode={2}, tm={3}", answer.Id, answer.MessageLength, answer.Mode, reply.RoundTripTime.TotalMilliseconds);
@@ -168,7 +166,7 @@ namespace OpenKuka.KukavarClient
             });
 
             t2.Wait();
-            var t1 = Task.Run(() => client.EnqueuingAsync());
+            client.Run();
         }
     }
 }

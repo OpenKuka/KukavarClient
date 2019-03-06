@@ -56,7 +56,7 @@ namespace Kukavar
 
             config.AddRule(LogLevel.Debug, LogLevel.Fatal, logfile);
             config.AddRule(LogLevel.Info, LogLevel.Fatal, logconsole);
-            config.AddRule(LogLevel.Trace, LogLevel.Fatal, logsentinel);
+            config.AddRule(LogLevel.Debug, LogLevel.Fatal, logsentinel);
 
             logFactory.Configuration = config;
             return logFactory;

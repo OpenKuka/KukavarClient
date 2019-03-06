@@ -24,7 +24,7 @@ namespace OpenKuka.KukavarClient.TCP
         }
         private void OnCapacityChanged(int prevCapacity, int newCapacity)
         {
-            Logger.Log(LogLevel.Info, "The buffer capacity has changed from {0} bytes to {1} bytes.", prevCapacity, newCapacity);
+            Logger.Log(LogLevel.Debug, "[{0}] the capacity has changed from {1} bytes to {2} bytes.", Name, prevCapacity, newCapacity);
             CapacityChanged?.Invoke(this, new CapacityEventArgs(prevCapacity, newCapacity));
         }
 
@@ -107,6 +107,7 @@ namespace OpenKuka.KukavarClient.TCP
 
         #region Properties
 
+        public string Name { get; set; } = "ByteQueue";
         public Logger Logger { get; private set; }
 
         /// <summary>
@@ -247,17 +248,18 @@ namespace OpenKuka.KukavarClient.TCP
 
         #region Constructors
 
-        public ByteQueue(int initialCapacity = 256, int minCapacity = 256, int maxCapacity = 4096, Logger logger = null)
+        public ByteQueue(string name, int initialCapacity = 256, int minCapacity = 256, int maxCapacity = 4096, Logger logger = null)
         {
             Logger = logger ?? NLog.LogManager.CreateNullLogger();
 
+            Name = name;
             MaxCapacity = maxCapacity;
             MinCapacity = minCapacity;
             SetCapacity(initialCapacity);
 
             receivedCount = 0;
 
-            Logger.Info("Bytes buffer initialized with capacity : initial={0}, min={1}, max={2}", Capacity, MinCapacity, MaxCapacity);
+            Logger.Info("[{0}] byte buffer initialized with capacity : initial={1}, min={2}, max={3}", Name, Capacity, MinCapacity, MaxCapacity);
         }
 
         #endregion Constructors
@@ -381,7 +383,7 @@ namespace OpenKuka.KukavarClient.TCP
                             // it's still an overflow
 
                             // notify that an overflow occured despite the call to OverflowingCallback
-                            var ex = new OverflowException(string.Format("Buffer overflow : failed to enqueue {0} bytes. The buffer can only accept {1} more bytes.", count, (MaxCapacity - Count)));
+                            var ex = new OverflowException(string.Format("[{0}] buffer overflow : failed to enqueue {1} bytes. The buffer can only accept {2} more bytes.", Name, count, (MaxCapacity - Count)));
                             Logger.Log(LogLevel.Fatal, ex, ex.Message);
                             OnOverflow(count, Count, MaxCapacity);
                             // we throw an error as this would lead to corrupted data otherwise
@@ -409,7 +411,7 @@ namespace OpenKuka.KukavarClient.TCP
                     }
                     tail = (tail + count) % Capacity;
                     isEmpty = false;
-                    Logger.Log(LogLevel.Debug, "++{0,5} bytes enqueued", count);
+                    Logger.Log(LogLevel.Trace, "[{0}] ++{1,3} bytes enqueued | count={2}", Name, count, Count);
                 }
             }
 
@@ -418,7 +420,7 @@ namespace OpenKuka.KukavarClient.TCP
                 // try to do something to prevent overflow (outside the lock of Enqueue())
                 lock (syncObj)
                 {
-                    Logger.Log(LogLevel.Warn, "Buffer overflow alert : could not enqueue {0} bytes. The buffer can only accept {1} more bytes.", count, (MaxCapacity - Count));
+                    Logger.Log(LogLevel.Warn, "[{0}] buffer overflow alert : could not enqueue {1} bytes. The buffer can only accept {2} more bytes.", Name, count, (MaxCapacity - Count));
                     OverflowingCallback?.Invoke(this, chunk, count, offset);
                 }
 
@@ -447,10 +449,42 @@ namespace OpenKuka.KukavarClient.TCP
                 {
                     head = (head + count) % Capacity;
                 }
-                Logger.Log(LogLevel.Debug, "--{0,5} bytes dequeued", count);
+                Logger.Log(LogLevel.Trace, "[{0}] --{1,3} bytes dequeued | count={2}", Name, count, Count);
                 return count;
             }         
         }
+        public int Dequeue(int count, ref byte[] buffer)
+        {
+            lock (syncObj)
+            {
+                if (count < 0)
+                    throw new ArgumentOutOfRangeException(nameof(count), "The count must not be negative.");
+                if (count == 0)
+                    return 0;
+
+                count = Math.Min(Math.Min(count, Count), buffer.Length);
+
+                int i = 0;
+                foreach (var item in Content)
+                {
+                    buffer[i++] = item;
+                    if (i == count) break;
+                }
+
+                if (count == Count)
+                {
+                    isEmpty = true;
+                    head = 0;
+                    tail = -1;
+                }
+                else
+                {
+                    head = (head + count) % Capacity;
+                }
+                Logger.Log(LogLevel.Trace, "[{0}] --{1,3} bytes dequeued | count={2}", Name, count, Count);
+                return count;
+            }
+        } 
 
         /// <summary>
         /// How a certain chunk of data fits in the buffer.
