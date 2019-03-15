@@ -50,7 +50,7 @@ namespace OpenKuka.KukavarClient
         public int MsgId { get; private set; } = 0; // the client should be repsonsible to assign message ids.
         private new Logger Logger { get; set; }
   
-        public KukavarClient(int guid, Logger logger = null) : base(guid, 2, 2, 2048, logger)
+        public KukavarClient(int guid, Logger logger = null) : base(guid, 2, 2, 32768, logger)
         {
             chrono.Start(); // use this timer to get accurate measurement of roundtrip times
             Logger = logger ?? NLog.LogManager.CreateNullLogger();
@@ -99,7 +99,7 @@ namespace OpenKuka.KukavarClient
                 {
                     // we build as many answers as we can
                     answerStatus = KVAnswer.TryParse(buffer, ByteBuffer.Count, out answer);
-                    if (answerStatus == KVParsingStatus.Valid || answerStatus == KVParsingStatus.Empty)
+                    if (answerStatus == KVParsingStatus.Valid)
                     {
                         dequeuedMessageCount += 1;
                         dequeuedBytesCount += answer.MessageLength;
@@ -117,6 +117,11 @@ namespace OpenKuka.KukavarClient
                     }
                     else
                     {
+                        if (answerStatus == KVParsingStatus.Empty)
+                        {
+                            // the stream is corrupted : dequeue all zeros
+                            ByteBuffer.Clean();
+                        }
                         break;
                     }
                 }

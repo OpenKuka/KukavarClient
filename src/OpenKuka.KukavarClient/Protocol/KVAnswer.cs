@@ -96,6 +96,9 @@ namespace OpenKuka.KukavarClient.Protocol
 
                 var msgLength = KVPConvert.UByteToShort(new byte[2] { b3, b2 });
 
+                // here we got a serious problem and the stream is corrupted
+                if (msgLength == 0) return KVParsingStatus.Empty;
+
                 if (bytesCount < msgLength + 4) return KVParsingStatus.NotEnoughBytes;
 
                 // get the msg bytes

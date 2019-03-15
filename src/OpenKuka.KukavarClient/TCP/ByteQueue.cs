@@ -339,6 +339,41 @@ namespace OpenKuka.KukavarClient.TCP
             return false;
         }
 
+        /// <summary>
+        /// Remove all trailing zeros from the buffer
+        /// </summary>
+        public void Clean()
+        {
+            lock (syncObj)
+            {
+                if (!isEmpty)
+                {
+                    var count = 0;
+                    if (tail >= head)
+                    {
+                        for (int i = head; i <= tail; i++)
+                        {
+                            if(buffer[i] != 0) break;
+                            count++;
+                        }
+                    }
+                    else
+                    {
+                        for (int i = head; i < Capacity; i++)
+                        {
+                            if (buffer[i] != 0) break;
+                            count++;
+                        }
+                        for (int i = 0; i <= tail; i++)
+                        {
+                            if (buffer[i] != 0) break;
+                            count++;
+                        }
+                    }
+                    Dequeue(count);
+                }
+            }
+        }
 
         /// <summary>
         /// Adds bytes to the end of the buffer.

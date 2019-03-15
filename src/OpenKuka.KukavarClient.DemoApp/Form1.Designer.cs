@@ -61,6 +61,7 @@
             this.btRemoveTemplateVar = new System.Windows.Forms.Button();
             this.btDown = new System.Windows.Forms.Button();
             this.label9 = new System.Windows.Forms.Label();
+            this.scbRead = new AutoCompleteComboBox.SuggestComboBox();
             this.label8 = new System.Windows.Forms.Label();
             this.btReadSingle = new System.Windows.Forms.Button();
             this.label7 = new System.Windows.Forms.Label();
@@ -72,6 +73,7 @@
             this.label23 = new System.Windows.Forms.Label();
             this.btWrite = new System.Windows.Forms.Button();
             this.label21 = new System.Windows.Forms.Label();
+            this.scbWrite = new AutoCompleteComboBox.SuggestComboBox();
             this.tabPage3 = new System.Windows.Forms.TabPage();
             this.label19 = new System.Windows.Forms.Label();
             this.label20 = new System.Windows.Forms.Label();
@@ -212,8 +214,6 @@
             this.ckConnect = new System.Windows.Forms.CheckBox();
             this.toolTip = new System.Windows.Forms.ToolTip(this.components);
             this.imageList1 = new System.Windows.Forms.ImageList(this.components);
-            this.scbRead = new AutoCompleteComboBox.SuggestComboBox();
-            this.scbWrite = new AutoCompleteComboBox.SuggestComboBox();
             this.grpCSettings.SuspendLayout();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
@@ -593,6 +593,19 @@
             this.label9.TabIndex = 24;
             this.label9.Text = "Select a template";
             // 
+            // scbRead
+            // 
+            this.scbRead.FilterRule = null;
+            this.scbRead.FormattingEnabled = true;
+            this.scbRead.Location = new System.Drawing.Point(15, 50);
+            this.scbRead.Name = "scbRead";
+            this.scbRead.PropertySelector = null;
+            this.scbRead.Size = new System.Drawing.Size(150, 21);
+            this.scbRead.SuggestBoxHeight = 96;
+            this.scbRead.SuggestListOrderRule = null;
+            this.scbRead.TabIndex = 20;
+            this.scbRead.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.scbRead_KeyPress);
+            // 
             // label8
             // 
             this.label8.AutoSize = true;
@@ -706,6 +719,20 @@
             this.label21.Size = new System.Drawing.Size(74, 13);
             this.label21.TabIndex = 22;
             this.label21.Text = "Variable name";
+            // 
+            // scbWrite
+            // 
+            this.scbWrite.DisplayMember = "VarName";
+            this.scbWrite.FilterRule = null;
+            this.scbWrite.FormattingEnabled = true;
+            this.scbWrite.Location = new System.Drawing.Point(15, 50);
+            this.scbWrite.Name = "scbWrite";
+            this.scbWrite.PropertySelector = null;
+            this.scbWrite.Size = new System.Drawing.Size(150, 21);
+            this.scbWrite.SuggestBoxHeight = 96;
+            this.scbWrite.SuggestListOrderRule = null;
+            this.scbWrite.TabIndex = 24;
+            this.scbWrite.ValueMember = "VarValue";
             // 
             // tabPage3
             // 
@@ -2177,33 +2204,6 @@
             this.imageList1.ColorDepth = System.Windows.Forms.ColorDepth.Depth8Bit;
             this.imageList1.ImageSize = new System.Drawing.Size(16, 16);
             this.imageList1.TransparentColor = System.Drawing.Color.Transparent;
-            // 
-            // scbRead
-            // 
-            this.scbRead.FilterRule = null;
-            this.scbRead.FormattingEnabled = true;
-            this.scbRead.Location = new System.Drawing.Point(15, 50);
-            this.scbRead.Name = "scbRead";
-            this.scbRead.PropertySelector = null;
-            this.scbRead.Size = new System.Drawing.Size(150, 21);
-            this.scbRead.SuggestBoxHeight = 96;
-            this.scbRead.SuggestListOrderRule = null;
-            this.scbRead.TabIndex = 20;
-            this.scbRead.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.scbRead_KeyPress);
-            // 
-            // scbWrite
-            // 
-            this.scbWrite.DisplayMember = "VarName";
-            this.scbWrite.FilterRule = null;
-            this.scbWrite.FormattingEnabled = true;
-            this.scbWrite.Location = new System.Drawing.Point(15, 50);
-            this.scbWrite.Name = "scbWrite";
-            this.scbWrite.PropertySelector = null;
-            this.scbWrite.Size = new System.Drawing.Size(150, 21);
-            this.scbWrite.SuggestBoxHeight = 96;
-            this.scbWrite.SuggestListOrderRule = null;
-            this.scbWrite.TabIndex = 24;
-            this.scbWrite.ValueMember = "VarValue";
             // 
             // Form1
             // 

@@ -191,7 +191,7 @@ namespace Kukavar.DemoApp
                                         try
                                         {
                                             var vel = new CP(ast);
-                                            lb_VelCP.Text = FormatNumber(format, vel.LIN);
+                                            lb_VelCP.Text = FormatNumber("{0:F3}", vel.LIN, 4);
                                             lb_VelORI1.Text = FormatNumber(format, vel.ORI1);
                                             lb_VelORI2.Text = FormatNumber(format, vel.ORI2);
                                         }
@@ -206,7 +206,7 @@ namespace Kukavar.DemoApp
                                         try
                                         {
                                             var acc = new CP(ast);
-                                            lb_AccCP.Text = FormatNumber(format, acc.LIN);
+                                            lb_AccCP.Text = FormatNumber("{0:F3}", acc.LIN, 5);
                                             lb_AccORI1.Text = FormatNumber(format, acc.ORI1);
                                             lb_AccORI2.Text = FormatNumber(format, acc.ORI2);
                                         }
@@ -1184,12 +1184,12 @@ namespace Kukavar.DemoApp
 
                                 case "$BASE":
                                     var baseFrame = new FRAME(ast);
-                                    row["$BASE.X"] = baseFrame.X;
-                                    row["$BASE.Y"] = baseFrame.Y;
-                                    row["$BASE.Z"] = baseFrame.Z;
-                                    row["$BASE.A"] = baseFrame.A;
-                                    row["$BASE.B"] = baseFrame.B;
-                                    row["$BASE.C"] = baseFrame.C;
+                                    row["$BASE.X"] = baseFrame.X ?? 0;
+                                    row["$BASE.Y"] = baseFrame.Y ?? 0;
+                                    row["$BASE.Z"] = baseFrame.Z ?? 0;
+                                    row["$BASE.A"] = baseFrame.A ?? 0;
+                                    row["$BASE.B"] = baseFrame.B ?? 0;
+                                    row["$BASE.C"] = baseFrame.C ?? 0;
                                     break;
 
                                 case "$TOOL":
@@ -1714,6 +1714,7 @@ namespace Kukavar.DemoApp
 
             dtio.Rows.Add(dr);
         }
+
         private void AddIOItem(string krl, string tag, string group)
         {
             DataRow dr;
