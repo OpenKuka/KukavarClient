@@ -1,0 +1,155 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{9C01CFB2-E726-49CB-94F9-8F22177DE313}</ProjectGuid>
+    <OutputType>WinExe</OutputType>
+    <RootNamespace>Kukavar.DemoApp</RootNamespace>
+    <AssemblyName>Kukavar.DemoApp</AssemblyName>
+    <TargetFrameworkVersion>v4.7</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
+    <Deterministic>true</Deterministic>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="OpenKuka.KRL">
+      <HintPath>..\OpenKuka.KukavarClient\bin\Debug\OpenKuka.KRL.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Deployment" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="AppSettings.cs" />
+    <Compile Include="Form1.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Form1.Designer.cs">
+      <DependentUpon>Form1.cs</DependentUpon>
+    </Compile>
+    <Compile Include="IconComboBox.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Program.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <Compile Include="SuggestComboBox.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <EmbeddedResource Include="Form1.resx">
+      <DependentUpon>Form1.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <SubType>Designer</SubType>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Settings.settings</DependentUpon>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="EWSoftware.ListControls">
+      <Version>2015.1.27</Version>
+    </PackageReference>
+    <PackageReference Include="NLog">
+      <Version>4.5.11</Version>
+    </PackageReference>
+    <PackageReference Include="nucs.JsonSettings.Autosave">
+      <Version>1.0.0</Version>
+    </PackageReference>
+    <PackageReference Include="ObjectListView.Official">
+      <Version>2.9.1</Version>
+    </PackageReference>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\OpenKuka.KukavarClient\OpenKuka.KukavarClient.csproj">
+      <Project>{857f50a6-ecdf-4de9-8b0b-dfa207a60ba4}</Project>
+      <Name>OpenKuka.KukavarClient</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="icon\add.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="icon\remove.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="icon\down.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="icon\up.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="icon\save.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="icon\delete.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="icon\addfilled.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="icon\edit.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="icon\unfold.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="icon\fold.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="icon\clear.png" />
+    <Content Include="icon\record.png" />
+    <Content Include="icon\round_black.png" />
+    <Content Include="icon\round_blue.png" />
+    <Content Include="icon\round_green.png" />
+    <Content Include="icon\round_grey.png" />
+    <Content Include="icon\round_orange.png" />
+    <Content Include="icon\round_red.png" />
+    <Content Include="icon\round_yellow.png" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+</Project>
