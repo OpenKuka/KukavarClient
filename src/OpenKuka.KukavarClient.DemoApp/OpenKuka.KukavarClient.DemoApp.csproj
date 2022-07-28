@@ -33,9 +33,6 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="OpenKuka.KRL">
-      <HintPath>..\OpenKuka.KukavarClient\bin\Debug\OpenKuka.KRL.dll</HintPath>
-    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -105,6 +102,10 @@
     </PackageReference>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\KRL\src\OpenKuka.KRL\OpenKuka.KRL.csproj">
+      <Project>{1ba8596a-bd90-4c05-9875-97e064c2c73b}</Project>
+      <Name>OpenKuka.KRL</Name>
+    </ProjectReference>
     <ProjectReference Include="..\OpenKuka.KukavarClient\OpenKuka.KukavarClient.csproj">
       <Project>{857f50a6-ecdf-4de9-8b0b-dfa207a60ba4}</Project>
       <Name>OpenKuka.KukavarClient</Name>
