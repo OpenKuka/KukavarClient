@@ -9,7 +9,9 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OpenKuka.KukavarClient.Demo
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OpenKuka.KukavarClient.Test", "OpenKuka.KukavarClient.Test\OpenKuka.KukavarClient.Test.csproj", "{376943AB-93FD-4E16-BE61-74A9449CE7B2}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OpenKuka.KRL", "KRL\src\OpenKuka.KRL\OpenKuka.KRL.csproj", "{1BA8596A-BD90-4C05-9875-97E064C2C73B}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OpenKuka.KRL", "OpenKuka.KRL\OpenKuka.KRL.csproj", "{1BA8596A-BD90-4C05-9875-97E064C2C73B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OpenKuka.KRL.Data", "OpenKuka.KRL.Data\OpenKuka.KRL.Data.csproj", "{2DFC0F2B-BD84-458C-B131-4ABB24B0D33E}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -33,6 +35,10 @@ Global
 		{1BA8596A-BD90-4C05-9875-97E064C2C73B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{1BA8596A-BD90-4C05-9875-97E064C2C73B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{1BA8596A-BD90-4C05-9875-97E064C2C73B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2DFC0F2B-BD84-458C-B131-4ABB24B0D33E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2DFC0F2B-BD84-458C-B131-4ABB24B0D33E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2DFC0F2B-BD84-458C-B131-4ABB24B0D33E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2DFC0F2B-BD84-458C-B131-4ABB24B0D33E}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
